@@ -1,0 +1,26 @@
+.login-form-flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+.box{
+  width: 100%;
+  max-width: 400px;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.button-flex-container {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+.title-center {
+  text-align: center;
+}
+.card-content {
+  padding: 0 1rem;
+
+}
+

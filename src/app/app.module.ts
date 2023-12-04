@@ -13,6 +13,7 @@ import {MatTableModule} from "@angular/material/table";
 import {MatIconModule} from "@angular/material/icon";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {AuthModule} from "./components/auth/auth.module";
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
     MatIconModule,
     MatSlideToggleModule,
     FormsModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    AuthModule
   ],
   providers: [],
   bootstrap: [AppComponent]
