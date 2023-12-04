@@ -32,7 +32,6 @@ import {AuthModule} from "./components/auth/auth.module";
     MatIconModule,
     MatSlideToggleModule,
     FormsModule,
-    MatSnackBarModule,
     AuthModule
   ],
   providers: [],

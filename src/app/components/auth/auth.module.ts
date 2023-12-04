@@ -8,12 +8,14 @@ import {MatListModule} from "@angular/material/list";
 import {RouterLink} from "@angular/router";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatCardModule} from "@angular/material/card";
+import {RegisterComponent} from "./register/register.component";
 
 
 
 @NgModule({
   declarations: [
-    LoginComponent
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     CommonModule,
