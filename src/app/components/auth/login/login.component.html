@@ -1,21 +1,24 @@
 <div class="login-form-flex">
-
-  <mat-card>
+  <mat-card class="login-form">
     <mat-card-title class="title-center">
       Login
     </mat-card-title>
-    <mat-card-content class="card-content">
-      <mat-form-field appearance="outline">
-        <input matInput placeholder="User Name">
+    <mat-card-content class="card-content" >
+      <mat-form-field appearance="outline" class="max-height" >
+        <input matInput placeholder="User Name" (change)="setEmail()">
       </mat-form-field>
       <br/>
-      <mat-form-field appearance="outline">
-        <input type="password" matInput placeholder="Password"/>
+      <mat-form-field appearance="outline" class="max-height">
+        <input type="password" matInput placeholder="Password" (change)="setPassword()"/>
       </mat-form-field>
+      <mat-checkbox color="primary">Remember Me</mat-checkbox>
     </mat-card-content>
     <mat-card-actions>
       <div class="button-flex-container">
-        <button mat-raised-button color="primary">Login</button>
+        <button mat-raised-button color="primary" (click)="login()">Login</button>
+      </div>
+      <div class="password-reset">
+        <button mat-raised-button color="accent" (click)="reset()">Forgot Password?</button>
       </div>
     </mat-card-actions>
   </mat-card>

@@ -4,12 +4,13 @@
   justify-content: center;
   height: 100vh;
 }
-.box{
+.login-form {
+    width: 100%;
+    max-width: 500px;
+    padding: 1rem;
+}
+.max-height {
   width: 100%;
-  max-width: 400px;
-  padding: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
 }
 .button-flex-container {
   display: flex;
@@ -21,6 +22,11 @@
 }
 .card-content {
   padding: 0 1rem;
-
+  margin-top: 30px;
 }
+.password-reset {
+  text-align: center;
+}
+
+
 

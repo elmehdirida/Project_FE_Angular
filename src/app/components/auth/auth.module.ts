@@ -1,26 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
-import {MatCardModule} from "@angular/material/card";
 import {MatInputModule} from "@angular/material/input";
 import {FormsModule} from "@angular/forms";
 import {MatButtonModule} from "@angular/material/button";
 import {MatListModule} from "@angular/material/list";
 import {RouterLink} from "@angular/router";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatCardModule} from "@angular/material/card";
 
 
 
 @NgModule({
   declarations: [
-    LoginComponent,
-    RegisterComponent
+    LoginComponent
   ],
   imports: [
-    CommonModule,
-    MatCardModule,
-    FormsModule,
-    MatInputModule,
     CommonModule,
     MatInputModule,
     FormsModule,
@@ -28,6 +23,7 @@ import {RouterLink} from "@angular/router";
     MatListModule,
     MatCardModule,
     RouterLink,
+    MatCheckboxModule,
   ]
 })
 export class AuthModule { }

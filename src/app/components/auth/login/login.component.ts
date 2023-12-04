@@ -6,16 +6,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-  loginStatus: string="login";
-  username: any;
-  showError: any;
-  password: any;
 
   login() {
-
-  }
-
-  resetPassword() {
 
   }
 
@@ -23,7 +15,11 @@ export class LoginComponent {
 
   }
 
-  back2Login() {
+  setEmail() {
+
+  }
+
+  setPassword() {
 
   }
 }
