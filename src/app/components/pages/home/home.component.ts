@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {Product} from "../../../Model/Product";
+import {Router} from "@angular/router";
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -8,8 +9,8 @@ import {Product} from "../../../Model/Product";
 export class HomeComponent {
   cartCount: number = 0;
   products: Product[] = [];
-
-  constructor() {}
+  cartItems: Product[] = [];
+  constructor( private router: Router) {}
 
   ngOnInit(): void {
     this.products = [
@@ -72,10 +73,20 @@ export class HomeComponent {
   logout() {
 
   }
+  login() {
+          this.router.navigate(['/login']);
+        }
+
 
 
 
   addToCart(product: Product) {
+    this.cartCount = this.cartCount + 1 ;
+    this.cartItems.push(product);
+    console.log(this.cartItems)
+  }
 
+  register() {
+    this.router.navigate(['/register']);
   }
 }
