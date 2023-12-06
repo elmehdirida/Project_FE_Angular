@@ -1,12 +1,12 @@
 <mat-toolbar>
   <span>Dashboard</span>
-  <button mat-icon-button >
-    <mat-icon>shopping_cart</mat-icon>
-    <span>{{ [cartCount] }}</span>
+  <button mat-icon-button  (click)="openCartDialog()">
+    <mat-icon color="warn">shopping_cart</mat-icon>
+    <span [matBadge]="cartCount" matBadgeColor="accent"></span>
   </button>
-  <button mat-button (click)="register()" *ngIf="!isLoginIn">Register</button>
-  <button mat-button (click)="logout()" *ngIf="isLoginIn">Logout</button>
-  <button mat-button (click)="login()" *ngIf="!isLoginIn">Login</button>
+  <button mat-raised-button color="primary" (click)="register()" *ngIf="!isLoginIn">Register</button>
+  <button mat-raised-button color="warn" (click)="logout()" *ngIf="isLoginIn">Log out</button>
+  <button mat-raised-button color="accent" (click)="login()" *ngIf="!isLoginIn">Login</button>
 </mat-toolbar>
 <div class="product-container">
   <div *ngFor="let product of products" class="product">
@@ -17,6 +17,6 @@
       <p class="price" [ngClass]="product.discount?.discount != 0? 'strick-through ':''">{{ product.price | currency }}</p>
       <p class="discounted-price" *ngIf="product.discount?.discount!=0" >{{ getDiscount(product) | currency }}</p>
     </div>
-    <button mat-raised-button color="accent" class="add-cart-button">Add to Cart</button>
+    <button mat-raised-button color="accent" class="add-cart-button" (click)="addToCart(product)">Add to Cart</button>
   </div>
 </div>

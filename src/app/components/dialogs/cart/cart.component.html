@@ -1,1 +1,74 @@
-<p>cart works!</p>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Cart</mat-card-title>
+  </mat-card-header>
+  <div class="card-container" *ngIf="cartItems.length==0">
+    <div class="empty-cart">
+      <p>Cart is empty</p>
+    </div>
+  </div>
+  <div class="card-container" *ngIf="cartItems.length>0">
+  <mat-card-content>
+  <div class="cart-container">
+    <div class="left-side-table">
+        <p>Items in the cart</p>
+        <table mat-table [dataSource]="dataSource"  class="mat-elevation-z8">
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef > Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.product.name}} </td>
+          </ng-container>
+
+          <!-- Price Column -->
+          <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef > Price </th>
+            <td mat-cell *matCellDef="let element"> {{element.product.price | currency}} </td>
+          </ng-container>
+
+          <!-- Quantity Column -->
+          <ng-container matColumnDef="quantity">
+            <th mat-header-cell *matHeaderCellDef > Quantity </th>
+            <td mat-cell *matCellDef="let element, let i = index">
+              <div class="plus-minus">
+                <button mat-icon-button color="primary" (click)="addQuantity(i) ">
+                  <mat-icon >add</mat-icon>
+                </button>
+                <span class="quantity">{{element.quantity}}</span>
+                <button mat-icon-button color="warn" (click)="removeQuantity(i)">
+                  <mat-icon>remove</mat-icon>
+                </button>
+              </div>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="delete">
+            <th mat-header-cell *matHeaderCellDef> Actions </th>
+            <td mat-cell *matCellDef="let element, let i = index">
+              <button (click)="deleteItemCart(i)" mat-icon-button color="warn">
+                <mat-icon  >delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+    <div class="right-side-checkout">
+        <div class="checkout">
+          <div class="total">
+            <span>Total Amount</span>
+            <p>{{total | currency}}</p>
+          </div>
+        </div>
+    </div>
+  </div>
+  </mat-card-content>
+  </div>
+  <mat-card-actions class="actions">
+    <button mat-raised-button color="primary" (click)="onNoClick()">Close</button>
+    <button *ngIf="cartItems.length>0" class="margin-right" mat-raised-button color="accent" (click)="checkout()">Checkout</button>
+  </mat-card-actions>
+
+</mat-card>

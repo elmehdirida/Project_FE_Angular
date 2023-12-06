@@ -3,29 +3,35 @@ import {Product} from "../../../Model/Product";
 import {ProductService} from "../../../services/product.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AuthServiceService} from "../../../services/auth/auth-service.service";
-import {SessionStorageService} from "../../../services/Storage/session-storage.service";
+import {LocalStorageService} from "../../../services/Storage/local-storage.service";
+import {MatDialog} from "@angular/material/dialog";
+import {CartComponent} from "../../dialogs/cart/cart.component";
+import {CartProduct} from "../../../Model/CartProduct";
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit{
+export class HomeComponent {
   cartCount: number = 0;
   products: Product[] = [];
   isLoginIn: boolean = false ;
+  cartItems: CartProduct[] = [];
 
   constructor(private productService : ProductService,
               private router: Router,
               private authService : AuthServiceService,
               private route : ActivatedRoute,
-              private sessionStorageService: SessionStorageService
-  ) {}
-  cartItems: Product[] = [];
-
-  ngOnInit(): void {
-    this.isLoginIn = this.sessionStorageService.isUserLoggedIn();
+              private localStorageService: LocalStorageService,
+              public dialog: MatDialog
+  ) {
+    this.isLoginIn = this.localStorageService.isUserLoggedIn();
+  if (this.isLoginIn) {
+    this.cartItems = this.localStorageService.getCartStorage();
+    this.cartCount = this.cartItems.length;
+  }
     this.getProducts();
-      }
+  }
 
   getProducts() {
     this.productService.getProducts().subscribe((response: any) => {
@@ -37,8 +43,8 @@ export class HomeComponent implements OnInit{
   logout() {
     this.authService.logout().subscribe({
       next: () => {
-        this.sessionStorageService.setIsUserLoggedIn(false);
-        this.sessionStorageService.removeUserStorage();
+        this.localStorageService.setIsUserLoggedIn(false);
+        this.localStorageService.removeUserStorage();
         this.router.navigate(['/login']);
       },
       error: (error) => {
@@ -51,8 +57,16 @@ export class HomeComponent implements OnInit{
         }
 
   addToCart(product: Product) {
-    this.cartCount = this.cartCount + 1 ;
-    this.cartItems.push(product);
+    this.cartCount++;
+    let cartProduct = this.cartItems.find((item) => item.product.id == product.id);
+    if (cartProduct) {
+      cartProduct.quantity++;
+    } else {
+      this.cartItems.push({product: product, quantity: 1,id:this.cartCount});
+    }
+      this.localStorageService.setCartStorage(this.cartItems);
+
+
   }
 
   register() {
@@ -66,6 +80,12 @@ export class HomeComponent implements OnInit{
     else {
       return product.price;
     }
-
   }
+
+    openCartDialog() {
+      this.dialog.open(CartComponent, {
+        maxHeight: '90vh',
+        maxWidth: '80vw',
+      });
+    }
 }

@@ -4,7 +4,7 @@ import { FormControl, FormGroup, Validators} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {Router} from "@angular/router";
-import {SessionStorageService} from "../../../services/Storage/session-storage.service";
+import {LocalStorageService} from "../../../services/Storage/local-storage.service";
 
 @Component({
   selector: 'app-login',
@@ -25,11 +25,11 @@ export class LoginComponent  implements OnInit{
 
   constructor(private authService: AuthServiceService,
               private router: Router,
-              private sessionStorageService: SessionStorageService,)
+              private localStorageService: LocalStorageService,)
   {}
 
   ngOnInit(): void {
-    this.isLoginIn = this.sessionStorageService.isUserLoggedIn();
+    this.isLoginIn = this.localStorageService.isUserLoggedIn();
     if (this.isLoginIn) {
       this.router.navigate(['/home']);
     }
@@ -42,8 +42,8 @@ export class LoginComponent  implements OnInit{
         next: (res) => {
           console.log(res);
           if (res) {
-            this.sessionStorageService.setIsUserLoggedIn(true);
-            this.sessionStorageService.setUserStorage(res);
+            this.localStorageService.setIsUserLoggedIn(true);
+            this.localStorageService.setUserStorage(res);
             this.loginErrors = [];
             this.isLoading = false;
             this.router.navigate(['/home'],
@@ -53,8 +53,8 @@ export class LoginComponent  implements OnInit{
         error: (error) => {
             this.loginErrors = error.error.errors;
             this.isLoading = false;
-            this.sessionStorageService.setIsUserLoggedIn(false);
-            this.sessionStorageService.removeUserStorage();
+            this.localStorageService.setIsUserLoggedIn(false);
+            this.localStorageService.removeUserStorage();
         },
       });
     } else {
