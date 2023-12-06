@@ -16,6 +16,7 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {AuthModule} from "./components/auth/auth.module";
 import {DialogsModule} from "./components/dialogs/dialogs.module";
 import {MatDialogModule} from "@angular/material/dialog";
+import {PagesModule} from "./components/pages/pages.module";
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import {MatDialogModule} from "@angular/material/dialog";
     FormsModule,
     AuthModule,
     DialogsModule,
-    MatDialogModule
+    MatDialogModule,
+    PagesModule
   ],
   providers: [],
   bootstrap: [AppComponent]

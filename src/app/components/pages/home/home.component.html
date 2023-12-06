@@ -1,1 +1,16 @@
-<p>home works!</p>
+<mat-toolbar>
+  <span>Dashboard</span>
+  <button mat-icon-button >
+    <mat-icon>shopping_cart</mat-icon>
+    <span>{{ cartCount }}</span>
+  </button>
+  <button mat-button (click)="logout()">Logout</button>
+</mat-toolbar>
+<div class="product-container">
+  <div *ngFor="let product of products" class="product">
+    <img [src]="product.image" alt="">
+    <h3>{{ product.name }}</h3>
+    <p>{{ product.price }}</p>
+    <button>Add to Cart</button>
+  </div>
+</div>
