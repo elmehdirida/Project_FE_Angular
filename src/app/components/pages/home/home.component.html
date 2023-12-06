@@ -4,19 +4,19 @@
     <mat-icon>shopping_cart</mat-icon>
     <span>{{ [cartCount] }}</span>
   </button>
-  <button mat-button (click)="register()">Register</button>
-  <button mat-button (click)="logout()">Logout</button>
-  <button mat-button (click)="login()">Login</button>
+  <button mat-button (click)="register()" *ngIf="!isLoginIn">Register</button>
+  <button mat-button (click)="logout()" *ngIf="isLoginIn">Logout</button>
+  <button mat-button (click)="login()" *ngIf="!isLoginIn">Login</button>
 </mat-toolbar>
 <div class="product-container">
   <div *ngFor="let product of products" class="product">
-    <div class="discount-bar" *ngIf="product.discount?.discount!=0">{{ product.discount?.discount }}% OFF</div>
+    <div class="discount-bar" >{{ product.discount?.discount }}% OFF</div>
     <img [src]="product.image" alt="">
     <div class="product-details">
       <h3>{{ product.name }}</h3>
       <p class="price" [ngClass]="product.discount?.discount != 0? 'strick-through ':''">{{ product.price | currency }}</p>
       <p class="discounted-price" *ngIf="product.discount?.discount!=0" >{{ getDiscount(product) | currency }}</p>
     </div>
-    <button mat-raised-button color="primary" class="add-cart-button">Add to Cart</button>
+    <button mat-raised-button color="accent" class="add-cart-button">Add to Cart</button>
   </div>
 </div>

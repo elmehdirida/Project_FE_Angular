@@ -11,4 +11,7 @@ constructor(private httpClient : HttpClient) { }
   login(email: string, password: string) {
     return this.httpClient.post(`${this.apiUrl}/login`, {"email":email,"password": password});
   }
+  logout() {
+    return this.httpClient.post(`${this.apiUrl}/logout`, {});
+  }
 }

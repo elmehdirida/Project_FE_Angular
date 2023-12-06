@@ -3,6 +3,8 @@ import {AuthServiceService} from "../../../services/auth/auth-service.service";
 import { FormControl, FormGroup, Validators} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {Router} from "@angular/router";
+import {SessionStorageService} from "../../../services/Storage/session-storage.service";
 
 @Component({
   selector: 'app-login',
@@ -14,6 +16,7 @@ export class LoginComponent  implements OnInit{
   password = '';
   loginErrors: any = [];
   isLoading = false;
+  isLoginIn: boolean = false ;
   loginForm:FormGroup=new FormGroup({
     email:new FormControl(this.email,[Validators.required]),
     password:new FormControl(this.password,[Validators.required]),
@@ -21,31 +24,37 @@ export class LoginComponent  implements OnInit{
   });
 
   constructor(private authService: AuthServiceService,
-              private snackBar: MatSnackBar)
+              private router: Router,
+              private sessionStorageService: SessionStorageService,)
   {}
 
   ngOnInit(): void {
+    this.isLoginIn = this.sessionStorageService.isUserLoggedIn();
+    if (this.isLoginIn) {
+      this.router.navigate(['/home']);
+    }
   }
 
   login() {
-    this.isLoading = true;
     if (this.loginForm.valid){
+      this.isLoading = true;
       this.authService.login(this.loginForm.value.email, this.loginForm.value.password).subscribe({
-        next: (isLoggedIn) => {
-          if (isLoggedIn) {
+        next: (res) => {
+          console.log(res);
+          if (res) {
+            this.sessionStorageService.setIsUserLoggedIn(true);
+            this.sessionStorageService.setUserStorage(res);
             this.loginErrors = [];
             this.isLoading = false;
-            this.snackBar.open('You are logged in', 'Close', {
-              duration: 3000,
-            });
+            this.router.navigate(['/home'],
+            );
           }
         },
         error: (error) => {
-          this.loginErrors = error.error.errors;
-          this.isLoading = false;
-          this.snackBar.open(error.error.message, 'Close', {
-            duration: 3000,
-          });
+            this.loginErrors = error.error.errors;
+            this.isLoading = false;
+            this.sessionStorageService.setIsUserLoggedIn(false);
+            this.sessionStorageService.removeUserStorage();
         },
       });
     } else {

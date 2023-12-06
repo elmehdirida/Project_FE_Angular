@@ -38,7 +38,7 @@ import {PagesModule} from "./components/pages/pages.module";
     AuthModule,
     DialogsModule,
     MatDialogModule,
-    PagesModule
+    PagesModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

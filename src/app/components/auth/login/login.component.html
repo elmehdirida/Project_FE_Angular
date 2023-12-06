@@ -5,7 +5,16 @@
       Login
     </mat-card-title>
     <mat-card-content class="card-content" >
+      <div *ngIf="loginErrors" class="login-errors">
+        <mat-error *ngFor="let err of loginErrors.email">
+            &bigstar;{{err}}
+        </mat-error>
+        <mat-error *ngFor="let err of loginErrors.password">
+        &bigstar;{{err}}
+        </mat-error>
+      </div>
       <mat-form-field appearance="outline" class="max-height" >
+        <mat-label>Username</mat-label>
         <input matInput placeholder="User Name" formControlName="email" >
         <mat-error *ngIf="loginForm.controls['email'].hasError('required')">
           Email is <strong>required</strong>
@@ -13,6 +22,7 @@
       </mat-form-field>
       <br/>
       <mat-form-field appearance="outline" class="max-height">
+        <mat-label>Password</mat-label>
         <input type="password" matInput placeholder="Password" formControlName="password"/>
         <mat-error *ngIf="loginForm.controls['password'].hasError('required')">
           Password is <strong>required</strong>
