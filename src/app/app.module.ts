@@ -14,6 +14,8 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {AuthModule} from "./components/auth/auth.module";
+import {DialogsModule} from "./components/dialogs/dialogs.module";
+import {MatDialogModule} from "@angular/material/dialog";
 
 @NgModule({
   declarations: [
@@ -32,7 +34,9 @@ import {AuthModule} from "./components/auth/auth.module";
     MatIconModule,
     MatSlideToggleModule,
     FormsModule,
-    AuthModule
+    AuthModule,
+    DialogsModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

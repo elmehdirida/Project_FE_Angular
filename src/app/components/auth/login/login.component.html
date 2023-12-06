@@ -1,3 +1,4 @@
+<form [formGroup]="loginForm">
 <div class="login-form-flex">
   <mat-card class="login-form">
     <mat-card-title class="title-center">
@@ -5,13 +6,19 @@
     </mat-card-title>
     <mat-card-content class="card-content" >
       <mat-form-field appearance="outline" class="max-height" >
-        <input matInput placeholder="User Name" (change)="setEmail()">
+        <input matInput placeholder="User Name" formControlName="email" >
+        <mat-error *ngIf="loginForm.controls['email'].hasError('required')">
+          Email is <strong>required</strong>
+        </mat-error>
       </mat-form-field>
       <br/>
       <mat-form-field appearance="outline" class="max-height">
-        <input type="password" matInput placeholder="Password" (change)="setPassword()"/>
+        <input type="password" matInput placeholder="Password" formControlName="password"/>
+        <mat-error *ngIf="loginForm.controls['password'].hasError('required')">
+          Password is <strong>required</strong>
+        </mat-error>
       </mat-form-field>
-      <mat-checkbox color="primary">Remember Me</mat-checkbox>
+      <mat-checkbox color="primary" formControlName="rememberMe" >Remember Me</mat-checkbox>
     </mat-card-content>
     <mat-card-actions>
       <div class="button-flex-container">
@@ -22,4 +29,8 @@
       </div>
     </mat-card-actions>
   </mat-card>
+</div>
+</form>
+<div class="spinner-hover-the-back-ground" *ngIf="isLoading">
+  <mat-spinner></mat-spinner>
 </div>
