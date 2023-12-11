@@ -17,6 +17,7 @@ table.mat-table {
   display: flex;
   justify-content: center;
 }
+
 .quantity {
   width: 50px;
   text-align: center;
@@ -26,8 +27,10 @@ table.mat-table {
 .cart-container {
   padding: 20px;
   display: flex;
-  flex-direction: column;
   align-items: center;
+  justify-content: center  ;
+  flex-wrap: wrap;
+
 }
 
 .left-side-table {
@@ -38,19 +41,23 @@ table.mat-table {
   max-width: 100%;
   margin-top: 25px;
 }
+
 .checkout {
   display: flex;
   justify-content: space-between;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  margin-left: 40px;
 }
+
 .total {
   font-size: 20px;
   font-weight: bold;
 }
 
 .actions {
+  margin-top: auto;
   display: flex;
   justify-content: flex-end;
   padding: 10px;
@@ -59,11 +66,23 @@ table.mat-table {
 .actions button:first-child {
   margin-right: 10px;
 }
+
 .margin-right {
   margin-right: 10px;
 }
+
 .card-container {
   display: flex;
   justify-content: space-around;
+  height: 39vh;
+  overflow-y: auto;
+}
 
+.fotter {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-left: 40px;
 }

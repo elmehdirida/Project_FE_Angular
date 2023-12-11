@@ -52,35 +52,35 @@ span {
   min-height: 500px;
   margin: 10px;
   box-sizing: border-box;
-  border: 1px solid #ddd; /* Optional: Add a border for better separation */
+  border: 1px solid #ddd;
   padding: 10px;
 }
 
 .product img {
-  min-width: 400px; /* Make sure the image doesn't exceed its container */
-  max-height: 400px;
+  width: 400px;
+  height: 400px;
 }
 
 .product-details {
   flex-grow: 1;
   margin-top: 20px;
-  text-align: center; /* Center-align text within the product details */
+  text-align: center;
 }
 
 h3 {
-  margin: 10px 0; /* Add some margin to the top and bottom of the product name */
+  margin: 10px 0;
 }
 
 .price {
   font-size: 20px;
   font-weight: bold;
-  margin: 10px 0; /* Add margin to the top and bottom of the regular price */
+  margin: 10px 0;
 }
 
 .discounted-price {
   font-size: 16px;
   font-weight: bold;
-  margin: 10px 0; /* Add margin to the top and bottom of the discounted price */
+  margin: 10px 0;
   color: #ea2121;
 }
 
@@ -90,7 +90,7 @@ h3 {
 }
 
 .add-cart-button {
-  margin-top: 20px; /* Add margin between the product details and the "Add to Cart" button */
+  margin-top: 20px;
   &:hover {
     background-color: #5bb24c;
   }
@@ -107,5 +107,62 @@ h3 {
   font-weight: bold;
   font-size: 14px;
   border-radius: 5px;
-  margin: 10px 0; /* Add margin to the top and bottom of the discount bar */
+  margin: 10px 0;
+}
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;;
+  background-color: #3f51b5;
+}
+.about-us {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 300px;
+  margin: 10px;
+  box-sizing: border-box;
+  padding: 10px;
+  color: #fff;
+}
+.quick-links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 300px;
+  margin: 10px;
+  box-sizing: border-box;
+  padding: 10px;
+  color: #fff;
+}
+.contact-us {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 300px;
+  margin: 10px;
+  box-sizing: border-box;
+  padding: 10px;
+  color: #fff;
+}
+.follow-us {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 300px;
+  margin: 10px;
+  box-sizing: border-box;
+  padding: 10px;
+  color: #fff;
+}
+.copyright {
+  display: flex;
+  align-items: center;
+  margin: 10px;
+  box-sizing: border-box;
+  padding: 10px;
+  background-color: #3f51b5;
+  color: #fff;
+  justify-content: center;
+
 }

@@ -86,6 +86,8 @@ export class HomeComponent {
       this.dialog.open(CartComponent, {
         maxHeight: '90vh',
         maxWidth: '80vw',
+        width:"70vw",
+        height:"50vh"
       });
     }
 }

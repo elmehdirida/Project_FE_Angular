@@ -10,6 +10,8 @@ import {MatMenuModule} from "@angular/material/menu";
 import {MatBadgeModule} from "@angular/material/badge";
 import {MatCardModule} from "@angular/material/card";
 import {MatPaginatorModule} from "@angular/material/paginator";
+import {MatTableModule} from "@angular/material/table";
+import {MatListModule} from "@angular/material/list";
 
 
 
@@ -18,16 +20,18 @@ import {MatPaginatorModule} from "@angular/material/paginator";
     HomeComponent,
     ProduitComponent
   ],
-  imports: [
-    CommonModule,
-    MatToolbarModule,
-    RouterLink,
-    MatButtonModule,
-    MatIconModule,
-    MatMenuModule,
-    MatBadgeModule,
-    MatCardModule,
-    MatPaginatorModule
-  ]
+    imports: [
+        CommonModule,
+        MatToolbarModule,
+        RouterLink,
+        MatButtonModule,
+        MatIconModule,
+        MatMenuModule,
+        MatBadgeModule,
+        MatCardModule,
+        MatPaginatorModule,
+        MatTableModule,
+        MatListModule
+    ]
 })
 export class PagesModule { }
