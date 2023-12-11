@@ -2,12 +2,8 @@
   <mat-card-header>
     <mat-card-title>Cart</mat-card-title>
   </mat-card-header>
-  <div class="card-container" *ngIf="cartItems.length==0">
-    <div class="empty-cart">
-      <p>Cart is empty</p>
-    </div>
-  </div>
-  <div class="card-container" *ngIf="cartItems.length>0">
+
+  <div class="card-container" *ngIf="cartItems.length>0 ; else empty">
   <mat-card-content>
   <div class="cart-container">
     <div class="left-side-table">
@@ -72,3 +68,12 @@
     <button *ngIf="cartItems.length>0" class="margin-right" mat-raised-button color="accent" (click)="checkout()">Checkout</button>
   </mat-card-actions>
 </mat-card>
+
+<ng-template #empty>
+  <div class="empty-cart" *ngIf="cartItems.length==0">
+      <p>Cart is empty</p>
+    <div class="empty-cart-image">
+      <img src="assets/empty-cart.jpg" alt="empty-cart">
+    </div>
+  </div>
+</ng-template>

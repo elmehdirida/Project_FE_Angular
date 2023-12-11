@@ -2,7 +2,12 @@
 <div class="login-form-flex">
   <mat-card class="login-form">
     <mat-card-title class="title-center">
-      Login
+      <div class="arrow">
+        <mat-icon routerLink="/home">arrow_back</mat-icon>
+      </div>
+      <div class="title">
+        <h1>Login</h1>
+      </div>
     </mat-card-title>
     <mat-card-content class="card-content" >
       <div *ngIf="loginErrors" class="login-errors">
@@ -28,14 +33,14 @@
           Password is <strong>required</strong>
         </mat-error>
       </mat-form-field>
-      <mat-checkbox color="primary" formControlName="rememberMe" >Remember Me</mat-checkbox>
+      <mat-checkbox style="margin: auto" color="primary" formControlName="rememberMe" >Remember Me</mat-checkbox>
     </mat-card-content>
     <mat-card-actions>
       <div class="button-flex-container">
         <button mat-raised-button color="primary" (click)="login()">Login</button>
       </div>
       <div class="password-reset">
-        <button mat-raised-button color="accent" (click)="reset()">Forgot Password?</button>
+        <button mat-raised-button color="accent" (click)="register()">Register</button>
       </div>
     </mat-card-actions>
   </mat-card>

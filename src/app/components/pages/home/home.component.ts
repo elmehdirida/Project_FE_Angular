@@ -15,8 +15,11 @@ import {CartProduct} from "../../../Model/CartProduct";
 export class HomeComponent {
   cartCount: number = 0;
   products: Product[] = [];
+  filteredProducts: Product[] = [];
   isLoginIn: boolean = false ;
   cartItems: CartProduct[] = [];
+  searchQuery: String="";
+  isLoaded: boolean = false;
 
   constructor(private productService : ProductService,
               private router: Router,
@@ -28,23 +31,30 @@ export class HomeComponent {
     this.isLoginIn = this.localStorageService.isUserLoggedIn();
   if (this.isLoginIn) {
     this.cartItems = this.localStorageService.getCartStorage();
-    this.cartCount = this.cartItems.length;
+    this.setNewCartCount();
   }
     this.getProducts();
   }
 
   getProducts() {
+    this.isLoaded = true;
     this.productService.getProducts().subscribe((response: any) => {
       this.products = response.data;
+      this.filteredProducts = this.products;
+      this.isLoaded = false;
     });
   }
 
+  setNewCartCount() {
+    this.cartCount = this.localStorageService.getCartCount();
+  }
 
   logout() {
     this.authService.logout().subscribe({
       next: () => {
         this.localStorageService.setIsUserLoggedIn(false);
         this.localStorageService.removeUserStorage();
+        this.localStorageService.removeCartStorage();
         this.router.navigate(['/login']);
       },
       error: (error) => {
@@ -57,16 +67,15 @@ export class HomeComponent {
         }
 
   addToCart(product: Product) {
-    this.cartCount++;
     let cartProduct = this.cartItems.find((item) => item.product.id == product.id);
     if (cartProduct) {
       cartProduct.quantity++;
     } else {
+      this.cartCount++;
       this.cartItems.push({product: product, quantity: 1,id:this.cartCount});
     }
       this.localStorageService.setCartStorage(this.cartItems);
-
-
+      this.localStorageService.setCartCount(this.cartCount);
   }
 
   register() {
@@ -89,5 +98,30 @@ export class HomeComponent {
         width:"70vw",
         height:"50vh"
       });
+      this.dialog.afterAllClosed.subscribe(() => {
+          this.afterClosed()
+      }
+      );
     }
+    afterClosed() {
+      this.cartItems = this.localStorageService.getCartStorage();
+      this.setNewCartCount();
+    }
+
+  clearSearch() {
+    this.searchQuery="";
+    this.getProducts();
+  }
+
+  SearchForProduct() {
+    if(this.searchQuery=="") {
+      this.getProducts();
+    }
+    else {
+      this.filteredProducts = this.products.filter((product) => {
+          return product.name.toLowerCase().includes(this.searchQuery.toLowerCase());
+        }
+      );
+    }
+  }
 }

@@ -1,8 +1,6 @@
-import {Component, Inject, OnInit, ViewChild} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {Product} from "../../../Model/Product";
+import {Component} from '@angular/core';
+import { MatDialogRef} from "@angular/material/dialog";
 import {CartProduct} from "../../../Model/CartProduct";
-import {MatSort} from "@angular/material/sort";
 import {MatTableDataSource} from "@angular/material/table";
 import {LocalStorageService} from "../../../services/Storage/local-storage.service";
 
@@ -32,6 +30,7 @@ export class CartComponent{
     this.cartItems.splice(index, 1);
     this.calcTotalCost(this.cartItems);
     this.localStorageService.setCartStorage(this.cartItems);
+    this.localStorageService.setCartCount(this.cartItems.length);
     this.dataSource = new MatTableDataSource(this.cartItems);
   }
 

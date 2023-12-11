@@ -33,4 +33,12 @@ export class LocalStorageService {
   removeCartStorage() {
     localStorage.removeItem('cart');
   }
+
+  getCartCount() {
+    return this.getCartStorage().length;
+  }
+
+  setCartCount(length: number) {
+    localStorage.setItem('cartCount', JSON.stringify(length));
+  }
 }

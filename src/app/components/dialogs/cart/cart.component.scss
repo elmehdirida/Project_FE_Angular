@@ -86,3 +86,16 @@ table.mat-table {
   border-radius: 5px;
   margin-left: 40px;
 }
+.empty-cart {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 39vh;
+  font-size: 20px;
+  font-weight: bold;
+}
+.empty-cart img {
+  width: 100px;
+  height: 100px;
+  margin-right: 10px;
+}

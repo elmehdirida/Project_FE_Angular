@@ -64,8 +64,8 @@ export class LoginComponent  implements OnInit{
 
   }
 
-  reset() {
-
+  register() {
+    this.router.navigate(['/register']);
   }
 
 }
