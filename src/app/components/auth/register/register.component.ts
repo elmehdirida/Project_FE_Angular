@@ -4,6 +4,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {User} from "../../../Model/User";
+import {ValidationErrors} from "@angular/forms";
 
 @Component({
   selector: 'app-register',
@@ -27,25 +28,33 @@ export class RegisterComponent {
   }
 
   onSubmit() {
-    console.log("mosine",this.registerForm.value);
-
-
+    console.log("mosine", this.registerForm.value);
 
     this.authService.register(this.registerForm.value).subscribe({
-      next: (isLoggedIn) => {
-        if (isLoggedIn) {
-          this.registerErrors = [];
-          this.isLoggedIn = true;
-          this.router.navigate(['/login']);
+      next: (response: any) => {
+        this.router.navigate(['/login']);
+      },
+      error: (error: any) => {
+        if (error.status === 422) {
+          if (this.isValidationErrors(error.error)) {
+            const validationErrors = error.error as ValidationErrors;
+
+            const firstError = Object.values(validationErrors)[0][0];
+
+            this.snackBar.open(firstError, 'Close', { duration: 3000 });
+          }
+        } else {
+          console.error('An error occurred:', error);
+          this.snackBar.open('An error occurred. Please try again later.', 'Close', { duration: 3000 });
         }
       },
-      error: (error) => {
-        this.snackBar.open(
-          this.registerErrors[0]
-          , 'Close', {duration: 3000,})
-      }
     });
-
   }
+
+  private isValidationErrors(obj: any): obj is ValidationErrors {
+    return obj && typeof obj === 'object' && !Array.isArray(obj);
+  }
+
+
 
 }
