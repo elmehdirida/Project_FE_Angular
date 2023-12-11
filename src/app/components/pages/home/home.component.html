@@ -22,8 +22,8 @@
   </div>
 </mat-toolbar>
 
-<div class="product-container" *ngIf="!isLoaded ; else loading">
-  <div *ngFor="let product of filteredProducts" class="product">
+<div class="product-container" *ngIf="!isLoaded ; else loading" >
+  <div *ngFor="let product of filteredProducts" class="product" (click)="consulteProduct(product)" >
     <div class="discount-bar">{{ product.discount?.discount }}% OFF</div>
     <img [src]="product.image" alt="">
     <div class="product-details">

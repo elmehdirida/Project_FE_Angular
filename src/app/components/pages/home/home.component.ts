@@ -39,6 +39,7 @@ export class HomeComponent {
   getProducts() {
     this.isLoaded = true;
     this.productService.getProducts().subscribe((response: any) => {
+      console.log(response)
       this.products = response.data;
       this.filteredProducts = this.products;
       this.isLoaded = false;
@@ -125,4 +126,7 @@ export class HomeComponent {
     }
   }
 
+  consulteProduct(product: Product) {
+     this.router.navigate(["/product"]);
+  }
 }

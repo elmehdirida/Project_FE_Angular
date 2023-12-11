@@ -1,1 +1,53 @@
-<p>produit works!</p>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title > Product Information :</mat-card-title>
+
+  </mat-card-header>
+  <mat-card-content >
+    <div  class="product-container " style="display: flex" *ngIf="!isLoaded ; else loading" >
+      <div style="margin-left: 50px ;margin-top: 30px">
+        <img mat-card-image [src]="image" alt="insert here image">
+      </div>
+      <div style="margin-left: 70px ;margin-top: 30px">
+        <h3>Discount : % OFF </h3>
+         <h3> </h3>
+          <h3>Price : hhh  </h3>
+          <h3>Discount : final  </h3>
+          <h3>Description  :  </h3>
+          <p style="width: 500PX">
+            Mrs. Mae Gout qui sunt non et. Quo officia cupiditateMrs. Mae Gorczany PhD', description:
+            'Non magnam dolores veniam aut sint dicta. Saepe ut qui sunt non et. Quo officia cupiditate
+          </p>
+      </div>
+
+      <div style="margin-left: 70px ;margin-top: 30px">
+        <h3>Category  : rkkgejgergerkgergkregfergregregregerg </h3>
+        <mat-card-actions>
+          <button mat-raised-button color="primary" (click)="addToCart(product)" >Add to Cart</button>
+        </mat-card-actions>
+
+      </div>
+
+    </div>
+  </mat-card-content>
+  <mat-card-footer>
+    <div style="margin-left: 70px ;margin-top: 30px">
+      <h3>Comment  :  </h3>
+
+      <div class="product-container" *ngIf="!isLoaded ; else loading" >
+        <div *ngFor="let comment of comments" class="product"  >
+          <div class="discount-bar">
+          <h3> paragraphe 1 </h3>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </mat-card-footer>
+</mat-card>
+
+<ng-template #loading  >
+  <div class="spinner-hover-the-back-ground">
+    <mat-spinner></mat-spinner></div>
+</ng-template>
