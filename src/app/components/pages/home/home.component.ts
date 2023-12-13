@@ -20,6 +20,7 @@ export class HomeComponent {
   cartItems: CartProduct[] = [];
   searchQuery: String="";
   isLoaded: boolean = false;
+  par : string="hello"
 
   constructor(private productService : ProductService,
               private router: Router,
@@ -127,6 +128,11 @@ export class HomeComponent {
   }
 
   consulteProduct(product: Product) {
-     this.router.navigate(["/product"]);
+    console.log("in consulte **** ")
+    console.log(product)
+     this.router.navigate(["/product"],{
+       state: { product: product, par: this.par }
+     });
+
   }
 }

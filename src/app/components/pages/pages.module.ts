@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HomeComponent } from './home/home.component';
-import { ProduitComponent } from './produit/produit.component';
+import { ProductComponent } from './produit/product.component';
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {RouterLink} from "@angular/router";
 import {MatButtonModule} from "@angular/material/button";
@@ -21,7 +21,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 @NgModule({
   declarations: [
     HomeComponent,
-    ProduitComponent,
+    ProductComponent,
   ],
   imports: [
     CommonModule,

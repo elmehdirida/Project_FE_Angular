@@ -14,6 +14,7 @@
   color: #fff;
   height: auto;
 }
+
 .buttons{
   display: flex;
   width: auto;
@@ -187,4 +188,8 @@ h3 {
   width: 60px;
   height: 60px;
   margin: 10px;
+}
+img:hover{
+  border: 1px solid rgb(175, 103, 9);
+  box-shadow: 0px 0px 30px rgb(113, 82, 4);
 }
