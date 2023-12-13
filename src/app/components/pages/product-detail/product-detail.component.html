@@ -1,0 +1,62 @@
+<!-- <nav class="navbar bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand"style="color:white;">E-commerce Website</a>
+       <button routerLink="/" class="btn btn-warning text-light">BACK</button>
+    </div>
+</nav> -->
+
+<!-- single product display-->
+<div class="container" >
+  <div class="product-detail" style="display: flex; flex-direction: row;margin-left: 30px ">
+    <div class="image-div">
+      <mat-card >
+      <img mat-card-image class="product-img"  src="{{product.image}}" alt="">
+        <mat-card-content style="margin-top: 20px">
+      <div>
+        <button mat-raised-button color="primary">Buy Now</button>&nbsp;
+        <button mat-raised-button color="accent" (click)="addtocart()" *ngIf="showadd" >Add to Cart</button>&nbsp;
+        <button mat-raised-button color="accent" (click)="removeitem()" *ngIf="showremove" >Remove Item</button>
+
+      </div><br>
+        </mat-card-content>
+      </mat-card>
+      </div>
+
+
+    <mat-card style="margin-left: 20px">
+      <mat-card-content>
+        <div class="description" >
+          <div>
+            <h1>{{product.name}}</h1>
+            <p style="color:green">Special Price </p>
+            <h3 style="color: green;" >Price:${{product.price}}</h3>
+            <strong >Category:&nbsp;{{product.category?.name}}</strong><br>
+            <strong>Description:</strong><br>
+            <p>{{product.description}}</p>
+            <p > <strong> Discount:  </strong><strong style="color: red;">{{product.discount?.discount}} % </strong></p><br>
+            <strong>Stocks:{{product.stock}} Units left</strong><br>
+            <button routerLink="/" mat-raised-button color="accent">BACK</button>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+  </div>
+
+</div>
+
+  <mat-card class="crd">
+    <mat-card-title style="margin-left: 20px;color: #3f51b5;"><strong>Comment :</strong></mat-card-title>
+    <mat-card-content>
+      <div *ngFor="let comment of comments" class="comments">
+        <mat-icon aria-hidden="false" aria-label="User Icon">person</mat-icon>
+        <p><strong> {{comment.user.name}}</strong></p>
+        <p><strong> {{comment.date}}</strong></p>
+        <p><strong> {{comment.text}}</strong> </p>
+        <p><strong>{{comment.rating}}</strong></p>
+
+      </div>
+
+    </mat-card-content>
+  </mat-card>
+

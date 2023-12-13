@@ -4,6 +4,7 @@ import {CartProduct} from "../../../Model/CartProduct";
 import {CommentService} from "../../../services/CommentService.service";
 import {ActivatedRoute} from "@angular/router";
 import {Subscription} from "rxjs";
+import {Commentiare} from "../../../Model/Commentiare";
 
 @Component({
   selector: 'app-produit',
@@ -18,25 +19,21 @@ export class ProductComponent implements  OnInit{
   cartCount: number = 0;
   private sub!: Subscription;
   product!: Product;
-  comments : Comment[] = [];
+  comments : Commentiare[] = [];
   isLoaded: boolean = false;
-  image : string= "https://picsum.photos/200/300";
   ngOnInit(): void {
 
     const navigationState = window.history.state;
     if (navigationState && navigationState.product) {
       const product = navigationState.product;
-      this.comments=product.comments
+      this.comments=product.comment
       console.log("comments ");
       console.log(this.comments)
       console.log("i m here ")
-      console.log(product);
+      console.log(product.image);
     }
 
   }
   addToCart(product: Product) {
-
   }
-
-
 }

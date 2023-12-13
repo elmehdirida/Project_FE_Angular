@@ -15,6 +15,7 @@ import {MatListModule} from "@angular/material/list";
 import {MatInputModule} from "@angular/material/input";
 import {FormsModule} from "@angular/forms";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import { ProductDetailComponent } from './product-detail/product-detail.component';
 
 
 
@@ -22,6 +23,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
   declarations: [
     HomeComponent,
     ProductComponent,
+    ProductDetailComponent,
   ],
   imports: [
     CommonModule,
