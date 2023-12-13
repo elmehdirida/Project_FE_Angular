@@ -12,11 +12,11 @@ import {HttpClientModule} from "@angular/common/http";
 import {MatTableModule} from "@angular/material/table";
 import {MatIconModule} from "@angular/material/icon";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
-import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {AuthModule} from "./components/auth/auth.module";
 import {DialogsModule} from "./components/dialogs/dialogs.module";
 import {MatDialogModule} from "@angular/material/dialog";
 import {PagesModule} from "./components/pages/pages.module";
+import {AdminModule} from "./components/admin/admin.module";
 
 @NgModule({
   declarations: [
@@ -39,6 +39,7 @@ import {PagesModule} from "./components/pages/pages.module";
     DialogsModule,
     MatDialogModule,
     PagesModule,
+    AdminModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

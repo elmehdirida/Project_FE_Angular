@@ -1,0 +1,38 @@
+<div class="flex-row app-container">
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav
+      #sidenav
+      class="sidenav"
+      fixedInViewport
+      [mode]="isSmallScreen ? 'over' : 'side'"
+      [opened]="!isSmallScreen">
+        <div class="side-container">
+          <mat-nav-list >
+            <div class="list">
+              <a mat-list-item routerLink="/dashboard">Home</a>
+              <a mat-list-item routerLink="/users">Users</a>
+              <a mat-list-item routerLink="/orders">Orders</a>
+              <a mat-list-item routerLink="/products">Products</a>
+              <a mat-list-item routerLink="/categories">Categories</a>
+              <a mat-list-item routerLink="/discounts">Discounts</a>
+              <a mat-list-item routerLink="/payments">Payments</a>
+            </div>
+          </mat-nav-list>
+        </div>
+    </mat-sidenav>
+    <mat-sidenav-content
+      class="sidenav-content"
+      [ngClass]="{
+        'sidebar-open':
+          isOpen
+      }">
+      <mat-toolbar>
+        <button mat-icon-button   (click)="sidenav.toggle()">
+          <mat-icon>menu</mat-icon>
+        </button>
+        <span>  Admin Panel</span>
+      </mat-toolbar>
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
