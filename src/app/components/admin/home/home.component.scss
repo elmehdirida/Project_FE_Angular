@@ -1,0 +1,50 @@
+.container {
+}
+
+card {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+mat-card {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+}
+
+mat-card-title {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+mat-card-content {
+  padding: 15px;
+}
+
+.users-count__number,
+.orders-count__number,
+.products-count__number,
+.categories-count__number,
+.discounts-count__number,
+.payments-count__number {
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.users-count__text,
+.orders-count__text,
+.products-count__text,
+.categories-count__text,
+.discounts-count__text,
+.payments-count__text {
+  font-size: 1.2em;
+  color: #888;
+}
+
+.mat-card-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 15px;
+}

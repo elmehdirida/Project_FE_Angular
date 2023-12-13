@@ -3,6 +3,7 @@ import {Category} from "./Category";
 
 export interface Product
 {
+  comments: Comment[];
   id: number;
   name: string;
   price: number;
