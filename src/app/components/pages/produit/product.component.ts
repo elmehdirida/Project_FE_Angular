@@ -26,10 +26,13 @@ export class ProductComponent implements  OnInit{
     const navigationState = window.history.state;
     if (navigationState && navigationState.product) {
       const product = navigationState.product;
+      this.comments=product.comments
+      console.log("comments ");
+      console.log(this.comments)
       console.log("i m here ")
-      // Faites quelque chose avec l'objet product, par exemple, affichez ses détails
       console.log(product);
     }
+
   }
   addToCart(product: Product) {
 

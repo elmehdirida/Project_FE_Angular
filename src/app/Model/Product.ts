@@ -11,4 +11,5 @@ export interface Product
   stock: number;
   discount?: Discount;
   category?: Category;
+
 }
