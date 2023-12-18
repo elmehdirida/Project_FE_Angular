@@ -19,7 +19,17 @@ export class ProductDetailComponent implements OnInit{
   private sub!: Subscription;
   product!: Product;
   comments : Commentiare[] = [];
-  commentsLoading : Commentiare[] = [];
+  //newComment? : Commentiare;
+  newComment: Commentiare = {
+    id: 0,
+    text: '',
+    product_id: 0,
+    user: { id: 0, email: '', password: '', confirmPassword: '', name: 'OUTM' },
+    date: null,
+    rating: 0,
+    name: ''
+  };
+
   isLoaded: boolean = false;
   image : string="" ;
   showadd: boolean = true;
@@ -37,10 +47,7 @@ export class ProductDetailComponent implements OnInit{
       const productParams = navigationState.product;
       this.product= navigationState.product;
       this.comments=productParams.comment
-      console.log("comments ");
-      console.log(this.comments)
-      console.log("i m here ")
-      console.log(this.product);
+
     }
   }
   addtocart() {
@@ -54,12 +61,11 @@ export class ProductDetailComponent implements OnInit{
     //this.showremove = false;
     //this.api.removecartitem(productdata)
   }
-  loadComments(){
+  loadComments(comment:Commentiare){
     this.serviceComment.getComments(this.product.id).subscribe(res =>{
-      this.comments=res;
+      this.comments=res
       console.log("***** les commentaires *******")
       console.log(this.comments);
-
     });
   }
 
@@ -74,7 +80,8 @@ export class ProductDetailComponent implements OnInit{
      });
      _popup.afterClosed().subscribe(item=>{
        console.log("after close");
-       this.loadComments();
+        console.log(item)
+       this.loadComments(item);
      })
   }
 }

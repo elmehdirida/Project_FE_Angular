@@ -7,4 +7,5 @@ export interface Commentiare {
   user: User;
   date :any;
   rating : number;
+  name :string;
   }

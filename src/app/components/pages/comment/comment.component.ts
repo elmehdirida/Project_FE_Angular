@@ -20,7 +20,6 @@ export class CommentComponent implements  OnInit{
                  private service:CommentService) {
      }
   send() {
-
      this.ref.close()
   }
 
@@ -33,16 +32,17 @@ export class CommentComponent implements  OnInit{
     text : this.build.control(''),
     rating : this.build.control(''),
     user_id : 2,
-    product_id : this.productDetail?.id
+    product_id : this.productDetail?.id,
+    name : "outman"
   })
-   closePop(){
-    this.ref.close('closed using function')
+   closePop(result:any){
+    this.ref.close(result)
    }
   saveComment() {
        console.log(this.form.value);
        this.form.value.product_id=this.productDetail?.id
        this.service.save(this.form.value).subscribe(res =>{
-          this.closePop();
+         this.closePop(this.form.value);
        },
          error => {
          console.log("erreur ")
