@@ -197,18 +197,9 @@ export class HomeComponent implements OnInit {
   }
 
 
-  formatLabel(value: number): string {
-    if (value >= 1) {
-      return Math.round(value) + '%';
-    }
-
-    return `${value}`;
-  }
 
 
-
-
-  filterProductsByDiscountRange() {
+  /*filterProductsByDiscountRange() {
     this.filteredProducts = this.products.filter(product => {
       const discountValue = product.discount ? product.discount.discount : 0;
       return discountValue >= this.minDiscountValue && discountValue <= this.maxDiscountValue;
@@ -238,8 +229,26 @@ export class HomeComponent implements OnInit {
     } else {
       this.filteredProducts = this.products;
     }
+  }*/
+
+
+
+  applyFilters() {
+    this.filteredProducts = this.products.filter(product => {
+      const discountValue = product.discount ? product.discount.discount : 0;
+      const price = product.price ? (product.price - (product.price * product.discount!.discount / 100)) : 0;
+      const matchesDiscount = discountValue >= this.minDiscountValue && discountValue <= this.maxDiscountValue;
+      const matchesPrice = price >= this.minPrice && price <= this.maxPrice;
+      const matchesCategory = !this.selectedCategory || (product.category && product.category.id === this.selectedCategory);
+
+      return matchesDiscount && matchesPrice && matchesCategory;
+    });
   }
 
+  // Call this method whenever a filter value changes
+  onFilterChange() {
+    this.applyFilters();
+  }
 
 
 
