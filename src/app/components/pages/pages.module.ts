@@ -21,6 +21,7 @@ import {MatSelectModule} from "@angular/material/select";
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import { CommentComponent } from './comment/comment.component';
+import { RatingComponent } from './rating/rating.component';
 
 
 
@@ -30,6 +31,7 @@ import { CommentComponent } from './comment/comment.component';
     ProductComponent,
     ProductDetailComponent,
     CommentComponent,
+    RatingComponent,
   ],
   imports: [
     CommonModule,
