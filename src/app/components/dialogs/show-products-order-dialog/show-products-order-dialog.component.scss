@@ -1,0 +1,39 @@
+.container {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+}
+.image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  margin: 10px 0 0 0;
+}
+.price {
+  margin: 0 0 0 10px;
+  font-size: 20px;
+  font-weight: bold;
+}
+.total {
+  display: flex;
+  align-items: center;
+  color: #5bb24c;
+}
+.close-dialog {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 10px;
+}
+.title {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 10px 0 0 10px;
+}
+.date{
+  margin: 0 0 0 10px;
+  font-size: 15px;
+  font-weight: bold;
+}

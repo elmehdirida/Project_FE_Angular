@@ -1,1 +1,42 @@
-<p>categories works!</p>
+<mat-paginator [pageSizeOptions]="[10, 30, 50]" showFirstLastButtons></mat-paginator>
+<mat-table [dataSource]="dataSource"  >
+
+  <!-- ID Column -->
+  <ng-container matColumnDef="id">
+    <mat-header-cell *matHeaderCellDef > ID </mat-header-cell>
+    <mat-cell *matCellDef="let category"> {{category.id}} </mat-cell>
+  </ng-container>
+
+  <!-- Username Column -->
+  <ng-container matColumnDef="name">
+    <mat-header-cell *matHeaderCellDef > Username </mat-header-cell>
+    <mat-cell *matCellDef="let category"> {{category.name}} </mat-cell>
+  </ng-container>
+
+
+
+  <ng-container matColumnDef="description">
+    <mat-header-cell *matHeaderCellDef > Description </mat-header-cell>
+    <mat-cell *matCellDef="let category"> {{category.description}} </mat-cell>
+  </ng-container>
+
+
+  <!-- Edit Column -->
+  <ng-container matColumnDef="edit">
+    <mat-header-cell *matHeaderCellDef > Edit </mat-header-cell>
+    <mat-cell *matCellDef="let category"> <button mat-icon-button color="primary" (click)="editCategory(category)">
+      <mat-icon>edit</mat-icon>
+    </button> </mat-cell>
+  </ng-container>
+
+  <!-- Delete Column -->
+  <ng-container matColumnDef="delete">
+    <mat-header-cell *matHeaderCellDef > Delete </mat-header-cell>
+    <mat-cell *matCellDef="let category"> <button mat-icon-button  color="warn" (click)="deleteCategory(category)">
+      <mat-icon>delete</mat-icon>
+    </button> </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let category; columns: displayedColumns;"></mat-row>
+</mat-table>

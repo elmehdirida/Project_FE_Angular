@@ -1,6 +1,7 @@
 export interface  Payment{
-  paymentId : number,
+  id : number,
+  order_id : number,
   amount : number,
-  paymentMethod : string,
-  paymentStatus : any
+  payment_method : string,
+  payment_status : string
 }

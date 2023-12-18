@@ -1,50 +1,106 @@
-.container {
-}
-
-card {
+.dashboard-container {
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+
+}
+.dashboard-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 10%;
+  width: 100%;
+  background-color: #f5f5f5;
+  border-bottom: 1px solid #e0e0e0;
   margin-bottom: 20px;
 }
 
-mat-card {
-  width: 100%;
-  box-sizing: border-box;
+.dashboard-content {
   display: flex;
+  flex-direction: row;
   align-items: center;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  width: 100%;
 }
-
-mat-card-title {
-  font-size: 1.5em;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-mat-card-content {
-  padding: 15px;
-}
-
-.users-count__number,
-.orders-count__number,
-.products-count__number,
-.categories-count__number,
-.discounts-count__number,
-.payments-count__number {
-  font-size: 2em;
-  font-weight: bold;
-}
-
-.users-count__text,
-.orders-count__text,
-.products-count__text,
-.categories-count__text,
-.discounts-count__text,
-.payments-count__text {
-  font-size: 1.2em;
-  color: #888;
-}
-
-.mat-card-actions {
+.dash-card {
   display: flex;
-  justify-content: flex-end;
-  padding: 15px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  width: 500px;
+  margin-bottom: 30px;
+  background-color: #8a8282;
+  border: 1px solid #260303;
 }
+.dash-card-head {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+
+}
+
+.dash-card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+
+}
+.dash-card-count {
+  position: absolute;
+  top: 70px;
+  left: 10px;
+  font-size: 2rem;
+  font-weight: 500;
+  margin: 0 0 0 10px
+}
+h2 {
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin: 0 0 0 10px
+}
+.last-users {
+  display: flex;
+  flex-direction: row;
+  width: 85%;
+  margin-top: 100px;
+
+}
+.last-users-title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  background-color: #55b53f;
+}
+.last-users-list {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+  flex: 2;
+
+}
+.last-user{
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+}
+

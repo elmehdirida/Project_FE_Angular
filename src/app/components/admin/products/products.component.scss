@@ -1,0 +1,15 @@
+.image{
+    width: 100px;
+    height: 100px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  margin-top: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    &:hover{
+        transform: scale(1.1);
+    }
+}

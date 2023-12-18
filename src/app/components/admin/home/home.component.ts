@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {User} from "../../../Model/User";
 import {Order} from "../../../Model/Order";
 import {Product} from "../../../Model/Product";
@@ -17,7 +17,7 @@ import {PaymentServiceService} from "../../../services/payment-service.service";
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit{
+export class HomeComponent implements OnInit ,AfterViewInit{
   users: User[]= [];
   orders: Order[] = [];
   products: Product[] = [];
@@ -55,5 +55,23 @@ export class HomeComponent implements OnInit{
     this.paymentService.getPayments().subscribe((response : any)=>{
       this.payments = response.data;
     });
+  }
+  getTop5Products(){
+    // for all orders find the top 5 products and return them with their quantity
+    let products = [];
+    console.log(this.orders);
+    for(let order of this.orders){
+      for(let product of order.products){
+        products.push(product);
+      }
+    }
+    console.log(products);
+      return this.products;
+  }
+  ngAfterViewInit(): void {
+    //wait 5 seconds then get top 5 products
+    setTimeout(()=>{
+      this.getTop5Products();
+    },5000);
   }
 }

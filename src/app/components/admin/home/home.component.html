@@ -1,86 +1,68 @@
-<div class="container">
-  <div class="card>">
-    <mat-card>
-      <mat-card-title>Users</mat-card-title>
-      <mat-card-content>
-        <div class="users-count">
-          <span class="users-count__number">{{users.length}}</span>
-          <span class="users-count__text">Users</span>
-        </div>
-      </mat-card-content>
-      <mat-card-actions>
-        <button mat-raised-button color="primary" routerLink="/users">View Users</button>
-      </mat-card-actions>
-    </mat-card>
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <h1>Dashboard</h1>
   </div>
-  <div class="card">
-    <mat-card>
-      <mat-card-title>Orders</mat-card-title>
-      <mat-card-content>
-        <div class="orders-count">
-          <span class="orders-count__number">{{orders.length}}</span>
-          <span class="orders-count__text">Orders</span>
+  <div class="dashboard-content">
+    <mat-card class="dash-card mat-elevation-z7">
+      <mat-card-header >
+        <mat-card-title class="dash-card-head" >
+          <h2>Users</h2>
+            <mat-icon>people</mat-icon>
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="dash-card-content">
+        <div class="dash-card-count">
+          Total Users :
+          {{users.length}}
+        </div>
+        <div class="last-users">
+          <div class="last-users-title">
+            Last 5 Users
+          </div>
+          <div class="last-users-list">
+            <div class="last-user" *ngFor="let user of users | slice:users.length-5:users.length">
+              <div class="last-user-name">
+                {{user.name}}
+              </div>
+            </div>
+          </div>
         </div>
       </mat-card-content>
-      <mat-card-actions>
-        <button mat-raised-button color="primary" routerLink="/orders">View Orders</button>
+      <mat-card-actions class="dash-card-actions">
+        <button mat-flat-button routerLink="/users">View Users</button>
       </mat-card-actions>
     </mat-card>
-  </div>
-  <div class="card">
-    <mat-card>
-      <mat-card-title>Products</mat-card-title>
-      <mat-card-content>
-        <div class="products-count">
-          <span class="products-count__number">{{products.length}}</span>
-          <span class="products-count__text">Products</span>
+    <mat-card class="dash-card mat-elevation-z7">
+      <mat-card-header >
+        <mat-card-title class="dash-card-head" >
+          <h2>Products</h2>
+          <mat-icon>shopping_cart</mat-icon>
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="dash-card-content">
+        <div class="dash-card-count">
+          Total Products :
+          {{products.length}}
+        </div>
+        <div class="last-users">
+          <div class="last-users-title">
+            Top 5 Products
+          </div>
+          <div class="last-users-list">
+            <div class="last-user" *ngFor="let product of products">
+              <div class="last-user-name">
+                {{product.name}}
+              </div>
+            </div>
+          </div>
         </div>
       </mat-card-content>
-      <mat-card-actions>
-        <button mat-raised-button color="primary" routerLink="/products">View Products</button>
+      <mat-card-actions class="dash-card-actions">
+        <button mat-flat-button routerLink="/users">View Users</button>
       </mat-card-actions>
     </mat-card>
-  </div>
-  <div class="card">
-    <mat-card>
-      <mat-card-title>Categories</mat-card-title>
-      <mat-card-content>
-        <div class="categories-count">
-          <span class="categories-count__number">{{categories.length}}</span>
-          <span class="categories-count__text">Categories</span>
-        </div>
-      </mat-card-content>
-      <mat-card-actions>
-        <button mat-raised-button color="primary" routerLink="/categories">View Categories</button>
-      </mat-card-actions>
-    </mat-card>
-  </div>
-  <div class="card">
-    <mat-card>
-      <mat-card-title>Discounts</mat-card-title>
-      <mat-card-content>
-        <div class="discounts-count">
-          <span class="discounts-count__number">{{discounts.length}}</span>
-          <span class="discounts-count__text">Discounts</span>
-        </div>
-      </mat-card-content>
-      <mat-card-actions>
-        <button mat-raised-button color="primary" routerLink="/discounts">View Discounts</button>
-      </mat-card-actions>
-    </mat-card>
-  </div>
-  <div class="card">
-    <mat-card>
-      <mat-card-title>Payments</mat-card-title>
-      <mat-card-content>
-        <div class="payments-count">
-          <span class="payments-count__number">{{payments.length}}</span>
-          <span class="payments-count__text">Payments</span>
-        </div>
-      </mat-card-content>
-      <mat-card-actions>
-        <button mat-raised-button color="primary" routerLink="/payments">View Payments</button>
-      </mat-card-actions>
-    </mat-card>
+
+
+
   </div>
 </div>

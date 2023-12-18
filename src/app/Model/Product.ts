@@ -10,6 +10,8 @@ export interface Product
   image: string;
   description: string;
   stock: number;
+  discount_id:number;
+  category_id : number;
   discount?: Discount;
   category?: Category;
   totalRating:number;

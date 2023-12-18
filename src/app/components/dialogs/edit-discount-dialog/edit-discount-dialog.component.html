@@ -1,0 +1,45 @@
+
+<mat-card class = "user-edit-card">
+  <mat-card-title class="user-edit-title"> <p>Edit Discount </p>
+    <button class="close-btn" mat-icon-button matTooltip="Close" (click)="closeEditDialog()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-card-title>
+  <form class="user-form" [formGroup]="discountForm">
+    <mat-card-content>
+      <mat-form-field  appearance="outline" class="form-fields">
+        <mat-label>ID</mat-label>
+        <input matInput placeholder="ID" value="{{data.id}} " disabled>
+      </mat-form-field>
+      <mat-form-field  appearance="outline" class="form-fields">
+        <mat-label>come</mat-label>
+        <input matInput placeholder="Code"  formControlName="code" >
+        <mat-error *ngIf="discountForm.controls['code'].hasError('required')">
+          Code is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field  appearance="outline" class="form-fields">
+        <mat-label>Discount</mat-label>
+        <input matInput placeholder="Discount"  formControlName="discount" >
+        <mat-error *ngIf="discountForm.controls['discount'].hasError('required')">
+          Discount is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <!-- add a range date picker a date range not a simple date picker -->
+      <mat-form-field>
+        <mat-label>Enter a date range</mat-label>
+        <mat-date-range-input [rangePicker]="picker">
+          <input matStartDate placeholder="Start date" formControlName="start_date">
+          <input matEndDate placeholder="End date" formControlName="end_date">
+        </mat-date-range-input>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+      </mat-form-field>
+
+
+    </mat-card-content>
+    <mat-card-actions class="card-actions">
+      <button mat-raised-button color="primary" (click)="saveChanges()">Save Changes</button>
+    </mat-card-actions>
+  </form>
+</mat-card>

@@ -1,1 +1,51 @@
-<p>discounts works!</p>
+
+<mat-paginator [pageSizeOptions]="[10, 30, 50]" showFirstLastButtons></mat-paginator>
+<mat-table [dataSource]="dataSource"  >
+
+  <!-- ID Column -->
+  <ng-container matColumnDef="id">
+    <mat-header-cell *matHeaderCellDef > ID </mat-header-cell>
+    <mat-cell *matCellDef="let discount"> {{discount.id}} </mat-cell>
+  </ng-container>
+
+  <!-- Username Column -->
+  <ng-container matColumnDef="code">
+    <mat-header-cell *matHeaderCellDef > Code </mat-header-cell>
+    <mat-cell *matCellDef="let discount"> {{discount.code}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="discount">
+    <mat-header-cell *matHeaderCellDef > Discount </mat-header-cell>
+    <mat-cell *matCellDef="let discount"> {{discount.discount}} %</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="start_date">
+    <mat-header-cell *matHeaderCellDef > Start </mat-header-cell>
+    <mat-cell *matCellDef="let discount"> {{discount.start_date}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="end_date">
+    <mat-header-cell *matHeaderCellDef > End </mat-header-cell>
+    <mat-cell *matCellDef="let discount"> {{discount.end_date}} </mat-cell>
+  </ng-container>
+
+
+  <!-- Edit Column -->
+  <ng-container matColumnDef="edit">
+    <mat-header-cell *matHeaderCellDef > Edit </mat-header-cell>
+    <mat-cell *matCellDef="let discount"> <button mat-icon-button color="primary" (click)="editDiscount(discount)">
+      <mat-icon>edit</mat-icon>
+    </button> </mat-cell>
+  </ng-container>
+
+  <!-- Delete Column -->
+  <ng-container matColumnDef="delete">
+    <mat-header-cell *matHeaderCellDef > Delete </mat-header-cell>
+    <mat-cell *matCellDef="let discount"> <button mat-icon-button  color="warn" (click)="deleteDiscount(discount)">
+      <mat-icon>delete</mat-icon>
+    </button> </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let category; columns: displayedColumns;"></mat-row>
+</mat-table>

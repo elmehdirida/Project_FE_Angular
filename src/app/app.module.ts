@@ -17,6 +17,9 @@ import {DialogsModule} from "./components/dialogs/dialogs.module";
 import {MatDialogModule} from "@angular/material/dialog";
 import {PagesModule} from "./components/pages/pages.module";
 import {AdminModule} from "./components/admin/admin.module";
+import {MatPaginatorModule} from "@angular/material/paginator";
+import {MatCardModule} from "@angular/material/card";
+import {MatDatepickerModule} from "@angular/material/datepicker";
 
 @NgModule({
   declarations: [
@@ -40,6 +43,8 @@ import {AdminModule} from "./components/admin/admin.module";
     MatDialogModule,
     PagesModule,
     AdminModule,
+    MatPaginatorModule,
+    MatCardModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

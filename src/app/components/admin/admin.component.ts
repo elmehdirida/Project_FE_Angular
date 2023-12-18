@@ -49,6 +49,11 @@ export class AdminComponent {
 
   }
 
+  getCurrentRoute() {
+      let path = window.location.pathname;
+      path = path.split('/').pop() || '';
+      return path;
+  }
   logout() {
 
   }

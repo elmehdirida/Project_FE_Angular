@@ -1,0 +1,22 @@
+<mat-card >
+  <mat-card-title>
+    <h2 class="title">Order #{{order.id}}</h2>
+    <p class="date">{{order.order_date | date}}</p>
+    <button class="close-dialog" mat-icon-button [mat-dialog-close]="true">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-card-title>
+  <mat-card *ngFor="let item of order.products" class="container">
+    <mat-card-title>{{item.name}}</mat-card-title>
+    <mat-card-content>
+      <img [src]="item.image" class="image">
+      <p class="price">{{item.price | currency}}</p>
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="total">
+    <mat-card-title>Total</mat-card-title>
+    <mat-card-content>
+      <p class="price">{{order.total_amount | currency}}</p>
+    </mat-card-content>
+  </mat-card>
+</mat-card>

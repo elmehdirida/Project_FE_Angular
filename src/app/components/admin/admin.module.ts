@@ -21,6 +21,8 @@ import {PaymentsComponent} from "./payments/payments.component";
 import {HomeComponent} from "./home/home.component";
 import {MatCardModule} from "@angular/material/card";
 import {MatLineModule} from "@angular/material/core";
+import {MatTableModule} from "@angular/material/table";
+import {MatPaginatorModule} from "@angular/material/paginator";
 
 
 
@@ -51,7 +53,9 @@ import {MatLineModule} from "@angular/material/core";
     MatListModule,
     AdminRoutingModule,
     MatCardModule,
-    MatLineModule
+    MatLineModule,
+    MatTableModule,
+    MatPaginatorModule
   ]
 })
 export class AdminModule { }

@@ -1,1 +1,49 @@
-<p>orders works!</p>
+<mat-paginator [pageSizeOptions]="[10, 30, 50]" showFirstLastButtons></mat-paginator>
+<mat-table [dataSource]="dataSource"  >
+
+  <!-- ID Column -->
+  <ng-container matColumnDef="id">
+    <mat-header-cell *matHeaderCellDef > ID </mat-header-cell>
+    <mat-cell *matCellDef="let order"> {{order.id}} </mat-cell>
+  </ng-container>
+
+  <!-- Username Column -->
+  <ng-container matColumnDef="order Date">
+    <mat-header-cell *matHeaderCellDef > payment Date </mat-header-cell>
+    <mat-cell *matCellDef="let order"> {{order.order_date}} </mat-cell>
+  </ng-container>
+
+  <!-- Email Column -->
+  <ng-container matColumnDef="total Amount">
+    <mat-header-cell *matHeaderCellDef > total Amount </mat-header-cell>
+    <mat-cell *matCellDef="let order"> {{order.total_amount | currency}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="Status">
+    <mat-header-cell *matHeaderCellDef > Status </mat-header-cell>
+    <mat-cell *matCellDef="let order"> <p [ngClass]="statusColors(order.order_status)">{{order.order_status}}</p> </mat-cell>
+  </ng-container>
+
+  <!-- Edit Column -->
+  <ng-container matColumnDef="View Products">
+    <mat-header-cell *matHeaderCellDef > View Products </mat-header-cell>
+    <mat-cell *matCellDef="let order">
+      <button mat-icon-button  color="primary"  (click)="viewOrders(order)">
+        <mat-icon>list</mat-icon>
+        View Products
+      </button>
+    </mat-cell>
+  </ng-container>
+
+  <!-- Delete Column -->
+  <ng-container matColumnDef="delete">
+    <mat-header-cell *matHeaderCellDef > Delete </mat-header-cell>
+    <mat-cell *matCellDef="let order"> <button mat-icon-button  color="warn" (click)="deleteOrder(order)" >
+      <mat-icon>delete</mat-icon>
+      delete
+    </button> </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let order; columns: displayedColumns;"></mat-row>
+</mat-table>
