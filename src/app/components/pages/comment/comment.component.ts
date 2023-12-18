@@ -13,6 +13,7 @@ import {Commentiare} from "../../../Model/Commentiare";
 export class CommentComponent implements  OnInit{
   productDetail? : Product;
   closeMessage='close';
+  ratingProduct=0;
   newComment! : Commentiare;
      constructor(private ref:MatDialogRef<CommentComponent>,
                  @Inject(MAT_DIALOG_DATA) public data:any,
@@ -30,7 +31,7 @@ export class CommentComponent implements  OnInit{
   form=this.build.group({
     email : this.build.control(''),
     text : this.build.control(''),
-    rating : this.build.control(''),
+    rating : this.ratingProduct,
     user_id : 2,
     product_id : this.productDetail?.id,
     name : "outman"
@@ -41,6 +42,7 @@ export class CommentComponent implements  OnInit{
   saveComment() {
        console.log(this.form.value);
        this.form.value.product_id=this.productDetail?.id
+       this.form.value.rating=this.ratingProduct;
        this.service.save(this.form.value).subscribe(res =>{
          this.closePop(this.form.value);
        },
@@ -49,5 +51,8 @@ export class CommentComponent implements  OnInit{
          console.log(error)
          }
       );
+  }
+  Handle(event:number){
+       this.ratingProduct=event;
   }
 }

@@ -65,8 +65,8 @@
           <p style="width: 10%"><strong> {{comment.user.name}}</strong></p>
           <p style="width: 10%"><strong> {{comment.date}}</strong></p>
           <p style="width: 50%"><strong> {{comment.text}}</strong> </p>
-          <p style="width: 30%;margin-left: 5px"><strong>{{comment.rating}}</strong></p>
-          <app-rating></app-rating>
+          <!--<p style="width: 30%;margin-left: 5px"><strong>{{comment.rating}}</strong></p>-->
+          <app-rating (onRating)="Handle($event)"></app-rating>
         </div>
       </div>
       <ng-template #noComments>

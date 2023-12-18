@@ -9,10 +9,8 @@
     <mat-label>Text</mat-label>
     <input matInput formControlName="text">
   </mat-form-field>
-  <mat-form-field>
-  <mat-label> Rating</mat-label>
-  <input matInput formControlName="rating">
- </mat-form-field>
+
+  <app-rating (onRating)="Handle($event)"></app-rating>
 </div>
 <div mat-dialog-actions>
    <button type="submit" mat-raised-button color="warn">Send  </button>

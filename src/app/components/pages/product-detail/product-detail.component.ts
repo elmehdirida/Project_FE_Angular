@@ -45,7 +45,9 @@ export class ProductDetailComponent {
     this.showremove = true;
    // this.api.addtocart(productdata)
   }
-
+  Handle(event:number){
+    alert(`hello  ${event}`)
+  }
   removeitem() {
     //this.showadd = true;
     //this.showremove = false;
@@ -80,4 +82,5 @@ export class ProductDetailComponent {
        this.loadComments();
      })
   }
+
 }
