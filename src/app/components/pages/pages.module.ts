@@ -13,9 +13,11 @@ import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatTableModule} from "@angular/material/table";
 import {MatListModule} from "@angular/material/list";
 import {MatInputModule} from "@angular/material/input";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import { ProductDetailComponent } from './product-detail/product-detail.component';
+import {MatDialogModule} from "@angular/material/dialog";
+import { CommentComponent } from './comment/comment.component';
 
 
 
@@ -24,6 +26,7 @@ import { ProductDetailComponent } from './product-detail/product-detail.componen
     HomeComponent,
     ProductComponent,
     ProductDetailComponent,
+    CommentComponent,
   ],
   imports: [
     CommonModule,
@@ -39,7 +42,9 @@ import { ProductDetailComponent } from './product-detail/product-detail.componen
     MatListModule,
     MatInputModule,
     FormsModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatDialogModule,
+    ReactiveFormsModule
   ]
 })
 export class PagesModule {

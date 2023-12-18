@@ -12,5 +12,7 @@ export interface Product
   stock: number;
   discount?: Discount;
   category?: Category;
+  totalRating:number;
+  rating: number;
 
 }

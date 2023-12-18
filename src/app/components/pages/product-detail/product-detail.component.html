@@ -23,7 +23,7 @@
       </div>
 
 
-    <mat-card style="margin-left: 20px">
+    <mat-card style="margin-left: 20px;">
       <mat-card-content>
         <div class="description" >
           <div>
@@ -46,17 +46,32 @@
 </div>
 
   <mat-card class="crd">
-    <mat-card-title style="margin-left: 20px;color: #3f51b5;"><strong>Comment :</strong></mat-card-title>
-    <mat-card-content>
-      <div *ngFor="let comment of comments" class="comments">
-        <mat-icon aria-hidden="false" aria-label="User Icon">person</mat-icon>
-        <p><strong> {{comment.user.name}}</strong></p>
-        <p><strong> {{comment.date}}</strong></p>
-        <p><strong> {{comment.text}}</strong> </p>
-        <p><strong>{{comment.rating}}</strong></p>
+    <div style="display: flex">
+      <mat-card-title style="margin-left: 20px;color: #3f51b5;"><strong>Comment :</strong></mat-card-title>
 
+      <div class="example-button-container" >
+        <button mat-mini-fab color="accent" (click)="openPopupComment()" style="margin-left: 40px;width: 35px;height: 35px">
+          <mat-icon>add</mat-icon>
+        </button>
       </div>
+    </div>
 
+    <mat-card-content>
+      <div *ngIf="comments.length > 0; else noComments" >
+        <div *ngFor="let comment of comments"  class="comments">
+          <div class="circle-icon">
+            <mat-icon  aria-hidden="false" aria-label="User Icon">person</mat-icon>
+          </div>
+          <p><strong> {{comment.user.name}}</strong></p>
+          <p><strong> {{comment.date}}</strong></p>
+          <p><strong> {{comment.text}}</strong> </p>
+          <p><strong>{{comment.rating}}</strong></p>
+
+        </div>
+      </div>
+      <ng-template #noComments>
+         No Comment
+      </ng-template>
     </mat-card-content>
   </mat-card>
 

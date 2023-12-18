@@ -11,6 +11,7 @@ img{
 
 .container {
   justify-content: space-between;
+  padding-bottom: 50px;
 }
 .image-div {
   margin-left: 30px;
@@ -26,6 +27,7 @@ img{
 }
 .comments{
   display: flex;
+  text-align: left;
   flex-direction: row;
   justify-content: space-evenly;
   margin-left: -30px;
@@ -38,3 +40,19 @@ img{
 .crd {
 margin-top: -50px;
 }
+.circle-icon {
+  width: 25px; /* ajustez la taille du cercle selon vos besoins */
+  height: 25px;
+  background-color: #2196F3; /* couleur de fond du cercle */
+  border-radius: 50%; /* pour créer un cercle */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 40px;
+}
+
+.mat-icon-post {
+  color: white; /* couleur de l'icône */
+  font-size: 24px; /* ajustez la taille de l'icône selon vos besoins */
+}
+

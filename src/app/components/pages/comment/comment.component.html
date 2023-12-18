@@ -1,0 +1,22 @@
+<form [formGroup]="form" (ngSubmit)="saveComment()">
+<h1 mat-dialog-title >Add New Comment : </h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <mat-label>Email</mat-label>
+    <input matInput formControlName="email">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Text</mat-label>
+    <input matInput formControlName="text">
+  </mat-form-field>
+  <mat-form-field>
+  <mat-label> Rating</mat-label>
+  <input matInput formControlName="rating">
+ </mat-form-field>
+</div>
+<div mat-dialog-actions>
+   <button (click)="send()" mat-raised-button color="warn">Send  </button>
+  <button   mat-raised-button [mat-dialog-close]="closeMessage" color="accent"> Cancel</button>
+
+</div>
+</form>
