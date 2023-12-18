@@ -44,7 +44,6 @@ export class RegisterComponent {
             this.snackBar.open(firstError, 'Close', { duration: 3000 });
           }
         } else {
-          console.error('An error occurred:', error);
           this.snackBar.open('An error occurred. Please try again later.', 'Close', { duration: 3000 });
         }
       },

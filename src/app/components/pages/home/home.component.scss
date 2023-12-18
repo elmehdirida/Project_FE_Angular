@@ -1,14 +1,44 @@
+
+.sidenav-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+
+.mat-sidenav-content {
+  margin-top: auto;
+}
+
+
+.mat-drawer {
+  width: 250px;
+  z-index: 1000;
+}
+
+.mat-drawer-container {
+  z-index: 1000;
+}
+
+
+.sidenav {
+  width: 350px;
+}
+
+
+
 .spacer {
   flex: 1 1 auto;
 }
 .toolbar {
+  z-index: 2;
   display: flex;
   flex-wrap: wrap;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  z-index: 1000;
   background-color: #000000;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
   color: #fff;
@@ -187,9 +217,39 @@ h3 {
   display: flex;
   width: 60px;
   height: 60px;
-  margin: 10px;
+  margin: 10px 10px 10px 40px;
 }
 img:hover{
   border: 1px solid rgb(175, 103, 9);
   box-shadow: 0px 0px 30px rgb(113, 82, 4);
+}
+
+.custom-button-size {
+  width: 48px;
+  height: 48px;
+  padding: 8px;
+}
+
+
+.discountFilter{
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  margin: 10px;
+  box-sizing: border-box;
+  padding: 10px;
+  color: #fff;
+}
+
+
+.min-max{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 300px;
+  margin: 10px;
+  box-sizing: border-box;
+  padding: 10px;
+  color: #fff;
 }

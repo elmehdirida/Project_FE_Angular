@@ -15,6 +15,9 @@ import {MatListModule} from "@angular/material/list";
 import {MatInputModule} from "@angular/material/input";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatSidenavModule} from "@angular/material/sidenav";
+import {MatSliderModule, MatSliderChange} from "@angular/material/slider";
+import {MatSelectModule} from "@angular/material/select";
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import { CommentComponent } from './comment/comment.component';
@@ -44,7 +47,10 @@ import { CommentComponent } from './comment/comment.component';
     FormsModule,
     MatProgressSpinnerModule,
     MatDialogModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatSidenavModule,
+    MatSliderModule,
+    MatSelectModule,
   ]
 })
 export class PagesModule {
