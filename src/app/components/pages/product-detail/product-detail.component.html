@@ -58,7 +58,7 @@
 
     <mat-card-content>
       <div *ngIf="comments.length > 0; else noComments" >
-        <div *ngFor="let comment of comments"  class="comments">
+        <div *ngFor="let comment of comments"  class="comments"  >
           <div class="circle-icon">
             <mat-icon  aria-hidden="false" aria-label="User Icon">person</mat-icon>
           </div>
@@ -70,8 +70,7 @@
         </div>
       </div>
       <ng-template #noComments>
-         No Comment
+        No Comment
       </ng-template>
     </mat-card-content>
   </mat-card>
-

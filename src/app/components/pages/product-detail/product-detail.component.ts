@@ -1,52 +1,42 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {Product} from "../../../Model/Product";
 import {ActivatedRoute} from "@angular/router";
-import {Subscription} from "rxjs";
+import {Observable, Subscription} from "rxjs";
 import {Commentiare} from "../../../Model/Commentiare";
 import {MatDialog} from "@angular/material/dialog";
 import {CommentComponent} from "../comment/comment.component";
 import {CommentService} from "../../../services/CommentService.service";
+import {load} from "@angular-devkit/build-angular/src/utils/server-rendering/esm-in-memory-file-loader";
 
 @Component({
   selector: 'app-product-detail',
   templateUrl: './product-detail.component.html',
   styleUrls: ['./product-detail.component.scss']
 })
-export class ProductDetailComponent implements OnInit{
-
+export class ProductDetailComponent {
 
   cartCount: number = 0;
   private sub!: Subscription;
   product!: Product;
   comments : Commentiare[] = [];
-  //newComment? : Commentiare;
-  newComment: Commentiare = {
-    id: 0,
-    text: '',
-    product_id: 0,
-    user: { id: 0, email: '', password: '', confirmPassword: '', name: 'OUTM' },
-    date: null,
-    rating: 0,
-    name: ''
-  };
 
   isLoaded: boolean = false;
   image : string="" ;
   showadd: boolean = true;
   showremove: boolean = false;
   constructor(
-    //private api: ApiService,
     private route: ActivatedRoute,private dialog:MatDialog,
-    private serviceComment:CommentService) {
-
+    private serviceComment:CommentService,
+    private cdr: ChangeDetectorRef
+  ) {
+    this.Init()
+    this.loadComments();
   }
-  ngOnInit(): void {
-
+  Init(): void {
     const navigationState = window.history.state;
     if (navigationState && navigationState.product) {
       const productParams = navigationState.product;
       this.product= navigationState.product;
-      this.comments=productParams.comment
 
     }
   }
@@ -61,14 +51,20 @@ export class ProductDetailComponent implements OnInit{
     //this.showremove = false;
     //this.api.removecartitem(productdata)
   }
-  loadComments(comment:Commentiare){
-    this.serviceComment.getComments(this.product.id).subscribe(res =>{
-      this.comments=res
-      console.log("***** les commentaires *******")
-      console.log(this.comments);
-    });
-  }
+  loadComments() {
+    if (this.product && this.product.id) {
+      this.serviceComment.getComments(this.product.id).subscribe((res : any) => {
+          this.comments = res.data;
+        }
+        , error => {
+          console.error("Erreur lors du chargement des commentaires :", error);
+        });
+    }
+    else {
+      console.error("pas de product id ");
 
+    }
+  }
   openPopupComment() {
      var _popup=this.dialog.open(CommentComponent,{
        width:'60%',
@@ -81,7 +77,7 @@ export class ProductDetailComponent implements OnInit{
      _popup.afterClosed().subscribe(item=>{
        console.log("after close");
         console.log(item)
-       this.loadComments(item);
+       this.loadComments();
      })
   }
 }

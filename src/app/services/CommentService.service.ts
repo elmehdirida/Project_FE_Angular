@@ -11,8 +11,8 @@ export class CommentService {
   constructor(private httpClient:HttpClient) { }
   ApiUrl = 'http://localhost:8000/api';
 
-  getComments(id :number):Observable<Commentiare[]> {
-    return this.httpClient.get<Commentiare[]>(`${this.ApiUrl}/products/${id}/comments`);
+  getComments(id :number) {
+    return this.httpClient.get(`${this.ApiUrl}/products/${id}/comments`);
   }
   save(comment:any){
     console.log("any");
