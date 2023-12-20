@@ -26,7 +26,7 @@
     <mat-card style="margin-left: 20px;">
       <mat-card-content>
         <div class="description" >
-          <div>
+          <div >
             <h1>{{product.name}}</h1>
             <p style="color:green">Special Price </p>
             <h3 style="color: green;" >Price:${{product.price}}</h3>
@@ -37,12 +37,14 @@
             <strong>Stocks:{{product.stock}} Units left</strong><br>
             <button routerLink="/" mat-raised-button color="accent">BACK</button>
           </div>
+          <div style="margin-top: 100px">
+            <app-rating-static [SelectedStart]="product.rating"></app-rating-static>
+          </div>
         </div>
       </mat-card-content>
     </mat-card>
 
   </div>
-
 </div>
 
   <mat-card class="crd">
@@ -66,7 +68,7 @@
           <p style="width: 10%"><strong> {{comment.date}}</strong></p>
           <p style="width: 50%"><strong> {{comment.text}}</strong> </p>
           <!--<p style="width: 30%;margin-left: 5px"><strong>{{comment.rating}}</strong></p>-->
-          <app-rating (onRating)="Handle($event)"></app-rating>
+          <app-rating-static [SelectedStart]="comment.rating"></app-rating-static>
         </div>
       </div>
       <ng-template #noComments>

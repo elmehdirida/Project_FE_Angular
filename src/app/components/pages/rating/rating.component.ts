@@ -11,13 +11,13 @@ export class RatingComponent implements OnInit{
   @Input() SelectedStart=0;
   @Output()
   onRating: EventEmitter<number> =new EventEmitter<number>();
-  ratingProductByUser : number=0;
   previousSelection =0;
   constructor() {
 
   }
   ngOnInit(): void {
     this.maxRatingArr=Array(this.maxRating).fill(0)
+    console.log("rattttttt !!!!!",    this.SelectedStart)
   }
   HandleMouseEnter(index:number){
     this.SelectedStart=index+1;

@@ -1,13 +1,10 @@
 <form [formGroup]="form" (ngSubmit)="saveComment()">
 <h1 mat-dialog-title >Add New Comment : </h1>
 <div mat-dialog-content>
+
   <mat-form-field>
-    <mat-label>Email</mat-label>
-    <input matInput formControlName="email">
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Text</mat-label>
-    <input matInput formControlName="text">
+    <mat-label>Insert Your Comment Here :</mat-label>
+    <input style="height: 80px" matInput formControlName="text">
   </mat-form-field>
 
   <app-rating (onRating)="Handle($event)"></app-rating>

@@ -14,7 +14,6 @@ export interface Product
   category_id : number;
   discount?: Discount;
   category?: Category;
-  totalRating:number;
   rating: number;
 
 }
