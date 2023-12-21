@@ -69,25 +69,8 @@
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
-<mat-toolbar>
-  <div class="toolbar">
-    <button (click)="toggleSidenav()" mat-icon-button class="custom-button-size" >
-      <mat-icon style="transform: scale(3); margin-top: 20px; margin-left: 30px">menu</mat-icon>
-    </button>
-      <img class="logo" src="assets/empty-cart.jpg" alt="" >
 
-
-    <div class="buttons">
-      <button mat-icon-button (click)="openCartDialog()">
-      <mat-icon color="warn">shopping_cart</mat-icon>
-      <span [matBadge]="cartCount" matBadgeColor="accent"></span>
-    </button>
-      <button style="margin: 0 20px 0 20px" mat-raised-button color="primary" (click)="register()" *ngIf="!isLoginIn">Register</button>
-      <button style="margin: 0 20px 0 20px" mat-raised-button color="warn" (click)="logout()" *ngIf="isLoginIn">Log out</button>
-      <button style="margin: 0 20px 0 20px" mat-raised-button color="accent" (click)="login()" *ngIf="!isLoginIn">Login</button>
-    </div>
-  </div>
-</mat-toolbar>
+    <app-toolbar [isHome]="true"></app-toolbar>
 
 
 <div class="product-container" *ngIf="!isLoaded ; else loading" >

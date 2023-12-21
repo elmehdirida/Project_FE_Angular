@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
 import {CartProduct} from "../../Model/CartProduct";
+import {BehaviorSubject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class LocalStorageService {
+  private cartItemsSource = new BehaviorSubject<CartProduct[]>(this.getCartStorage());
+  cartItems$ = this.cartItemsSource.asObservable();
 
   setUserStorage(user: any) {
     localStorage.setItem('user', JSON.stringify(user));
@@ -25,6 +28,12 @@ export class LocalStorageService {
 
   setCartStorage(cartItems: CartProduct[]) {
     localStorage.setItem('cart', JSON.stringify(cartItems));
+    this.cartItemsSource.next(cartItems); // Notify subscribers
+  }
+
+  refreshCartItems() {
+    const currentCartItems = this.getCartStorage();
+    this.cartItemsSource.next(currentCartItems);
   }
 
   getCartStorage() {
@@ -32,6 +41,7 @@ export class LocalStorageService {
   }
   removeCartStorage() {
     localStorage.removeItem('cart');
+    this.cartItemsSource.next([]);
   }
 
   getCartCount() {
@@ -40,5 +50,10 @@ export class LocalStorageService {
 
   setCartCount(length: number) {
     localStorage.setItem('cartCount', JSON.stringify(length));
+  }
+
+
+  clearStorage() {
+    localStorage.clear();
   }
 }
