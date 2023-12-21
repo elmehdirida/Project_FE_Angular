@@ -113,7 +113,6 @@ export class ProductDetailComponent {
        console.log("after close");
         console.log(item)
        this.loadComments();
-
      })
   }
 

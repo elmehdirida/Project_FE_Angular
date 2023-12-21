@@ -58,5 +58,20 @@ mat-drawer {
   background-color: #fafafa;
 }
 
-
-
+.name-and-logout{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0 10px;
+  margin-right: 20px;
+  flex: 1;
+  .name{
+    font-size: 20px;
+    font-weight: 600;
+  }
+  .logout{
+    font-size: 20px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+}

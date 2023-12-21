@@ -1,13 +1,57 @@
-<div class="dashboard-container">
+<div class="dashboard-container" *ngIf="isLoaded ; else loading">
   <div class="dashboard-header">
     <h1>Dashboard</h1>
   </div>
   <div class="dashboard-content">
     <mat-card class="dash-card mat-elevation-z7">
-      <mat-card-header >
-        <mat-card-title class="dash-card-head" >
+      <mat-card-header>
+        <mat-card-title>
+          <div class="dash-card-head">
+            <h2>Orders</h2>
+            <mat-icon>money</mat-icon>
+          </div>
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="dash-card-content">
+        <div class="dash-card-count">
+          Total Orders :
+          {{orders.length}}
+        </div>
+        <div class="last-users">
+          <div class="last-users-title">
+            Orders Status :
+          </div>
+          <div class="last-users-list">
+            <div class="last-user" *ngFor="let status of orderStatusCount" [ngClass]="statusColors(status.status)">
+              <div class="last-user-name">
+                {{status.status}}
+                {{status.count}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="last-users">
+          <div class="last-users-title">
+            Total Sales :
+          </div>
+          <div class="last-users-list">
+            <div class="last-user" >
+              <div class="total-sales">
+                {{totalSales | currency}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+      <mat-card-actions class="dash-card-actions">
+        <button mat-flat-button routerLink="/orders">View Orders</button>
+      </mat-card-actions>
+    </mat-card>
+    <mat-card class="dash-card mat-elevation-z7">
+      <mat-card-header>
+        <mat-card-title class="dash-card-head">
           <h2>Users</h2>
-            <mat-icon>people</mat-icon>
+          <mat-icon>people</mat-icon>
         </mat-card-title>
       </mat-card-header>
       <mat-card-content class="dash-card-content">
@@ -33,8 +77,8 @@
       </mat-card-actions>
     </mat-card>
     <mat-card class="dash-card mat-elevation-z7">
-      <mat-card-header >
-        <mat-card-title class="dash-card-head" >
+      <mat-card-header>
+        <mat-card-title class="dash-card-head">
           <h2>Products</h2>
           <mat-icon>shopping_cart</mat-icon>
         </mat-card-title>
@@ -49,20 +93,23 @@
             Top 5 Products
           </div>
           <div class="last-users-list">
-            <div class="last-user" *ngFor="let product of products">
+            <div class="last-user" *ngFor="let product of Top5Products | slice:0:5 ; let i = index">
               <div class="last-user-name">
-                {{product.name}}
+                {{product.product.name}}
+                {{ProductIdAndCount[i].count}}
               </div>
             </div>
           </div>
         </div>
       </mat-card-content>
       <mat-card-actions class="dash-card-actions">
-        <button mat-flat-button routerLink="/users">View Users</button>
+        <button mat-flat-button routerLink="/users">View Products</button>
       </mat-card-actions>
     </mat-card>
-
-
-
   </div>
 </div>
+<ng-template #loading>
+  <div class="loading-container">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-template>

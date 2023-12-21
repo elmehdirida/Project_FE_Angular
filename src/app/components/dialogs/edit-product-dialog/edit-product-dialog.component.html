@@ -1,13 +1,12 @@
-
 <mat-card class = "user-edit-card">
-  <mat-card-title class="user-edit-title"> <p>Edit Product </p>
+  <mat-card-title class="user-edit-title"> <p>{{data.mode | uppercase}} PRODUCT </p>
     <button class="close-btn" mat-icon-button matTooltip="Close" (click)="closeEditDialog()">
       <mat-icon>close</mat-icon>
     </button>
   </mat-card-title>
   <form class="user-form" [formGroup]="productForm">
     <mat-card-content>
-      <mat-form-field  appearance="outline" class="form-fields">
+      <mat-form-field  appearance="outline" class="form-fields" *ngIf="data.mode === 'edit'">
         <mat-label>ID</mat-label>
         <input matInput placeholder="ID" value="{{product.id}} " disabled>
       </mat-form-field>
@@ -20,7 +19,7 @@
       </mat-form-field>
       <mat-form-field  appearance="outline" class="form-fields">
         <mat-label>Price</mat-label>
-        <input matInput placeholder="Price" formControlName="price" >
+        <input type="number" min="0" matInput placeholder="Price" formControlName="price" >
         <mat-error *ngIf="productForm.controls['price'].hasError('required')">
           Price is <strong>required</strong>
         </mat-error>
@@ -40,6 +39,13 @@
           description is <strong>required</strong>
         </mat-error>
       </mat-form-field>
+      <mat-form-field  appearance="outline" class="form-fields">
+        <mat-label>Stock</mat-label>
+        <input type="number" min="1" matInput placeholder="Stock" formControlName="stock">
+        <mat-error *ngIf="productForm.controls['stock'].hasError('required')">
+          Stock is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
       <mat-form-field appearance="outline" class="form-fields">
         <mat-label>Category</mat-label>
         <mat-select formControlName="category">
@@ -48,7 +54,6 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <!-- add a select for the discount -->
       <mat-form-field appearance="outline" class="form-fields">
         <mat-label>Discount</mat-label>
         <mat-select formControlName="discount">
@@ -57,9 +62,6 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-
-
-
     </mat-card-content>
     <mat-card-actions class="card-actions">
       <button mat-raised-button color="primary" (click)="saveChanges()">Save Changes</button>

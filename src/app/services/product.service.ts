@@ -14,6 +14,9 @@ export class ProductService{
     return this.httpClient.get(`${this.apiUrl}/products`);
   }
 
+  getProduct(id: number) {
+    return this.httpClient.get(`${this.apiUrl}/products/${id}`);
+  }
 
   deleteProduct(id: number) {
     return this.httpClient.delete(`${this.apiUrl}/products/${id}`);
@@ -22,5 +25,9 @@ export class ProductService{
   updateProduct(product: Product) {
     return this.httpClient.put(`${this.apiUrl}/products/${product.id}`, product);
 
+  }
+
+  addProduct(product: Product) {
+    return this.httpClient.post(`${this.apiUrl}/product`, product);
   }
 }

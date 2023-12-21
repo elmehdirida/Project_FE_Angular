@@ -11,7 +11,7 @@ export class CommentService {
   constructor(private httpClient:HttpClient) { }
   ApiUrl = 'http://localhost:8000/api';
 
-  getComments(id :number) {
+    getComments(id: number | undefined) {
     return this.httpClient.get(`${this.ApiUrl}/products/${id}/comments`);
   }
   save(comment:any){

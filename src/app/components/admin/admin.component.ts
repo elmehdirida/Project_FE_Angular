@@ -3,6 +3,7 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
 import {MatSidenav} from "@angular/material/sidenav";
 import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 import {map} from "rxjs";
+import {LocalStorageService} from "../../services/Storage/local-storage.service";
 
 @Component({
   selector: 'app-admin',
@@ -27,7 +28,13 @@ export class AdminComponent {
   isSmallScreen: boolean = false;
   isOpen = false;
   isLoginIn: any;
-    constructor(private breakpointObserver: BreakpointObserver) {
+    constructor(private breakpointObserver: BreakpointObserver,
+                public localStorageService: LocalStorageService
+                ) {
+      this.isLoginIn = this.localStorageService.isUserLoggedIn();
+      if(!this.isLoginIn || this.localStorageService.getUserStorage().role !== 'admin'){
+        window.location.href = '/home';
+      }
       this.breakpointObserver.observe([
         Breakpoints.HandsetLandscape,
         Breakpoints.HandsetPortrait,

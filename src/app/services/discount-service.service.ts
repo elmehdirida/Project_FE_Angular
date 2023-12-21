@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+import {Discount} from "../Model/Discount";
 
 @Injectable({
   providedIn: 'root'
@@ -15,13 +16,16 @@ export class DiscountServiceService {
   getDiscount(id : number){
     return this.httpClient.get(`${this.apiUrl}/discounts/${id}`);
   }
-  createDiscount(data : any){
-    return this.httpClient.post(`${this.apiUrl}/discounts`, data);
+  updateDiscount(discount : Discount){
+    return this.httpClient.put(`${this.apiUrl}/discounts/${discount.id}`, discount);
   }
-  updateDiscount(id : number, data : any){
-    return this.httpClient.put(`${this.apiUrl}/discounts/${id}`, data);
-  }
-  deleteDiscount(id : number){
+
+  deleteDiscount(id: number | undefined){
     return this.httpClient.delete(`${this.apiUrl}/discounts/${id}`);
+  }
+
+  addDiscount(discount: Discount) {
+    return this.httpClient.post(`${this.apiUrl}/discount`, discount);
+
   }
 }

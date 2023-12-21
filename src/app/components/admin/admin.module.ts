@@ -23,6 +23,8 @@ import {MatCardModule} from "@angular/material/card";
 import {MatLineModule} from "@angular/material/core";
 import {MatTableModule} from "@angular/material/table";
 import {MatPaginatorModule} from "@angular/material/paginator";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatTabsModule} from "@angular/material/tabs";
 
 
 
@@ -55,7 +57,9 @@ import {MatPaginatorModule} from "@angular/material/paginator";
     MatCardModule,
     MatLineModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatProgressSpinnerModule,
+    MatTabsModule
   ]
 })
 export class AdminModule { }

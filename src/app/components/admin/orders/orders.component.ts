@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
 import {User} from "../../../Model/User";
@@ -11,34 +11,65 @@ import {OrderServiceService} from "../../../services/order-service.service";
 import {
   ShowProductsOrderDialogComponent
 } from "../../dialogs/show-products-order-dialog/show-products-order-dialog.component";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.component.html',
   styleUrls: ['./orders.component.scss']
 })
-export class OrdersComponent implements OnInit{
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+export class OrdersComponent implements OnInit ,AfterViewInit{
+  @ViewChild(MatPaginator) allPaginator!: MatPaginator;
+  @ViewChild('processingPaginator') processingPaginator!: MatPaginator;
+  @ViewChild('completedPaginator') completedPaginator!: MatPaginator;
+  @ViewChild('declinedPaginator') declinedPaginator!: MatPaginator;
+  @ViewChild('pendingPaginator') pendingPaginator!: MatPaginator;
   dataSource! : MatTableDataSource<Order>
+  processingDataSource! : MatTableDataSource<Order>
+  completedDataSource! : MatTableDataSource<Order>
+  declinedDataSource! : MatTableDataSource<Order>
+  pendingDataSource! : MatTableDataSource<Order>
+
   orders : Order[]=[]
   displayedColumns: string[] = ['id', 'order Date', 'total Amount','Status','View Products', 'delete'];
   constructor(private orderService: OrderServiceService,
-              private dialog: MatDialog
+              private dialog: MatDialog,
+              private _snackBar: MatSnackBar
   ) {
+    //initialize the dataSource
+    this.dataSource = new MatTableDataSource<Order>([])
+    this.processingDataSource = new MatTableDataSource<Order>([])
+    this.completedDataSource = new MatTableDataSource<Order>([])
+    this.declinedDataSource = new MatTableDataSource<Order>([])
+    this.pendingDataSource = new MatTableDataSource<Order>([])
   }
 
   ngOnInit(): void {
     this.getOrders();
+  }
+  ngAfterViewInit(): void {
+    this.dataSource.paginator = this.allPaginator;
+    this.processingDataSource.paginator = this.processingPaginator;
+    this.completedDataSource.paginator = this.completedPaginator;
+    this.declinedDataSource.paginator = this.declinedPaginator;
+    this.pendingDataSource.paginator = this.pendingPaginator;
   }
 
   getOrders(){
     this.orderService.getOrders().subscribe((data: any)=>{
         this.orders = data.data;
         this.dataSource = new MatTableDataSource(this.orders);
-        this.dataSource.paginator = this.paginator;
+        this.dataSource.paginator = this.allPaginator;
+        this.processingDataSource = new MatTableDataSource(this.orders.filter((order)=>order.order_status == "processing"));
+        this.processingDataSource.paginator = this.processingPaginator;
+        this.completedDataSource = new MatTableDataSource(this.orders.filter((order)=>order.order_status == "completed"));
+        this.completedDataSource.paginator = this.completedPaginator;
+        this.declinedDataSource = new MatTableDataSource(this.orders.filter((order)=>order.order_status == "declined"));
+        this.declinedDataSource.paginator = this.declinedPaginator;
+        this.pendingDataSource = new MatTableDataSource(this.orders.filter((order)=>order.order_status == "pending"));
+        this.pendingDataSource.paginator = this.pendingPaginator;
       }
     )
-
   }
 
 
@@ -50,6 +81,9 @@ export class OrdersComponent implements OnInit{
     dialogRef.afterClosed().subscribe(result => {
       if(result) {
         this.orderService.deleteOrder(order.id).subscribe((data: any)=>{
+          this._snackBar.open('Order Deleted Successfully', 'Close', {
+            duration: 2000,
+          });
           this.getOrders();
         },(error)=>{
           console.log(error);
@@ -62,6 +96,7 @@ export class OrdersComponent implements OnInit{
   viewOrders(order:Order) {
     const dialogRef =this.dialog.open(ShowProductsOrderDialogComponent, {
       width: '600px',
+      maxHeight: '90vh',
       data: order
     });
   }

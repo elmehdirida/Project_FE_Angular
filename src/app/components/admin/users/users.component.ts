@@ -6,19 +6,21 @@ import {MatPaginator} from "@angular/material/paginator";
 import {MatDialog} from "@angular/material/dialog";
 import {EditUserDialogComponent} from "../../dialogs/edit-user-dialog/edit-user-dialog.component";
 import {ConfirmDialogComponent} from "../../dialogs/confirm-dialog/confirm-dialog.component";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
-  styleUrls: ['./users.component.css']
+  styleUrls: ['./users.component.scss']
 })
 export class UsersComponent  implements  OnInit{
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   dataSource! : MatTableDataSource<User>
   users : User[]=[]
-  displayedColumns: string[] = ['id', 'name', 'email', 'edit', 'delete'];
+  displayedColumns: string[] = ['id', 'name','role', 'email', 'edit', 'delete'];
   constructor(private userService: UserServiceService,
-              private dialog: MatDialog
+              private dialog: MatDialog,
+              private _snackBar: MatSnackBar
               ) {
   }
 
@@ -56,9 +58,15 @@ export class UsersComponent  implements  OnInit{
     Ref.afterClosed().subscribe((result)=>{
       if (result) {
         this.userService.deleteUser(user.id).subscribe((data: any)=>{
+          this._snackBar.open("User deleted successfully", "close", {
+            duration: 2000,
+          });
           this.getUsers();
         },
           (error)=>{
+            this._snackBar.open("Error deleting user", "close", {
+              duration: 2000,
+            });
             console.log(error);
           }
         )

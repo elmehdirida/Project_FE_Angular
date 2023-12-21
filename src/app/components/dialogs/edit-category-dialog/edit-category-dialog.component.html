@@ -1,15 +1,15 @@
 
 <mat-card class = "user-edit-card">
-  <mat-card-title class="user-edit-title"> <p>Edit Category </p>
+  <mat-card-title class="user-edit-title"> <p>{{data.mode | uppercase}} CATEGORY </p>
     <button class="close-btn" mat-icon-button matTooltip="Close" (click)="closeEditDialog()">
       <mat-icon>close</mat-icon>
     </button>
   </mat-card-title>
   <form class="user-form" [formGroup]="categoryForm">
     <mat-card-content>
-      <mat-form-field  appearance="outline" class="form-fields">
+      <mat-form-field  appearance="outline" class="form-fields"  *ngIf="data.mode === 'edit'">
         <mat-label>ID</mat-label>
-        <input matInput placeholder="ID" value="{{data.id}} " disabled>
+        <input matInput placeholder="ID" value="{{data.category.id}} " disabled>
       </mat-form-field>
       <mat-form-field  appearance="outline" class="form-fields">
         <mat-label>name</mat-label>

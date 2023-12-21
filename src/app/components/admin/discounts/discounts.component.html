@@ -1,6 +1,9 @@
 
-<mat-paginator [pageSizeOptions]="[10, 30, 50]" showFirstLastButtons></mat-paginator>
-<mat-table [dataSource]="dataSource"  >
+<mat-toolbar class="toolbar">
+  <mat-paginator style="background-color: #f5f5f5;" [pageSizeOptions]="[10, 30, 50]" showFirstLastButtons></mat-paginator>
+  <span class="spacer"></span>
+  <button mat-raised-button color="primary" (click)="addDiscount()">Add New Discount</button>
+</mat-toolbar><mat-table [dataSource]="dataSource"  >
 
   <!-- ID Column -->
   <ng-container matColumnDef="id">

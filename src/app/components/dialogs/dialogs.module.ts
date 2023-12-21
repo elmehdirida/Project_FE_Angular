@@ -19,6 +19,7 @@ import { ShowProductsOrderDialogComponent } from './show-products-order-dialog/s
 import {MatSelectModule} from "@angular/material/select";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
+import {MatProgressBarModule} from "@angular/material/progress-bar";
 
 
 
@@ -33,21 +34,22 @@ import {MatNativeDateModule} from "@angular/material/core";
     ConfirmDialogComponent,
     ShowProductsOrderDialogComponent
   ],
-  imports: [
-    CommonModule,
-    MatDialogModule,
-    MatButtonModule,
-    MatCardModule,
-    MatTableModule,
-    MatIconModule,
-    MatListModule,
-    MatInputModule,
-    MatTooltipModule,
-    ReactiveFormsModule,
-    MatSelectModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
+    imports: [
+        CommonModule,
+        MatDialogModule,
+        MatButtonModule,
+        MatCardModule,
+        MatTableModule,
+        MatIconModule,
+        MatListModule,
+        MatInputModule,
+        MatTooltipModule,
+        ReactiveFormsModule,
+        MatSelectModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatProgressBarModule,
 
-  ]
+    ]
 })
 export class DialogsModule { }

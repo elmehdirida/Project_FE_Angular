@@ -1,15 +1,12 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
-import {Category} from "../../../Model/Category";
-import {CategoryServiceService} from "../../../services/category-service.service";
 import {MatDialog} from "@angular/material/dialog";
-import {EditCategoryDialogComponent} from "../../dialogs/edit-category-dialog/edit-category-dialog.component";
-import {User} from "../../../Model/User";
 import {ConfirmDialogComponent} from "../../dialogs/confirm-dialog/confirm-dialog.component";
 import {Discount} from "../../../Model/Discount";
 import {DiscountServiceService} from "../../../services/discount-service.service";
 import {EditDiscountDialogComponent} from "../../dialogs/edit-discount-dialog/edit-discount-dialog.component";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-discounts',
@@ -22,7 +19,8 @@ export class DiscountsComponent implements OnInit{
   discounts  : Discount[]=[]
   displayedColumns: string[] = ['id', 'code','discount','start_date','end_date','edit','delete'];
   constructor(private discountService: DiscountServiceService,
-              private dialog: MatDialog
+              private dialog: MatDialog,
+              private _snackbar : MatSnackBar
   ) {
   }
 
@@ -43,7 +41,7 @@ export class DiscountsComponent implements OnInit{
 
   editDiscount(discount:Discount) {
     let Ref = this.dialog.open(EditDiscountDialogComponent, {
-      data: discount,
+      data: {discount: discount, mode: "edit"},
       width: '600px',
     })
     Ref.afterClosed().subscribe((result)=>{
@@ -60,13 +58,32 @@ export class DiscountsComponent implements OnInit{
     Ref.afterClosed().subscribe((result)=>{
       if (result) {
         this.discountService.deleteDiscount(discount.id).subscribe((data: any)=>{
+            this._snackbar.open("Discount Deleted Successfully", "Close", {
+              duration: 2000,
+            });
             this.getDiscounts();
           },
           (error)=>{
+            this._snackbar.open("Error Deleting Discount", "Close", {
+              duration: 2000,
+            });
             console.log(error);
           }
         )
       }
     })
+  }
+
+  addDiscount() {
+    let Ref = this.dialog.open(EditDiscountDialogComponent, {
+      data: {mode: "add"},
+      width: '600px',
+    })
+    Ref.afterClosed().subscribe((result)=>{
+      if (result) {
+        this.getDiscounts();
+      }
+    })
+
   }
 }

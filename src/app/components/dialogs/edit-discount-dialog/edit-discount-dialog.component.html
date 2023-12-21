@@ -7,12 +7,12 @@
   </mat-card-title>
   <form class="user-form" [formGroup]="discountForm">
     <mat-card-content>
-      <mat-form-field  appearance="outline" class="form-fields">
+      <mat-form-field  appearance="outline" class="form-fields" *ngIf="data.mode === 'edit'">
         <mat-label>ID</mat-label>
-        <input matInput placeholder="ID" value="{{data.id}} " disabled>
+        <input matInput placeholder="ID" value="{{data.discount.id}} " disabled>
       </mat-form-field>
       <mat-form-field  appearance="outline" class="form-fields">
-        <mat-label>come</mat-label>
+        <mat-label>code</mat-label>
         <input matInput placeholder="Code"  formControlName="code" >
         <mat-error *ngIf="discountForm.controls['code'].hasError('required')">
           Code is <strong>required</strong>
@@ -20,7 +20,7 @@
       </mat-form-field>
       <mat-form-field  appearance="outline" class="form-fields">
         <mat-label>Discount</mat-label>
-        <input matInput placeholder="Discount"  formControlName="discount" >
+        <input type="number" min="1" max="100" matInput placeholder="Discount"  formControlName="discount" >
         <mat-error *ngIf="discountForm.controls['discount'].hasError('required')">
           Discount is <strong>required</strong>
         </mat-error>

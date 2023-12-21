@@ -3,6 +3,7 @@ import {Category} from "../../../Model/Category";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {CategoryServiceService} from "../../../services/category-service.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-edit-category-dialog',
@@ -11,33 +12,64 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 })
 export class EditCategoryDialogComponent {
   categories: Category[] = [];
-  categoryForm:FormGroup=new FormGroup({
-    description:new FormControl(this.data.description,[Validators.required]),
-    name:new FormControl(this.data.name,[Validators.required]),
-  });
-  constructor(@Inject(MAT_DIALOG_DATA) public data: Category,
+  categoryForm: FormGroup;
+  category: Category;
+
+  constructor(@Inject(MAT_DIALOG_DATA) public data: { category: Category, mode: string },
               public dialog: MatDialogRef<EditCategoryDialogComponent>,
-              private categoryService : CategoryServiceService,
+              private categoryService: CategoryServiceService,
+              private _snackbar: MatSnackBar
   ) {
+    if (this.data.mode === 'edit') {
+      this.category = data.category;
+      this.categoryForm = new FormGroup({
+        id: new FormControl(this.data.category.id),
+        name: new FormControl(this.data.category.name, [Validators.required]),
+        description: new FormControl(this.data.category.description, [Validators.required]),
+      });
+    } else {
+      this.category = {
+        name: '',
+        description: '',
+      };
+      this.categoryForm = new FormGroup({
+        name: new FormControl('', [Validators.required]),
+        description: new FormControl('', [Validators.required]),
+      });
+    }
   }
 
   saveChanges() {
-    if(this.categoryForm.valid) {
-      let category = this.categoryForm.value;
-      category.id = this.data.id;
-      this.categoryService.updateCategory(category.id,category).subscribe((data: any) => {
+    if (this.categoryForm.valid) {
+      this.category.name = this.categoryForm.value.name;
+      this.category.description = this.categoryForm.value.description;
+      if (this.data.mode === 'edit') {
+        this.categoryService.updateCategory(this.category).subscribe((data: any) => {
+          this._snackbar.open("Category Updated Successfully", "Close", {
+            duration: 2000,
+          });
           this.dialog.close(true);
-        },
-        (error) => {
-          if(error.error.name){
-            this.categoryForm.controls['name'].setErrors({'nameExists': true});
+        }, (error: any) => {
+          this._snackbar.open("Error Updating Category", "Close", {
+            duration: 2000,
+          });
+        })
+      } else if (this.data.mode === 'add') {
+        this.categoryService.addCategory(this.category).subscribe((data: any) => {
+            this._snackbar.open("Category Added Successfully", "Close", {
+              duration: 2000,
+            });
+            this.dialog.close(true);
+          }, (error: any) => {
+            this._snackbar.open("Error Adding Category", "Close", {
+              duration: 2000,
+            });
           }
-          else{
-            this.dialog.close(false);
-          }        }
-      )
+        )
+      }
     }
   }
+
   closeEditDialog() {
     this.dialog.close(false);
   }
