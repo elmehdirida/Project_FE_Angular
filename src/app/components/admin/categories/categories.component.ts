@@ -7,6 +7,7 @@ import {ConfirmDialogComponent} from "../../dialogs/confirm-dialog/confirm-dialo
 import {Category} from "../../../Model/Category";
 import {CategoryServiceService} from "../../../services/category-service.service";
 import {EditCategoryDialogComponent} from "../../dialogs/edit-category-dialog/edit-category-dialog.component";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-categories',
@@ -19,7 +20,8 @@ export class CategoriesComponent implements OnInit{
   category  : Category[]=[]
   displayedColumns: string[] = ['id', 'name','description', 'edit', 'delete'];
   constructor(private categoryService: CategoryServiceService,
-              private dialog: MatDialog
+              private dialog: MatDialog,
+              private _snackbar : MatSnackBar
   ) {
   }
 
@@ -58,9 +60,15 @@ export class CategoriesComponent implements OnInit{
     Ref.afterClosed().subscribe((result)=>{
       if (result) {
         this.categoryService.deleteCategory(user.id).subscribe((data: any)=>{
+            this._snackbar.open("Category deleted successfully", "close", {
+              duration: 2000,
+            })
             this.getCategories();
           },
           (error)=>{
+            this._snackbar.open("Error deleting category", "close", {
+              duration: 2000,
+            })
             console.log(error);
           }
         )

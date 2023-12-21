@@ -7,6 +7,7 @@ import {ConfirmDialogComponent} from "../../dialogs/confirm-dialog/confirm-dialo
 
 import {Payment} from "../../../Model/Payment";
 import {PaymentServiceService} from "../../../services/payment-service.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 export enum PaymentMessage {
   accept = "Are you sure you want to accept this payment ?",
@@ -37,7 +38,8 @@ export class PaymentsComponent implements OnInit ,AfterViewInit{
 
   constructor(private orderService: OrderServiceService,
               private paymentService: PaymentServiceService,
-              private dialog: MatDialog
+              private dialog: MatDialog,
+              private _snackbar : MatSnackBar
   ) {
     //initialize the dataSource
     this.dataSource = new MatTableDataSource<Payment>([])
@@ -107,7 +109,6 @@ export class PaymentsComponent implements OnInit ,AfterViewInit{
         payment.payment_status = "completed";
         console.log(payment);
         this.paymentService.updatePayment(payment.id, payment).subscribe((data: any) => {
-          this.getPayments();
             this.orderService.getOrder(payment?.order_id!).subscribe((data: any) => {
               let order = data.data;
               order.order_status = "completed";
@@ -117,7 +118,15 @@ export class PaymentsComponent implements OnInit ,AfterViewInit{
               })
             }
           )
+          this._snackbar.open("Payment Accepted Successfully", "Close", {
+            duration: 2000,
+          });
+          this.getPayments();
+
         }, (error) => {
+          this._snackbar.open("Error Accepting Payment", "Close", {
+            duration: 2000,
+          });
           console.log(error);
         })
     }
@@ -128,7 +137,6 @@ export class PaymentsComponent implements OnInit ,AfterViewInit{
     if (payment) {
         payment!.payment_status = "declined";
         this.paymentService.updatePayment(payment.id, payment).subscribe((data: any) => {
-          this.getPayments();
             this.orderService.getOrder(payment?.order_id!).subscribe((data: any) => {
               let order = data.data;
               order.order_status = "declined";
@@ -138,7 +146,14 @@ export class PaymentsComponent implements OnInit ,AfterViewInit{
               })
             }
           )
+          this._snackbar.open("Payment Declined Successfully", "Close", {
+            duration: 2000,
+          });
+          this.getPayments();
         }, (error) => {
+          this._snackbar.open("Error Declining Payment", "Close", {
+            duration: 2000,
+          });
           console.log(error);
         })
       }

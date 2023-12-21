@@ -3,6 +3,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {Discount} from "../../../Model/Discount";
 import {DiscountServiceService} from "../../../services/discount-service.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-edit-discount-dialog',
@@ -16,6 +17,7 @@ export class EditDiscountDialogComponent {
   constructor(@Inject(MAT_DIALOG_DATA) public data: {discount: Discount, mode: string},
               public dialog: MatDialogRef<EditDiscountDialogComponent>,
               private discountService : DiscountServiceService,
+              private _snackbar : MatSnackBar
   ) {
     if(this.data.mode === 'edit') {
       this.discount = data.discount;
@@ -52,13 +54,29 @@ export class EditDiscountDialogComponent {
       if (this.data.mode === 'edit') {
         discount.id = this.data.discount.id;
         this.discountService.updateDiscount(discount).subscribe((data: any) => {
+          this._snackbar.open("Discount Updated Successfully", "Close", {
+            duration: 2000,
+          });
           this.dialog.close(true);
-        })
+        }, (error: any) => {
+          this._snackbar.open("Error Updating Discount", "Close", {
+            duration: 2000,
+          });
+        }
+        )
       }
       else if (this.data.mode === 'add') {
         this.discountService.addDiscount(discount).subscribe((data: any) => {
+          this._snackbar.open("Discount Added Successfully", "Close", {
+            duration: 2000,
+          });
           this.dialog.close(true);
-        })
+        }, (error: any) => {
+          this._snackbar.open("Error Adding Discount", "Close", {
+            duration: 2000,
+          });
+        }
+        )
       }
     }
   }

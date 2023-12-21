@@ -9,6 +9,7 @@ import {ConfirmDialogComponent} from "../../dialogs/confirm-dialog/confirm-dialo
 import {Product} from "../../../Model/Product";
 import {ProductService} from "../../../services/product.service";
 import {EditProductDialogComponent} from "../../dialogs/edit-product-dialog/edit-product-dialog.component";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-products',
@@ -21,7 +22,8 @@ export class ProductsComponent implements OnInit{
   products : Product[]=[]
   displayedColumns: string[] = ['id','name', 'price', 'category', 'discount','image', 'edit', 'delete'];
   constructor(private productService: ProductService,
-              private dialog: MatDialog
+              private dialog: MatDialog,
+              private _snackBar: MatSnackBar
   ) {
   }
 
@@ -59,10 +61,15 @@ export class ProductsComponent implements OnInit{
     Ref.afterClosed().subscribe((result)=>{
       if (result) {
         this.productService.deleteProduct(product.id!).subscribe((data: any)=>{
+            this._snackBar.open("Product deleted successfully", "close", {
+              duration: 2000,
+            });
             this.getProducts();
           },
           (error)=>{
-            console.log(error);
+            this._snackBar.open("Error deleting Product" + error, "close", {
+              duration: 2000,
+            });
           }
         )
       }

@@ -62,7 +62,8 @@
         <mat-icon>settings</mat-icon>
         Admin
       </button>
-      <mat-divider *ngIf="loggedInUser.role ==='admin'" ></mat-divider>
+      <mat-divider *ngIf="isAdmin"
+      ></mat-divider>
       </div>
 
     </mat-nav-list>

@@ -6,6 +6,7 @@ import {ConfirmDialogComponent} from "../../dialogs/confirm-dialog/confirm-dialo
 import {Discount} from "../../../Model/Discount";
 import {DiscountServiceService} from "../../../services/discount-service.service";
 import {EditDiscountDialogComponent} from "../../dialogs/edit-discount-dialog/edit-discount-dialog.component";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-discounts',
@@ -18,7 +19,8 @@ export class DiscountsComponent implements OnInit{
   discounts  : Discount[]=[]
   displayedColumns: string[] = ['id', 'code','discount','start_date','end_date','edit','delete'];
   constructor(private discountService: DiscountServiceService,
-              private dialog: MatDialog
+              private dialog: MatDialog,
+              private _snackbar : MatSnackBar
   ) {
   }
 
@@ -56,9 +58,15 @@ export class DiscountsComponent implements OnInit{
     Ref.afterClosed().subscribe((result)=>{
       if (result) {
         this.discountService.deleteDiscount(discount.id).subscribe((data: any)=>{
+            this._snackbar.open("Discount Deleted Successfully", "Close", {
+              duration: 2000,
+            });
             this.getDiscounts();
           },
           (error)=>{
+            this._snackbar.open("Error Deleting Discount", "Close", {
+              duration: 2000,
+            });
             console.log(error);
           }
         )

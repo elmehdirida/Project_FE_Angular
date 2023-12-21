@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import {User} from "../../../Model/User";
 import {Order} from "../../../Model/Order";
 import {Product} from "../../../Model/Product";
@@ -89,7 +89,6 @@ export class HomeComponent implements OnInit{
   }
   getTotalSales() {
     this.orders.forEach((item)=>{
-      //convert string to number
       this.totalSales += +item.total_amount as number;
     })
   }
@@ -108,7 +107,6 @@ export class HomeComponent implements OnInit{
         this.ProductIdAndCount[index].count += 1;
       }
     });
-    console.log(this.ProductIdAndCount);
     this.ProductIdAndCount.sort((a,b)=>b.count-a.count);
       for(let i = 0; i < 5; i++) {
       this.Top5Products.push(<CartProduct>this.orderProducts.find((item) => item.product_id == this.ProductIdAndCount[i].productId));

@@ -11,6 +11,7 @@ import {OrderServiceService} from "../../../services/order-service.service";
 import {
   ShowProductsOrderDialogComponent
 } from "../../dialogs/show-products-order-dialog/show-products-order-dialog.component";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-orders',
@@ -32,7 +33,8 @@ export class OrdersComponent implements OnInit ,AfterViewInit{
   orders : Order[]=[]
   displayedColumns: string[] = ['id', 'order Date', 'total Amount','Status','View Products', 'delete'];
   constructor(private orderService: OrderServiceService,
-              private dialog: MatDialog
+              private dialog: MatDialog,
+              private _snackBar: MatSnackBar
   ) {
     //initialize the dataSource
     this.dataSource = new MatTableDataSource<Order>([])
@@ -79,6 +81,9 @@ export class OrdersComponent implements OnInit ,AfterViewInit{
     dialogRef.afterClosed().subscribe(result => {
       if(result) {
         this.orderService.deleteOrder(order.id).subscribe((data: any)=>{
+          this._snackBar.open('Order Deleted Successfully', 'Close', {
+            duration: 2000,
+          });
           this.getOrders();
         },(error)=>{
           console.log(error);

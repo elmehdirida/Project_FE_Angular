@@ -7,6 +7,7 @@ import {Category} from "../../../Model/Category";
 import {CategoryServiceService} from "../../../services/category-service.service";
 import {Discount} from "../../../Model/Discount";
 import {DiscountServiceService} from "../../../services/discount-service.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-edit-product-dialog',
@@ -22,7 +23,8 @@ export class EditProductDialogComponent {
               public dialog: MatDialogRef<EditProductDialogComponent>,
               private productService : ProductService,
               private categoryService : CategoryServiceService,
-              private discountService : DiscountServiceService
+              private discountService : DiscountServiceService,
+              private _snackBar: MatSnackBar
   ) {
     if(this.data.mode === 'edit') {
       this.product = data.product;
@@ -73,12 +75,28 @@ saveChanges() {
 
     if (this.data.mode === 'edit') {
       this.productService.updateProduct(this.product).subscribe((data: any) => {
+        this._snackBar.open("Product updated successfully", "close", {
+          duration: 2000,
+        });
         this.dialog.close(true);
-      });
+      }, (error) => {
+          this._snackBar.open("Error updating Product" + error, "close", {
+            duration: 2000,
+          });
+        }
+      );
     } else if (this.data.mode === 'add') {
       this.productService.addProduct(this.product).subscribe((data: any) => {
+        this._snackBar.open("Product added successfully", "close", {
+          duration: 2000,
+        },);
         this.dialog.close(true);
-      });
+      }, (error) => {
+          this._snackBar.open("Error adding Product" + error.error, "close", {
+            duration: 2000,
+          });
+        }
+      );
     }
   }
 }

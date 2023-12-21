@@ -71,12 +71,9 @@ export class HomeComponent implements OnInit {
     if (this.isLoginIn) {
       this.isAdmin = this.localStorageService.getUserStorage() ? this.localStorageService.getUserStorage().role == 'admin' : false;
       this.loggedInUser = this.localStorageService.getUserStorage();
-      this.cartItems = this.localStorageService.getCartStorage();
-      this.setNewCartCount();
     }
-    else {
-      this.router.navigate(['/login']);
-    }
+    this.cartItems = this.localStorageService.getCartStorage();
+    this.setNewCartCount();
     this.getProducts();
   }
 

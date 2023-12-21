@@ -20,7 +20,7 @@
       </mat-form-field>
       <mat-form-field  appearance="outline" class="form-fields">
         <mat-label>Discount</mat-label>
-        <input matInput placeholder="Discount"  formControlName="discount" >
+        <input type="number" min="1" max="100" matInput placeholder="Discount"  formControlName="discount" >
         <mat-error *ngIf="discountForm.controls['discount'].hasError('required')">
           Discount is <strong>required</strong>
         </mat-error>

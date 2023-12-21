@@ -19,7 +19,7 @@
       </mat-form-field>
       <mat-form-field  appearance="outline" class="form-fields">
         <mat-label>Price</mat-label>
-        <input matInput placeholder="Price" formControlName="price" >
+        <input type="number" min="0" matInput placeholder="Price" formControlName="price" >
         <mat-error *ngIf="productForm.controls['price'].hasError('required')">
           Price is <strong>required</strong>
         </mat-error>
@@ -41,7 +41,7 @@
       </mat-form-field>
       <mat-form-field  appearance="outline" class="form-fields">
         <mat-label>Stock</mat-label>
-        <input matInput placeholder="Stock" formControlName="stock">
+        <input type="number" min="1" matInput placeholder="Stock" formControlName="stock">
         <mat-error *ngIf="productForm.controls['stock'].hasError('required')">
           Stock is <strong>required</strong>
         </mat-error>

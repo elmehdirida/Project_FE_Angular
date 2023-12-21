@@ -29,7 +29,7 @@ export class AdminComponent {
   isOpen = false;
   isLoginIn: any;
     constructor(private breakpointObserver: BreakpointObserver,
-                private localStorageService: LocalStorageService
+                public localStorageService: LocalStorageService
                 ) {
       this.isLoginIn = this.localStorageService.isUserLoggedIn();
       if(!this.isLoginIn || this.localStorageService.getUserStorage().role !== 'admin'){
