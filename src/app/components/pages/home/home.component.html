@@ -55,6 +55,16 @@
         </mat-form-field>
 
       </div>
+      <!-- admin button router to admin -->
+      <div class="admin">
+      <mat-divider *ngIf="isAdmin" ></mat-divider>
+      <button *ngIf="isAdmin"  mat-raised-button routerLink="/admin">
+        <mat-icon>settings</mat-icon>
+        Admin
+      </button>
+      <mat-divider *ngIf="loggedInUser.role ==='admin'" ></mat-divider>
+      </div>
+
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>

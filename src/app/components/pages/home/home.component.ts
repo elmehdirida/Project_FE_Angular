@@ -11,6 +11,7 @@ import {MatSidenav} from "@angular/material/sidenav";
 import {BreakpointObserver} from "@angular/cdk/layout";
 import {Category} from "../../../Model/Category";
 import {CategoryServiceService} from "../../../services/category-service.service";
+import {User} from "../../../Model/User";
 
 @Component({
   selector: 'app-home',
@@ -26,6 +27,8 @@ export class HomeComponent implements OnInit {
   products: Product[] = [];
   filteredProducts: Product[] = [];
   isLoginIn: boolean = false;
+  isAdmin: boolean = false;
+  loggedInUser!: User;
   cartItems: CartProduct[] = [];
   searchQuery: String = "";
   isLoaded: boolean = false;
@@ -66,8 +69,13 @@ export class HomeComponent implements OnInit {
   ) {
     this.isLoginIn = this.localStorageService.isUserLoggedIn();
     if (this.isLoginIn) {
+      this.isAdmin = this.localStorageService.getUserStorage() ? this.localStorageService.getUserStorage().role == 'admin' : false;
+      this.loggedInUser = this.localStorageService.getUserStorage();
       this.cartItems = this.localStorageService.getCartStorage();
       this.setNewCartCount();
+    }
+    else {
+      this.router.navigate(['/login']);
     }
     this.getProducts();
   }
@@ -116,7 +124,11 @@ export class HomeComponent implements OnInit {
       cartProduct.quantity++;
     } else {
       this.cartCount++;
-      this.cartItems.push({product: product, quantity: 1, id: this.cartCount});
+      this.cartItems.push({product: product,
+                          quantity: 1,
+                          id: this.cartCount,
+                          product_id: product.id!
+      });
     }
     this.localStorageService.setCartStorage(this.cartItems);
     this.localStorageService.setCartCount(this.cartCount);
@@ -246,6 +258,7 @@ export class HomeComponent implements OnInit {
   }
 
   // Call this method whenever a filter value changes
+
   onFilterChange() {
     this.applyFilters();
   }

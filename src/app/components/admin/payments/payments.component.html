@@ -1,47 +1,264 @@
-<mat-paginator [pageSizeOptions]="[10, 30, 50]" showFirstLastButtons></mat-paginator>
-<mat-table [dataSource]="dataSource"  >
+<mat-tab-group>
+  <!-- All Tab -->
+  <mat-tab label="All ({{payments.length}})">
+    <ng-container *ngIf="dataSource; else loadingTemplate">
+      <mat-paginator style="background-color: #f5f5f5;" [pageSizeOptions]="[10, 30, 50]" showFirstLastButtons
+                     #paginator
+      ></mat-paginator>
+      <mat-table [dataSource]="dataSource">
+        <!-- ID Column -->
+        <ng-container matColumnDef="id">
+          <mat-header-cell *matHeaderCellDef> ID</mat-header-cell>
+          <mat-cell *matCellDef="let payment"> {{payment.id}} </mat-cell>
+        </ng-container>
 
-  <!-- ID Column -->
-  <ng-container matColumnDef="id">
-    <mat-header-cell *matHeaderCellDef > ID </mat-header-cell>
-    <mat-cell *matCellDef="let payment"> {{payment.id}} </mat-cell>
-  </ng-container>
+        <ng-container matColumnDef="order_id">
+          <mat-header-cell *matHeaderCellDef> Order Id</mat-header-cell>
+          <mat-cell *matCellDef="let payment"> {{payment.order_id}} </mat-cell>
+        </ng-container>
 
-  <ng-container matColumnDef="order_id">
-    <mat-header-cell *matHeaderCellDef > Order Id </mat-header-cell>
-    <mat-cell *matCellDef="let payment"> {{payment.order_id}} </mat-cell>
-  </ng-container>
+        <!-- Email Column -->
+        <ng-container matColumnDef="Amount">
+          <mat-header-cell *matHeaderCellDef> Amount</mat-header-cell>
+          <mat-cell *matCellDef="let payment"> {{payment.amount | currency}} </mat-cell>
+        </ng-container>
 
-  <!-- Email Column -->
-  <ng-container matColumnDef="Amount">
-    <mat-header-cell *matHeaderCellDef > Amount </mat-header-cell>
-    <mat-cell *matCellDef="let payment"> {{payment.amount | currency}} </mat-cell>
-  </ng-container>
+        <ng-container matColumnDef="payment_method">
+          <mat-header-cell *matHeaderCellDef> Method</mat-header-cell>
+          <mat-cell *matCellDef="let payment">
+            <p>{{payment.payment_method}}</p>
+          </mat-cell>
+        </ng-container>
 
-  <ng-container matColumnDef="payment_method">
-    <mat-header-cell *matHeaderCellDef > Method </mat-header-cell>
-    <mat-cell *matCellDef="let payment">
-      <p>{{payment.payment_method}}</p>
-    </mat-cell>
-  </ng-container>
+        <ng-container matColumnDef="payment_status">
+          <mat-header-cell *matHeaderCellDef> Status</mat-header-cell>
+          <mat-cell *matCellDef="let payment"><p
+            [ngClass]="statusColors(payment.payment_status)">{{payment.payment_status}}</p></mat-cell>
+        </ng-container>
 
-  <ng-container matColumnDef="payment_status">
-    <mat-header-cell *matHeaderCellDef > Status </mat-header-cell>
-    <mat-cell *matCellDef="let payment"> <p [ngClass]="statusColors(payment.payment_status)">{{payment.payment_status}}</p> </mat-cell>
-  </ng-container>
+        <!-- acceptPayment Column -->
+        <ng-container matColumnDef="Accept">
+          <mat-header-cell *matHeaderCellDef> Accept</mat-header-cell>
+          <mat-cell *matCellDef="let payment">
+            <button mat-raised-button color="primary" [disabled]="payment.payment_status !== 'processing'"
+                    (click)="openConfirmation(PaymentMessage.accept,PaymentMode.accept,payment.id)">Accept
+            </button>
+          </mat-cell>
+        </ng-container>
 
-  <!-- acceptPayment Column -->
-  <ng-container matColumnDef="Accept">
-    <mat-header-cell *matHeaderCellDef > Accept </mat-header-cell>
-    <mat-cell *matCellDef="let payment"> <button mat-raised-button color="primary" (click)="openConfirmation(PaymentMessage.accept,PaymentMode.accept,payment.id)">Accept</button> </mat-cell>
-  </ng-container>
+        <!-- rejectPayment Column -->
+        <ng-container matColumnDef="decline">
+          <mat-header-cell *matHeaderCellDef> Decline</mat-header-cell>
+          <mat-cell *matCellDef="let payment">
+            <button mat-raised-button color="warn"
+                    [disabled]="payment.payment_status !== 'processing'"
+                    (click)="openConfirmation(PaymentMessage.decline,PaymentMode.decline,payment.id)">
+              Reject
+            </button>
+          </mat-cell>
+        </ng-container>
 
-  <!-- rejectPayment Column -->
-  <ng-container matColumnDef="decline">
-      <mat-header-cell *matHeaderCellDef > Decline </mat-header-cell>
-    <mat-cell *matCellDef="let payment"> <button mat-raised-button color="warn" (click)="openConfirmation(PaymentMessage.decline,PaymentMode.decline,payment.id)">Reject</button> </mat-cell>
-  </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let payment; columns: displayedColumns;"></mat-row>
+      </mat-table>
+    </ng-container>
+    <ng-template #loadingTemplate>
+      <!-- Loading spinner or message when data is still loading -->
+      Loading...
+    </ng-template>
+  </mat-tab>
+  <!-- Processing Tab -->
+  <mat-tab label="Processing ({{processingDataSource.data.length}})">
+    <ng-container *ngIf="dataSource; else loadingTemplate">
+      <mat-paginator style="background-color: #f5f5f5;" [pageSizeOptions]="[10, 30, 50]" showFirstLastButtons
+                     #processingPaginator
+      ></mat-paginator>
+      <mat-table [dataSource]="processingDataSource">
 
-  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row *matRowDef="let payment; columns: displayedColumns;"></mat-row>
-</mat-table>
+        <!-- ID Column -->
+        <ng-container matColumnDef="id">
+          <mat-header-cell *matHeaderCellDef> ID</mat-header-cell>
+          <mat-cell *matCellDef="let payment"> {{payment.id}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="order_id">
+          <mat-header-cell *matHeaderCellDef> Order Id</mat-header-cell>
+          <mat-cell *matCellDef="let payment"> {{payment.order_id}} </mat-cell>
+        </ng-container>
+
+        <!-- Email Column -->
+        <ng-container matColumnDef="Amount">
+          <mat-header-cell *matHeaderCellDef> Amount</mat-header-cell>
+          <mat-cell *matCellDef="let payment"> {{payment.amount | currency}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="payment_method">
+          <mat-header-cell *matHeaderCellDef> Method</mat-header-cell>
+          <mat-cell *matCellDef="let payment">
+            <p>{{payment.payment_method}}</p>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="payment_status">
+          <mat-header-cell *matHeaderCellDef> Status</mat-header-cell>
+          <mat-cell *matCellDef="let payment"><p
+            [ngClass]="statusColors(payment.payment_status)">{{payment.payment_status}}</p></mat-cell>
+        </ng-container>
+
+        <!-- acceptPayment Column -->
+        <ng-container matColumnDef="Accept">
+          <mat-header-cell *matHeaderCellDef> Accept</mat-header-cell>
+          <mat-cell *matCellDef="let payment">
+            <button mat-raised-button color="primary" [disabled]="payment.payment_status !== 'processing'"
+                    (click)="openConfirmation(PaymentMessage.accept,PaymentMode.accept,payment.id)">Accept
+            </button>
+          </mat-cell>
+        </ng-container>
+
+        <!-- rejectPayment Column -->
+        <ng-container matColumnDef="decline">
+          <mat-header-cell *matHeaderCellDef> Decline</mat-header-cell>
+          <mat-cell *matCellDef="let payment">
+            <button mat-raised-button color="warn"
+                    [disabled]="payment.payment_status !== 'processing'"
+                    (click)="openConfirmation(PaymentMessage.decline,PaymentMode.decline,payment.id)">
+              Reject
+            </button>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let payment; columns: displayedColumns;"></mat-row>
+      </mat-table>    </ng-container>
+  </mat-tab>
+  <!-- Completed Tab -->
+  <mat-tab label="Completed ({{completedDataSource.data.length}})">
+    <ng-container *ngIf="dataSource; else loadingTemplate">
+      <mat-paginator style="background-color: #f5f5f5;" [pageSizeOptions]="[10, 30, 50]" showFirstLastButtons
+                      #completedPaginator
+
+      ></mat-paginator>
+      <mat-table [dataSource]="completedDataSource">
+
+        <!-- ID Column -->
+        <ng-container matColumnDef="id">
+          <mat-header-cell *matHeaderCellDef> ID</mat-header-cell>
+          <mat-cell *matCellDef="let payment"> {{payment.id}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="order_id">
+          <mat-header-cell *matHeaderCellDef> Order Id</mat-header-cell>
+          <mat-cell *matCellDef="let payment"> {{payment.order_id}} </mat-cell>
+        </ng-container>
+
+        <!-- Email Column -->
+        <ng-container matColumnDef="Amount">
+          <mat-header-cell *matHeaderCellDef> Amount</mat-header-cell>
+          <mat-cell *matCellDef="let payment"> {{payment.amount | currency}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="payment_method">
+          <mat-header-cell *matHeaderCellDef> Method</mat-header-cell>
+          <mat-cell *matCellDef="let payment">
+            <p>{{payment.payment_method}}</p>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="payment_status">
+          <mat-header-cell *matHeaderCellDef> Status</mat-header-cell>
+          <mat-cell *matCellDef="let payment"><p
+            [ngClass]="statusColors(payment.payment_status)">{{payment.payment_status}}</p></mat-cell>
+        </ng-container>
+
+        <!-- acceptPayment Column -->
+        <ng-container matColumnDef="Accept">
+          <mat-header-cell *matHeaderCellDef> Accept</mat-header-cell>
+          <mat-cell *matCellDef="let payment">
+            <button mat-raised-button color="primary" [disabled]="payment.payment_status !== 'processing'"
+                    (click)="openConfirmation(PaymentMessage.accept,PaymentMode.accept,payment.id)">Accept
+            </button>
+          </mat-cell>
+        </ng-container>
+
+        <!-- rejectPayment Column -->
+        <ng-container matColumnDef="decline">
+          <mat-header-cell *matHeaderCellDef> Decline</mat-header-cell>
+          <mat-cell *matCellDef="let payment">
+            <button mat-raised-button color="warn"
+                    [disabled]="payment.payment_status !== 'processing'"
+                    (click)="openConfirmation(PaymentMessage.decline,PaymentMode.decline,payment.id)">
+              Reject
+            </button>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let payment; columns: displayedColumns;"></mat-row>
+      </mat-table>
+    </ng-container>
+  </mat-tab>
+  <!-- Declined Tab -->
+  <mat-tab label="Declined ({{declinedDataSource.data.length}})">
+    <ng-container *ngIf="dataSource; else loadingTemplate">
+      <mat-paginator style="background-color: #f5f5f5;" [pageSizeOptions]="[10, 30, 50]" showFirstLastButtons
+                     #declinedPaginator
+      ></mat-paginator>
+      <mat-table [dataSource]="declinedDataSource">
+
+        <!-- ID Column -->
+        <ng-container matColumnDef="id">
+          <mat-header-cell *matHeaderCellDef> ID</mat-header-cell>
+          <mat-cell *matCellDef="let payment"> {{payment.id}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="order_id">
+          <mat-header-cell *matHeaderCellDef> Order Id</mat-header-cell>
+          <mat-cell *matCellDef="let payment"> {{payment.order_id}} </mat-cell>
+        </ng-container>
+
+        <!-- Email Column -->
+        <ng-container matColumnDef="Amount">
+          <mat-header-cell *matHeaderCellDef> Amount</mat-header-cell>
+          <mat-cell *matCellDef="let payment"> {{payment.amount | currency}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="payment_method">
+          <mat-header-cell *matHeaderCellDef> Method</mat-header-cell>
+          <mat-cell *matCellDef="let payment">
+            <p>{{payment.payment_method}}</p>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="payment_status">
+          <mat-header-cell *matHeaderCellDef> Status</mat-header-cell>
+          <mat-cell *matCellDef="let payment"><p
+            [ngClass]="statusColors(payment.payment_status)">{{payment.payment_status}}</p></mat-cell>
+        </ng-container>
+
+        <!-- acceptPayment Column -->
+        <ng-container matColumnDef="Accept">
+          <mat-header-cell *matHeaderCellDef> Accept</mat-header-cell>
+          <mat-cell *matCellDef="let payment">
+            <button mat-raised-button color="primary" [disabled]="payment.payment_status !== 'processing'"
+                    (click)="openConfirmation(PaymentMessage.accept,PaymentMode.accept,payment.id)">Accept
+            </button>
+          </mat-cell>
+        </ng-container>
+
+        <!-- rejectPayment Column -->
+        <ng-container matColumnDef="decline">
+          <mat-header-cell *matHeaderCellDef> Decline</mat-header-cell>
+          <mat-cell *matCellDef="let payment">
+            <button mat-raised-button color="warn"
+                    [disabled]="payment.payment_status !== 'processing'"
+                    (click)="openConfirmation(PaymentMessage.decline,PaymentMode.decline,payment.id)">
+              Reject
+            </button>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let payment; columns: displayedColumns;"></mat-row>
+      </mat-table>    </ng-container>
+  </mat-tab>
+</mat-tab-group>

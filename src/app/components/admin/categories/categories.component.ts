@@ -41,7 +41,7 @@ export class CategoriesComponent implements OnInit{
 
   editCategory(category:Category) {
     let Ref = this.dialog.open(EditCategoryDialogComponent, {
-      data: category,
+      data: {category: category, mode: "edit"},
       width: '600px',
     })
     Ref.afterClosed().subscribe((result)=>{
@@ -68,4 +68,16 @@ export class CategoriesComponent implements OnInit{
     })
   }
 
+  addCategory() {
+    let Ref = this.dialog.open(EditCategoryDialogComponent, {
+      data: {mode: "add"},
+      width: '600px',
+    })
+    Ref.afterClosed().subscribe((result)=>{
+      if (result) {
+        this.getCategories();
+      }
+    })
+
+  }
 }

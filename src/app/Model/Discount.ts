@@ -1,5 +1,5 @@
 export interface Discount {
-  id: number;
+  id?: number;
   code: string;
   discount: number;
   start_date: Date;

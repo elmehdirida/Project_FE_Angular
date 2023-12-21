@@ -21,7 +21,7 @@ export class OrderServiceService {
     return this.httpClient.delete(`${this.apiUrl}/orders/${id}`);
   }
   createOrder(data : any){
-    return this.httpClient.post(`${this.apiUrl}/orders`, data);
+    return this.httpClient.post(`${this.apiUrl}/order`, data);
   }
 
 }

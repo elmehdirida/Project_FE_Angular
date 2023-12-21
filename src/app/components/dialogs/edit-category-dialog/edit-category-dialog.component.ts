@@ -11,33 +11,49 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 })
 export class EditCategoryDialogComponent {
   categories: Category[] = [];
-  categoryForm:FormGroup=new FormGroup({
-    description:new FormControl(this.data.description,[Validators.required]),
-    name:new FormControl(this.data.name,[Validators.required]),
-  });
-  constructor(@Inject(MAT_DIALOG_DATA) public data: Category,
+  categoryForm:FormGroup;
+  category : Category;
+  constructor(@Inject(MAT_DIALOG_DATA) public data: {category: Category, mode: string},
               public dialog: MatDialogRef<EditCategoryDialogComponent>,
               private categoryService : CategoryServiceService,
   ) {
+    if(this.data.mode === 'edit') {
+      this.category = data.category;
+      this.categoryForm = new FormGroup({
+        id: new FormControl(this.data.category.id),
+        name: new FormControl(this.data.category.name, [Validators.required]),
+        description: new FormControl(this.data.category.description, [Validators.required]),
+      });
+    } else{
+      this.category = {
+        name: '',
+        description: '',
+      };
+      this.categoryForm = new FormGroup({
+        name: new FormControl('', [Validators.required]),
+        description: new FormControl('', [Validators.required]),
+      });
+    }
   }
 
   saveChanges() {
-    if(this.categoryForm.valid) {
-      let category = this.categoryForm.value;
-      category.id = this.data.id;
-      this.categoryService.updateCategory(category.id,category).subscribe((data: any) => {
-          this.dialog.close(true);
-        },
-        (error) => {
-          if(error.error.name){
-            this.categoryForm.controls['name'].setErrors({'nameExists': true});
-          }
-          else{
-            this.dialog.close(false);
-          }        }
-      )
+  if(this.categoryForm.valid){
+    this.category.name = this.categoryForm.value.name;
+    this.category.description = this.categoryForm.value.description;
+    if(this.data.mode === 'edit'){
+      this.categoryService.updateCategory(this.category).subscribe((data: any)=>{
+        this.dialog.close(true);
+      })
+    }
+    else if (this.data.mode === 'add'){
+
+      this.categoryService.addCategory(this.category).subscribe((data: any)=>{
+        this.dialog.close(true);
+      })
+    }
     }
   }
+
   closeEditDialog() {
     this.dialog.close(false);
   }

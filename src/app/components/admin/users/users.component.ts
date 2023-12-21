@@ -10,13 +10,13 @@ import {ConfirmDialogComponent} from "../../dialogs/confirm-dialog/confirm-dialo
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
-  styleUrls: ['./users.component.css']
+  styleUrls: ['./users.component.scss']
 })
 export class UsersComponent  implements  OnInit{
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   dataSource! : MatTableDataSource<User>
   users : User[]=[]
-  displayedColumns: string[] = ['id', 'name', 'email', 'edit', 'delete'];
+  displayedColumns: string[] = ['id', 'name','role', 'email', 'edit', 'delete'];
   constructor(private userService: UserServiceService,
               private dialog: MatDialog
               ) {

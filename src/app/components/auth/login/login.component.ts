@@ -5,6 +5,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {Router} from "@angular/router";
 import {LocalStorageService} from "../../../services/Storage/local-storage.service";
+import {User} from "../../../Model/User";
 
 @Component({
   selector: 'app-login',
@@ -39,13 +40,16 @@ export class LoginComponent  implements OnInit{
     if (this.loginForm.valid){
       this.isLoading = true;
       this.authService.login(this.loginForm.value.email, this.loginForm.value.password).subscribe({
-        next: (res) => {
-          console.log(res);
+        next: (res :User):any => {
           if (res) {
+            console.log(res);
             this.localStorageService.setIsUserLoggedIn(true);
             this.localStorageService.setUserStorage(res);
             this.loginErrors = [];
             this.isLoading = false;
+            if(res.role== 'admin'){
+              this.authService.setAdmin(true);
+            }
             this.router.navigate(['/home'],
             );
           }

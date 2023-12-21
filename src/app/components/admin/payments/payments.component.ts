@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
 import {OrderServiceService} from "../../../services/order-service.service";
@@ -23,9 +23,15 @@ export enum PaymentMode {
   styleUrls: ['./payments.component.scss']
 })
 
-export class PaymentsComponent implements OnInit {
+export class PaymentsComponent implements OnInit ,AfterViewInit{
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild('processingPaginator') processingPaginator!: MatPaginator;
+  @ViewChild('completedPaginator') completedPaginator!: MatPaginator;
+  @ViewChild('declinedPaginator') declinedPaginator!: MatPaginator;
   dataSource!: MatTableDataSource<Payment>
+  processingDataSource!: MatTableDataSource<Payment>
+  completedDataSource!: MatTableDataSource<Payment>
+  declinedDataSource!: MatTableDataSource<Payment>
   payments: Payment[] = []
   displayedColumns: string[] = ['id', 'order_id', 'payment_method', 'payment_status', 'Amount', 'Accept', 'decline'];
 
@@ -33,10 +39,21 @@ export class PaymentsComponent implements OnInit {
               private paymentService: PaymentServiceService,
               private dialog: MatDialog
   ) {
+    //initialize the dataSource
+    this.dataSource = new MatTableDataSource<Payment>([])
+    this.processingDataSource = new MatTableDataSource<Payment>([])
+    this.completedDataSource = new MatTableDataSource<Payment>([])
+    this.declinedDataSource = new MatTableDataSource<Payment>([])
   }
 
   ngOnInit(): void {
     this.getPayments();
+  }
+  ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator;
+    this.processingDataSource.paginator = this.processingPaginator;
+    this.completedDataSource.paginator = this.completedPaginator;
+    this.declinedDataSource.paginator = this.declinedPaginator;
   }
 
   getPayments() {
@@ -44,6 +61,13 @@ export class PaymentsComponent implements OnInit {
         this.payments = data.data;
         this.dataSource = new MatTableDataSource(this.payments);
         this.dataSource.paginator = this.paginator;
+        this.processingDataSource = new MatTableDataSource(this.payments.filter((payment) => payment.payment_status == "processing"));
+        this.processingDataSource.paginator = this.processingPaginator;
+        this.completedDataSource = new MatTableDataSource(this.payments.filter((payment) => payment.payment_status == "completed"));
+        this.completedDataSource.paginator = this.completedPaginator;
+        this.declinedDataSource = new MatTableDataSource(this.payments.filter((payment) => payment.payment_status == "declined"));
+        this.declinedDataSource.paginator = this.declinedPaginator;
+
       }
     )
 
@@ -80,9 +104,19 @@ export class PaymentsComponent implements OnInit {
   acceptPayment(id: number) {
     let payment = this.payments.find((payment) => payment.id == id);
     if (payment) {
-        payment!.payment_status = "completed";
+        payment.payment_status = "completed";
+        console.log(payment);
         this.paymentService.updatePayment(payment.id, payment).subscribe((data: any) => {
           this.getPayments();
+            this.orderService.getOrder(payment?.order_id!).subscribe((data: any) => {
+              let order = data.data;
+              order.order_status = "completed";
+              this.orderService.updateOrder(order.id, order).subscribe((data: any) => {
+              }, (error) => {
+                console.log(error);
+              })
+            }
+          )
         }, (error) => {
           console.log(error);
         })
@@ -95,6 +129,15 @@ export class PaymentsComponent implements OnInit {
         payment!.payment_status = "declined";
         this.paymentService.updatePayment(payment.id, payment).subscribe((data: any) => {
           this.getPayments();
+            this.orderService.getOrder(payment?.order_id!).subscribe((data: any) => {
+              let order = data.data;
+              order.order_status = "declined";
+              this.orderService.updateOrder(order.id, order).subscribe((data: any) => {
+              }, (error) => {
+                console.log(error);
+              })
+            }
+          )
         }, (error) => {
           console.log(error);
         })

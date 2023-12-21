@@ -1,11 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
-import {Category} from "../../../Model/Category";
-import {CategoryServiceService} from "../../../services/category-service.service";
 import {MatDialog} from "@angular/material/dialog";
-import {EditCategoryDialogComponent} from "../../dialogs/edit-category-dialog/edit-category-dialog.component";
-import {User} from "../../../Model/User";
 import {ConfirmDialogComponent} from "../../dialogs/confirm-dialog/confirm-dialog.component";
 import {Discount} from "../../../Model/Discount";
 import {DiscountServiceService} from "../../../services/discount-service.service";
@@ -43,7 +39,7 @@ export class DiscountsComponent implements OnInit{
 
   editDiscount(discount:Discount) {
     let Ref = this.dialog.open(EditDiscountDialogComponent, {
-      data: discount,
+      data: {discount: discount, mode: "edit"},
       width: '600px',
     })
     Ref.afterClosed().subscribe((result)=>{
@@ -68,5 +64,18 @@ export class DiscountsComponent implements OnInit{
         )
       }
     })
+  }
+
+  addDiscount() {
+    let Ref = this.dialog.open(EditDiscountDialogComponent, {
+      data: {mode: "add"},
+      width: '600px',
+    })
+    Ref.afterClosed().subscribe((result)=>{
+      if (result) {
+        this.getDiscounts();
+      }
+    })
+
   }
 }

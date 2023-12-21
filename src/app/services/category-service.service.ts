@@ -21,10 +21,16 @@ export class CategoryServiceService {
   createCategory(data : any){
     return this.httpClient.post(`${this.apiUrl}/categories`, data);
   }
-  updateCategory(id : number, data : any){
-    return this.httpClient.put(`${this.apiUrl}/categories/${id}`, data);
+
+  updateCategory( category: Category){
+    return this.httpClient.put(`${this.apiUrl}/categories/${category.id}`, category);
   }
   deleteCategory(id : number){
     return this.httpClient.delete(`${this.apiUrl}/categories/${id}`);
+  }
+
+  addCategory(category: Category) {
+    return this.httpClient.post(`${this.apiUrl}/category`, category);
+
   }
 }

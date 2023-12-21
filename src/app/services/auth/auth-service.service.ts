@@ -7,11 +7,12 @@ import {User} from "../../Model/User";
   providedIn: 'root'
 })
 export class AuthServiceService {
+  isAdmin: boolean = false;
   apiUrl ='http://localhost:8000/api';
 constructor(private httpClient : HttpClient) { }
 
   login(email: string, password: string) {
-    return this.httpClient.post(`${this.apiUrl}/login`, {"email":email,"password": password});
+    return this.httpClient.post<User>(`${this.apiUrl}/login`, {"email":email,"password": password});
   }
   logout() {
     return this.httpClient.post(`${this.apiUrl}/logout`, {});
@@ -19,5 +20,12 @@ constructor(private httpClient : HttpClient) { }
 
   register(user: User) {
     return this.httpClient.post(`${this.apiUrl}/user`, user);
+  }
+
+  setAdmin(isAdmin: boolean) {
+    this.isAdmin = isAdmin;
+  }
+  getAdmin() {
+    return this.isAdmin;
   }
 }

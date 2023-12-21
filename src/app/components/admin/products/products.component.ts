@@ -40,9 +40,9 @@ export class ProductsComponent implements OnInit{
   }
 
 
-  editProduct(product:Product) {
+  editProduct(product:Product ) {
     let Ref = this.dialog.open(EditProductDialogComponent, {
-      data: product,
+      data: {product: product, mode: "edit"},
       width: '600px',
     })
     Ref.afterClosed().subscribe((result)=>{
@@ -58,7 +58,7 @@ export class ProductsComponent implements OnInit{
     })
     Ref.afterClosed().subscribe((result)=>{
       if (result) {
-        this.productService.deleteProduct(product.id).subscribe((data: any)=>{
+        this.productService.deleteProduct(product.id!).subscribe((data: any)=>{
             this.getProducts();
           },
           (error)=>{
@@ -69,4 +69,15 @@ export class ProductsComponent implements OnInit{
     })
   }
 
+  addProduct() {
+    let Ref = this.dialog.open(EditProductDialogComponent, {
+      data: {mode: "add"},
+      width: '600px',
+    })
+    Ref.afterClosed().subscribe((result)=>{
+      if (result) {
+        this.getProducts();
+      }
+    })
+  }
 }

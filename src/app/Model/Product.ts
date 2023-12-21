@@ -3,8 +3,8 @@ import {Category} from "./Category";
 
 export interface Product
 {
-  comments: Comment[];
-  id: number;
+  comments?: Comment[];
+  id?: number;
   name: string;
   price: number;
   image: string;
@@ -14,6 +14,6 @@ export interface Product
   category_id : number;
   discount?: Discount;
   category?: Category;
+  totalRating?:number;
   rating: number;
-
 }

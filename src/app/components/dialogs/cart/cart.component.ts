@@ -3,6 +3,9 @@ import { MatDialogRef} from "@angular/material/dialog";
 import {CartProduct} from "../../../Model/CartProduct";
 import {MatTableDataSource} from "@angular/material/table";
 import {LocalStorageService} from "../../../services/Storage/local-storage.service";
+import {OrderProductService} from "../../../services/order-product.service";
+import {OrderServiceService} from "../../../services/order-service.service";
+import {flatMap} from "rxjs";
 
 @Component({
   selector: 'app-cart',
@@ -14,6 +17,8 @@ export class CartComponent{
   constructor(
     public dialogRef: MatDialogRef<CartComponent>,
     private  localStorageService: LocalStorageService,
+    private  orderProductService: OrderProductService,
+    private orderService: OrderServiceService
   ) {
     this.cartItems = this.localStorageService.getCartStorage();
     this.calcTotalCost(this.cartItems);
@@ -61,10 +66,42 @@ export class CartComponent{
 
   }
 
-  checkout() {
 
+checkout() {
+  let order = {
+    order_date: new Date().toISOString().slice(0, 19).replace('T', ' '),
+    total_amount: this.total,
+    order_status: "pending",
+    user_id: this.localStorageService.getUserStorage().id
   }
-
+  this.orderService.createOrder(order).subscribe((data: any) => {
+      console.log(data);
+      this.cartItems.forEach((item) => {
+        let orderProduct = {
+          order_id: data.data.id,
+          product_id: item.product.id,
+          quantity: item.quantity,
+          price: item.product.price,
+          total: item.product.price * item.quantity
+        }
+        this.orderProductService.createOrderProduct(orderProduct).subscribe((data: any) => {
+            console.log(data);
+            //clear cart
+            this.localStorageService.removeCartStorage();
+            this.localStorageService.setCartCount(0);
+            this.dialogRef.close();
+          },
+          (error: any) => {
+            console.log(error);
+          }
+        )
+      })
+    },
+    (error: any) => {
+      console.log(error);
+    }
+  )
+}
   onNoClick() {
     this.dialogRef.close();
   }
