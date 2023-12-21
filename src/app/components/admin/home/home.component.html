@@ -64,7 +64,7 @@
             Last 5 Users
           </div>
           <div class="last-users-list">
-            <div class="last-user" *ngFor="let user of users | slice:users.length-5:users.length">
+            <div class="last-user" *ngFor="let user of ( users | slice:users.length-5:users.length).reverse()">
               <div class="last-user-name">
                 {{user.name}}
               </div>
@@ -106,6 +106,51 @@
         <button mat-flat-button routerLink="/users">View Products</button>
       </mat-card-actions>
     </mat-card>
+    <mat-card class="dash-card mat-elevation-z7">
+      <mat-card-header>
+        <mat-card-title>
+          <div class="dash-card-head">
+            <h2>Payments</h2>
+            <mat-icon>payment</mat-icon>
+          </div>
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="dash-card-content">
+        <div class="dash-card-count">
+          Total Payments :
+          {{payments.length}}
+        </div>
+        <div class="last-users">
+          <div class="last-users-title">
+            Payments Status :
+          </div>
+          <div class="last-users-list">
+            <div class="last-user" *ngFor="let status of paymentStatusCount" [ngClass]="statusColors(status.status)">
+              <div class="last-user-name">
+                {{status.status}}
+                {{status.count}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="last-users">
+          <div class="last-users-title">
+            Total Payments :
+          </div>
+          <div class="last-users-list">
+            <div class="last-user" >
+              <div class="total-sales">
+                {{totalPayments | currency}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+      <mat-card-actions class="dash-card-actions">
+        <button mat-flat-button routerLink="/payments">View Payments</button>
+      </mat-card-actions>
+    </mat-card>
+
   </div>
 </div>
 <ng-template #loading>

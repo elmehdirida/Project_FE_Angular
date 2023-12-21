@@ -4,6 +4,8 @@ import {MatSidenav} from "@angular/material/sidenav";
 import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 import {map} from "rxjs";
 import {LocalStorageService} from "../../services/Storage/local-storage.service";
+import {Router} from "@angular/router";
+import {AuthServiceService} from "../../services/auth/auth-service.service";
 
 @Component({
   selector: 'app-admin',
@@ -29,7 +31,9 @@ export class AdminComponent {
   isOpen = false;
   isLoginIn: any;
     constructor(private breakpointObserver: BreakpointObserver,
-                public localStorageService: LocalStorageService
+                public localStorageService: LocalStorageService,
+                private router: Router,
+                private authService: AuthServiceService,
                 ) {
       this.isLoginIn = this.localStorageService.isUserLoggedIn();
       if(!this.isLoginIn || this.localStorageService.getUserStorage().role !== 'admin'){
@@ -62,6 +66,16 @@ export class AdminComponent {
       return path;
   }
   logout() {
-
+    this.authService.logout().subscribe({
+      next: () => {
+        this.localStorageService.setIsUserLoggedIn(false);
+        this.localStorageService.removeUserStorage();
+        this.localStorageService.removeCartStorage();
+        this.router.navigate(['/login']);
+      },
+      error: (error) => {
+        console.log(error);
+      },
+    });
   }
 }

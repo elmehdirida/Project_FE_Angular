@@ -33,7 +33,9 @@ export class HomeComponent implements OnInit{
   isLoaded: boolean = false;
   //create a map that handel 4 status of order and count of them
   orderStatusCount : any[] = [];
+  paymentStatusCount : any[] = [];
   totalSales : number = 0;
+  totalPayments : number = 0;
   constructor(private userService : UserServiceService,
               private orderService : OrderServiceService,
               private productService : ProductService,
@@ -68,7 +70,9 @@ export class HomeComponent implements OnInit{
         this.payments = responses[6].data;
         this.getTop5Products();
         this.getOrdersCount();
+        this.getPaymentStatusCount();
         this.getTotalSales();
+        this.getTotalPayments();
         },
       error => {
         console.error('Error fetching data:', error);
@@ -92,11 +96,26 @@ export class HomeComponent implements OnInit{
       this.totalSales += +item.total_amount as number;
     })
   }
+
+  getTotalPayments() {
+    this.payments.forEach((item)=>{
+      if (item.payment_status == "completed"){
+        this.totalPayments += +item.amount as number;
+      }
+    })
+  }
   getOrdersCount(){
-    this.orderStatusCount.push({status: "pending", count: this.orders.filter((item)=>item.order_status == "pending").length});
-    this.orderStatusCount.push({status: "processing", count: this.orders.filter((item)=>item.order_status == "processing").length});
     this.orderStatusCount.push({status: "completed", count: this.orders.filter((item)=>item.order_status == "completed").length});
+    this.orderStatusCount.push({status: "processing", count: this.orders.filter((item)=>item.order_status == "processing").length});
+    this.orderStatusCount.push({status: "pending", count: this.orders.filter((item)=>item.order_status == "pending").length});
     this.orderStatusCount.push({status: "declined", count: this.orders.filter((item)=>item.order_status == "declined").length});
+  }
+
+  getPaymentStatusCount(){
+    this.paymentStatusCount.push({status: "processing", count: this.payments.filter((item)=>item.payment_status == "processing").length});
+    this.paymentStatusCount.push({status: "completed", count: this.payments.filter((item)=>item.payment_status == "completed").length});
+    this.paymentStatusCount.push({status: "pending", count: this.payments.filter((item)=>item.payment_status == "pending").length});
+    this.paymentStatusCount.push({status: "declined", count: this.payments.filter((item)=>item.payment_status == "declined").length});
   }
   getTop5Products(){
     this.orderProducts.forEach((orderProduct)=>{
