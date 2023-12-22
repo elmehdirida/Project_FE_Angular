@@ -8,7 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {MatTableModule} from "@angular/material/table";
 import {MatIconModule} from "@angular/material/icon";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
@@ -19,7 +19,7 @@ import {PagesModule} from "./components/pages/pages.module";
 import {AdminModule} from "./components/admin/admin.module";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatCardModule} from "@angular/material/card";
-import {MatDatepickerModule} from "@angular/material/datepicker";
+import {Interceptor} from "./http-interceptor/Intererceptor";
 
 @NgModule({
   declarations: [
@@ -46,7 +46,13 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
     MatPaginatorModule,
     MatCardModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide : HTTP_INTERCEPTORS,
+      useClass: Interceptor,
+      multi   : true,
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

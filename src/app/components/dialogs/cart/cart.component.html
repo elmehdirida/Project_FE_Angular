@@ -65,7 +65,7 @@
   <mat-divider></mat-divider>
   <mat-card-actions class="actions">
     <button mat-raised-button color="primary" (click)="onNoClick()">Close</button>
-    <button *ngIf="cartItems.length>0" class="margin-right" mat-raised-button color="accent" (click)="openPaymentDialog()">Checkout</button>
+    <button *ngIf="cartItems.length>0" class="margin-right" mat-raised-button color="accent" (click)="checkout()">Checkout</button>
   </mat-card-actions>
 </mat-card>
 

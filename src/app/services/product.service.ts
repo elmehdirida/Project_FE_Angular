@@ -2,6 +2,7 @@ import {Injectable, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {ActivatedRoute, CanActivate} from "@angular/router";
 import {Product} from "../Model/Product";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class ProductService{
   apiUrl ='http://localhost:8000/api';
   constructor(private httpClient:HttpClient) { }
 
-  getProducts(){
+  getProducts():Observable<any>{
     return this.httpClient.get(`${this.apiUrl}/products`);
   }
 

@@ -1,11 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthServiceService} from "../../../services/auth/auth-service.service";
 import { FormControl, FormGroup, Validators} from "@angular/forms";
-import {MatDialog} from "@angular/material/dialog";
-import {MatSnackBar} from "@angular/material/snack-bar";
 import {Router} from "@angular/router";
 import {LocalStorageService} from "../../../services/Storage/local-storage.service";
-import {User} from "../../../Model/User";
 
 @Component({
   selector: 'app-login',
@@ -40,10 +37,11 @@ export class LoginComponent  implements OnInit{
     if (this.loginForm.valid){
       this.isLoading = true;
       this.authService.login(this.loginForm.value.email, this.loginForm.value.password).subscribe({
-        next: (res :User):any => {
+        next: (res:any) => {
           if (res) {
             this.localStorageService.setIsUserLoggedIn(true);
-            this.localStorageService.setUserStorage(res);
+            this.localStorageService.setUserStorage(res.user);
+            this.localStorageService.setToken(res.token);
             this.loginErrors = [];
             this.isLoading = false;
             if(res.role== 'admin'){
@@ -54,7 +52,7 @@ export class LoginComponent  implements OnInit{
           }
         },
         error: (error) => {
-            this.loginErrors = error.error.errors;
+            this.loginErrors = error.error;
             this.isLoading = false;
             this.localStorageService.setIsUserLoggedIn(false);
             this.localStorageService.removeUserStorage();

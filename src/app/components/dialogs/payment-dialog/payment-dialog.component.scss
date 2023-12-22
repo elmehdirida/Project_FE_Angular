@@ -1,11 +1,12 @@
 .payment-dialog-content {
+  height: 43vh;
   form {
     display: flex;
     flex-direction: column;
   }
 
   .payment-form-field {
-    margin-bottom: 15px;
+    margin-top: 15px;
   }
 
   .expiry-cvc-container {
@@ -24,3 +25,6 @@ mat-dialog-actions {
 }
 
 
+h2 {
+  margin: 0;
+}

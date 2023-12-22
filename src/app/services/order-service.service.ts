@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+import {Order} from "../Model/Order";
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +15,8 @@ export class OrderServiceService {
   getOrder(id : number){
     return this.httpClient.get(`${this.apiUrl}/orders/${id}`);
   }
-  updateOrder(id : number, data : any){
-    return this.httpClient.put(`${this.apiUrl}/orders/${id}`, data);
+  updateOrder( data : Order){
+    return this.httpClient.put(`${this.apiUrl}/orders/${data.id}`, data);
   }
   deleteOrder(id : number){
     return this.httpClient.delete(`${this.apiUrl}/orders/${id}`);

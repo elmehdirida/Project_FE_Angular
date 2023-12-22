@@ -32,7 +32,7 @@
         </button>
         <span> Manage {{getCurrentRoute()}}</span>
         <div class="name-and-logout">
-          <span class="name">{{localStorageService.getUserStorage().name}}</span>
+          <span class="name">{{localStorageService.getUser().name}}</span>
           <button mat-icon-button (click)="logout()">
             <mat-icon>exit_to_app</mat-icon>
           </button>

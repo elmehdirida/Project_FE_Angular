@@ -31,12 +31,12 @@ export class AdminComponent {
   isOpen = false;
   isLoginIn: any;
     constructor(private breakpointObserver: BreakpointObserver,
-                public localStorageService: LocalStorageService,
+                public localStorageService : LocalStorageService,
                 private router: Router,
                 private authService: AuthServiceService,
                 ) {
       this.isLoginIn = this.localStorageService.isUserLoggedIn();
-      if(!this.isLoginIn || this.localStorageService.getUserStorage().role !== 'admin'){
+      if(!this.isLoginIn || this.localStorageService.getUser().role !== 'admin'){
         window.location.href = '/home';
       }
       this.breakpointObserver.observe([
@@ -71,6 +71,7 @@ export class AdminComponent {
         this.localStorageService.setIsUserLoggedIn(false);
         this.localStorageService.removeUserStorage();
         this.localStorageService.removeCartStorage();
+        this.localStorageService.deleteToken();
         this.router.navigate(['/login']);
       },
       error: (error) => {

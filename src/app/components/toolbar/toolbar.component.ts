@@ -50,6 +50,7 @@ export class ToolbarComponent implements OnInit{
       next: () => {
         this.localStorageService.setIsUserLoggedIn(false);
         this.localStorageService.removeUserStorage();
+        this.localStorageService.deleteToken();
         this.localStorageService.removeCartStorage();
         this.router.navigate(['/login']);
       },
@@ -61,10 +62,8 @@ export class ToolbarComponent implements OnInit{
 
   openCartDialog() {
     this.dialog.open(CartComponent, {
-      maxHeight: '90vh',
-      maxWidth: '80vw',
-      width: "70vw",
-      height: "50vh"
+      width: "50vw",
+      height: "60vh"
     });
     this.dialog.afterAllClosed.subscribe(() => {
         this.afterClosed()

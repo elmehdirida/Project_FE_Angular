@@ -79,11 +79,13 @@ export class HomeComponent implements OnInit {
   ) {
     this.isLoginIn = this.localStorageService.isUserLoggedIn();
     if (this.isLoginIn) {
-      this.isAdmin = this.localStorageService.getUserStorage() ? this.localStorageService.getUserStorage().role == 'admin' : false;
-      this.loggedInUser = this.localStorageService.getUserStorage();
+      this.isAdmin = this.localStorageService.getUser() ? this.localStorageService.getUser().role == 'admin' : false;
+      this.loggedInUser = this.localStorageService.getUser();
     }
     this.cartItems = this.localStorageService.getCartStorage();
+
     this.setNewCartCount();
+
     this.getProducts();
   }
 
@@ -92,9 +94,11 @@ export class HomeComponent implements OnInit {
     this.productService.getProducts().subscribe((response: any) => {
       this.products = response.data;
       this.filteredProducts = this.products;
-      console.log("mosine", this.filteredProducts);
       this.isLoaded = false;
-    });
+    },
+      error => {
+        console.log(error);
+      });
   }
 
   getCategories() {
@@ -112,6 +116,7 @@ export class HomeComponent implements OnInit {
       next: () => {
         this.localStorageService.setIsUserLoggedIn(false);
         this.localStorageService.removeUserStorage();
+        this.localStorageService.deleteToken();
         this.localStorageService.removeCartStorage();
         this.router.navigate(['/login']);
       },
@@ -156,23 +161,6 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  openCartDialog() {
-    this.dialog.open(CartComponent, {
-      maxHeight: '90vh',
-      maxWidth: '80vw',
-      width: "70vw",
-      height: "50vh"
-    });
-    this.dialog.afterAllClosed.subscribe(() => {
-        this.afterClosed()
-      }
-    );
-  }
-
-  afterClosed() {
-    this.cartItems = this.localStorageService.getCartStorage();
-    this.setNewCartCount();
-  }
 
   clearSearch() {
     this.searchQuery = "";

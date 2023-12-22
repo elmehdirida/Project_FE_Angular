@@ -108,11 +108,11 @@ export class PaymentsComponent implements OnInit ,AfterViewInit{
     if (payment) {
         payment.payment_status = "completed";
         console.log(payment);
-        this.paymentService.updatePayment(payment.id, payment).subscribe((data: any) => {
+        this.paymentService.updatePayment(payment.id!, payment).subscribe((data: any) => {
             this.orderService.getOrder(payment?.order_id!).subscribe((data: any) => {
               let order = data.data;
               order.order_status = "completed";
-              this.orderService.updateOrder(order.id, order).subscribe((data: any) => {
+              this.orderService.updateOrder(order).subscribe((data: any) => {
               }, (error) => {
                 console.log(error);
               })
@@ -136,11 +136,11 @@ export class PaymentsComponent implements OnInit ,AfterViewInit{
     let payment = this.payments.find((payment) => payment.id == id);
     if (payment) {
         payment!.payment_status = "declined";
-        this.paymentService.updatePayment(payment.id, payment).subscribe((data: any) => {
+        this.paymentService.updatePayment(payment.id!, payment).subscribe((data: any) => {
             this.orderService.getOrder(payment?.order_id!).subscribe((data: any) => {
               let order = data.data;
               order.order_status = "declined";
-              this.orderService.updateOrder(order.id, order).subscribe((data: any) => {
+              this.orderService.updateOrder(order).subscribe((data: any) => {
               }, (error) => {
                 console.log(error);
               })

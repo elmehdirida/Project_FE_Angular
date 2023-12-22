@@ -1,5 +1,5 @@
 export interface  Payment{
-  id : number,
+  id? : number,
   order_id : number,
   amount : number,
   payment_method : string,

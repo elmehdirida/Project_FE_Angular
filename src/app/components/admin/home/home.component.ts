@@ -112,9 +112,10 @@ export class HomeComponent implements OnInit{
   }
 
   getPaymentStatusCount(){
+    //all
+    this.paymentStatusCount.push({status: "all", count: this.payments.length});
     this.paymentStatusCount.push({status: "processing", count: this.payments.filter((item)=>item.payment_status == "processing").length});
     this.paymentStatusCount.push({status: "completed", count: this.payments.filter((item)=>item.payment_status == "completed").length});
-    this.paymentStatusCount.push({status: "pending", count: this.payments.filter((item)=>item.payment_status == "pending").length});
     this.paymentStatusCount.push({status: "declined", count: this.payments.filter((item)=>item.payment_status == "declined").length});
   }
   getTop5Products(){

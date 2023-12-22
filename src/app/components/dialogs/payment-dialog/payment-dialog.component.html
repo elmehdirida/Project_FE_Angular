@@ -1,25 +1,37 @@
-<h2 mat-dialog-title>Payment Information</h2>
+<div>
+  <h2 mat-dialog-title>Payment Information</h2>
+  <mat-dialog-content>
+    <p>Enter your payment information below to pay a total of {{totalAmount | currency}}.</p>
+  </mat-dialog-content>
+</div>
 <mat-dialog-content class="payment-dialog-content">
-  <form>
-    <mat-form-field appearance="fill" class="payment-form-field">
-      <mat-label>Cardholder's Name</mat-label>
-      <input matInput placeholder="John Doe" type="text">
+  <form [formGroup]="paymentForm">
+    <mat-form-field appearance="outline" class="payment-form-field">
+      <mat-label>User Name</mat-label>
+      <input matInput formControlName="user" type="text" readonly>
     </mat-form-field>
-
-    <mat-form-field appearance="fill" class="payment-form-field">
+    <mat-form-field appearance="outline" class="payment-form-field">
+      <mat-label>Payment Type</mat-label>
+      <mat-select formControlName="option" [(value)]="selected">
+        <mat-option *ngFor="let cardType of paymentOptions" [value]="cardType">
+          {{cardType}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="payment-form-field" *ngIf="selected != 'PayPal'">
       <mat-label>Card Number</mat-label>
-      <input matInput placeholder="1234 1234 1234 1234" type="text">
+      <input matInput formControlName="cardNumber" type="text" readonly >
     </mat-form-field>
 
-    <div class="expiry-cvc-container">
-      <mat-form-field appearance="fill" class="expiry-field">
+    <div class="expiry-cvc-container"  *ngIf="selected != 'PayPal'">
+      <mat-form-field appearance="outline" class="expiry-field">
         <mat-label>Expiry Date</mat-label>
-        <input matInput placeholder="MM/YY" type="text">
+        <input matInput formControlName="expiry" type="text" readonly>
       </mat-form-field>
 
-      <mat-form-field appearance="fill" class="cvc-field">
+      <mat-form-field appearance="outline" class="cvc-field">
         <mat-label>CVC</mat-label>
-        <input matInput placeholder="123" type="text">
+        <input matInput formControlName="cvc" type="text" readonly>
       </mat-form-field>
     </div>
   </form>

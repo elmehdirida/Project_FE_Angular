@@ -5,7 +5,10 @@ import {MatTableDataSource} from "@angular/material/table";
 import {LocalStorageService} from "../../../services/Storage/local-storage.service";
 import {OrderProductService} from "../../../services/order-product.service";
 import {OrderServiceService} from "../../../services/order-service.service";
+import {Router} from "@angular/router";
 import {PaymentDialogComponent} from "../payment-dialog/payment-dialog.component";
+import {Order} from "../../../Model/Order";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-cart',
@@ -19,7 +22,10 @@ export class CartComponent{
     private  localStorageService: LocalStorageService,
     private  orderProductService: OrderProductService,
     private orderService: OrderServiceService,
+    private router: Router,
     private dialog: MatDialog
+    ,
+    private _snackBar: MatSnackBar
   ) {
     this.cartItems = this.localStorageService.getCartStorage();
     this.calcTotalCost(this.cartItems);
@@ -69,39 +75,65 @@ export class CartComponent{
 
 
 checkout() {
-  let order = {
-    order_date: new Date().toISOString().slice(0, 19).replace('T', ' '),
-    total_amount: this.total,
-    order_status: "pending",
-    user_id: this.localStorageService.getUserStorage().id
-  }
-  this.orderService.createOrder(order).subscribe((data: any) => {
-      console.log(data);
-      this.cartItems.forEach((item) => {
-        let orderProduct = {
-          order_id: data.data.id,
-          product_id: item.product.id,
-          quantity: item.quantity,
-          price: item.product.price,
-          total: item.product.price * item.quantity
-        }
-        this.orderProductService.createOrderProduct(orderProduct).subscribe((data: any) => {
-            console.log(data);
-            //clear cart
+    if (this.localStorageService.isUserLoggedIn()) {
+      let order = {
+        order_date: new Date().toISOString().slice(0, 19).replace('T', ' '),
+        total_amount: this.total,
+        order_status: "pending",
+        user_id: this.localStorageService.getUser().id
+      }
+      this.orderService.createOrder(order).subscribe((data: any) => {
+          let count = 0;
+          this.cartItems.forEach((item) => {
+            let orderProduct = {
+              order_id: data.data.id,
+              product_id: item.product.id,
+              quantity: item.quantity,
+              price: item.product.price,
+              total: item.product.price * item.quantity
+            }
+            count++;
+            this.orderProductService.createOrderProduct(orderProduct).subscribe((data: any) => {
+              },
+              (error: any) => {
+                console.log(error);
+              }
+            )
+          })
+          if (count == this.cartItems.length) {
             this.localStorageService.removeCartStorage();
             this.localStorageService.setCartCount(0);
-            this.dialogRef.close();
-          },
-          (error: any) => {
-            console.log(error);
+            this.openPaymentDialog(data.data);
+            this._snackBar.open('Order Placed Successfully', 'Close', {
+              duration: 3000
+            });
+            } else {
+            this._snackBar.open('Order Failed', 'Close', {
+              duration: 3000
+            });
           }
-        )
-      })
-    },
-    (error: any) => {
-      console.log(error);
+          this.dialogRef.close();
+        },
+        (error: any) => {
+        this._snackBar.open('Order Failed', 'Close', {
+          duration: 3000
+        });
+          if (error.status == 401) {
+            this.localStorageService.setIsUserLoggedIn(false);
+            this.localStorageService.removeUserStorage();
+            this.localStorageService.deleteToken();
+            this.localStorageService.removeCartStorage();
+            this.router.navigate(['/login']);
+        }
+          console.log(error);
+        }
+      )
+    } else {
+      //redirect to login
+      this.dialogRef.close();
+      this.router.navigate(['/login']);
+
     }
-  )
 }
   onNoClick() {
     this.dialogRef.close();
@@ -118,12 +150,11 @@ checkout() {
   }
 
 
-  openPaymentDialog() {
+  openPaymentDialog(data:Order) {
     const dialogRef = this.dialog.open(PaymentDialogComponent, {
-      maxHeight: '90vh',
-      maxWidth: '80vw',
-      width: "70vw",
-      height: "50vh"
+      data: data,
+      width: "50vw",
+      height: "60vh"
     });
 
     dialogRef.afterClosed().subscribe(result => {

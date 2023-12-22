@@ -16,7 +16,7 @@ export class PaymentServiceService {
     return this.httpClient.get(`${this.apiUrl}/payments/${id}`);
   }
   createPayment(payment :any){
-    return this.httpClient.post(`${this.apiUrl}/payments`,payment);
+    return this.httpClient.post(`${this.apiUrl}/payment`,payment);
   }
   updatePayment(id :number,payment :any){
     return this.httpClient.put(`${this.apiUrl}/payments/${id}`,payment);

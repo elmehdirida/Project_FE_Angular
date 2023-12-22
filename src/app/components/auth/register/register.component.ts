@@ -28,8 +28,6 @@ export class RegisterComponent {
   }
 
   onSubmit() {
-    console.log("mosine", this.registerForm.value);
-
     this.authService.register(this.registerForm.value).subscribe({
       next: (response: any) => {
         this.router.navigate(['/login']);
@@ -38,9 +36,7 @@ export class RegisterComponent {
         if (error.status === 422) {
           if (this.isValidationErrors(error.error)) {
             const validationErrors = error.error as ValidationErrors;
-
             const firstError = Object.values(validationErrors)[0][0];
-
             this.snackBar.open(firstError, 'Close', { duration: 3000 });
           }
         } else {
