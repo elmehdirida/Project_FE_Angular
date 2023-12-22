@@ -1,0 +1,26 @@
+.payment-dialog-content {
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .payment-form-field {
+    margin-bottom: 15px;
+  }
+
+  .expiry-cvc-container {
+    display: flex;
+    justify-content: space-between;
+
+    .expiry-field, .cvc-field {
+      width: 48%;
+    }
+  }
+}
+
+mat-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+

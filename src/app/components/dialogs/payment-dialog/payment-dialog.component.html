@@ -1,0 +1,30 @@
+<h2 mat-dialog-title>Payment Information</h2>
+<mat-dialog-content class="payment-dialog-content">
+  <form>
+    <mat-form-field appearance="fill" class="payment-form-field">
+      <mat-label>Cardholder's Name</mat-label>
+      <input matInput placeholder="John Doe" type="text">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="payment-form-field">
+      <mat-label>Card Number</mat-label>
+      <input matInput placeholder="1234 1234 1234 1234" type="text">
+    </mat-form-field>
+
+    <div class="expiry-cvc-container">
+      <mat-form-field appearance="fill" class="expiry-field">
+        <mat-label>Expiry Date</mat-label>
+        <input matInput placeholder="MM/YY" type="text">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="cvc-field">
+        <mat-label>CVC</mat-label>
+        <input matInput placeholder="123" type="text">
+      </mat-form-field>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="true">Cancel</button>
+  <button mat-button color="primary" (click)="pay()">Pay</button>
+</mat-dialog-actions>
