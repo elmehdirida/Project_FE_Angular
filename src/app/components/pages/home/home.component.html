@@ -1,6 +1,6 @@
 
 <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav #drawer class="sidenav" [mode]="isHandset ? 'over' : 'side'" [opened]="!isHandset" [fixedInViewport]="true"
+  <mat-sidenav #drawer class="sidenav" [mode]="isHandset ? 'over' : 'side'" [opened]="isHandset" [fixedInViewport]="true"
                [fixedTopGap]="toolbarHeight" [fixedBottomGap]="0">
     <mat-nav-list>
       <!-- Navigation items -->
@@ -27,16 +27,16 @@
       </div>
       <mat-divider class="discountFilter" ></mat-divider>
       <div class="discountFilter">
-        <mat-label style="color: #260303; font-size: medium; font-family: Roboto, sans-serif; margin-bottom: 10px">Discount (Min-Max) Filter :</mat-label>
+        <mat-label style="color: #260303; font-size: medium; font-family: Roboto, sans-serif; margin-bottom: 10px">Discount Min-Max Filter :</mat-label>
 
         <mat-form-field appearance="outline">
           <mat-label>Min Discount</mat-label>
-          <input matInput type="number" [(ngModel)]="minDiscountValue" (input)="applyFilters()">
+          <input matInput type="number" min="0" max="100" [(ngModel)]="minDiscountValue" (input)="applyFilters()">
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Max Discount</mat-label>
-          <input matInput type="number" [(ngModel)]="maxDiscountValue" (input)="applyFilters()">
+          <input matInput type="number" min="0" max="100" [(ngModel)]="maxDiscountValue" (input)="applyFilters()">
         </mat-form-field>
 
       </div>
@@ -46,12 +46,12 @@
 
         <mat-form-field appearance="outline">
           <mat-label>Min Price</mat-label>
-          <input matInput type="number" [(ngModel)]="minPrice" (input)="applyFilters()">
+          <input matInput type="number" min="0" max="100" [(ngModel)]="minPrice" (input)="applyFilters()">
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Max Price</mat-label>
-          <input matInput type="number" [(ngModel)]="maxPrice" (input)="applyFilters()">
+          <input matInput type="number" min="0" max="1000" [(ngModel)]="maxPrice" (input)="applyFilters()">
         </mat-form-field>
 
       </div>
@@ -87,48 +87,7 @@
     <button mat-raised-button color="accent" class="add-cart-button" (click)="addToCart(product)">Add to Cart</button>
   </div>
 </div>
-<footer>
-  <div class="footer-container">
-    <div class="about-us">
-      <h3>About Us</h3>
-      <p>
-        We are a leading e-commerce platform providing a seamless shopping experience to our customers.
-      </p>
-      <button>Learn more</button>
-    </div>
-    <div class="quick-links">
-      <h3>Quick Links</h3>
-      <a href="#">Home</a>
-      <a href="#">Shop</a>
-      <a href="#">Contact</a>
-      <a href="#">About</a>
-    </div>
-    <div class="contact-us">
-      <h3>Contact Us</h3>
-      <p>123 Street Road, City, State, 12345</p>
-      <p>info@ecommerce.com</p>
-      <p>(123) 456-7890</p>
-    </div>
-    <div class="follow-us">
-      <h3>Follow Us</h3>
-      <div>
-        <a href="#">
-          <span>Facebook</span>
-        </a>
-        <a href="#">
-          <span>Instagram</span>
-        </a>
-        <a href="#">
-          <span>Twitter</span>
-        </a>
-      </div>
-    </div>
-  </div>
-  <mat-divider></mat-divider>
-  <div class="copyright">
-    <p>© 2023 E-Commerce. All rights reserved.</p>
-  </div>
-</footer>
+ <app-footer  *ngIf="!isLoaded; else loading"></app-footer>
 <ng-template #loading  >
   <div class="spinner-hover-the-back-ground">
   <mat-spinner></mat-spinner></div>

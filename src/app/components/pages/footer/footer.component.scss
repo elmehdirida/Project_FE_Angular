@@ -1,0 +1,264 @@
+
+.sidenav-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+
+.mat-sidenav-content {
+  margin-top: auto;
+}
+
+
+.mat-drawer {
+  width: 250px;
+  z-index: 1000;
+}
+
+.mat-drawer-container {
+  z-index: 1000;
+}
+
+
+.sidenav {
+  width: 350px;
+}
+
+
+
+.spacer {
+  flex: 1 1 auto;
+}
+.toolbar {
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: #000000;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+  color: #fff;
+  height: auto;
+}
+
+.buttons{
+  display: flex;
+  width: auto;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+  margin-left: auto;
+}
+
+.search-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  margin: 10px 0 10px 0;
+}
+.search{
+  width: auto;
+  min-width: auto;
+  height: 56px;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-size: 16px;
+  background-color: white;
+  margin-top: 4px;
+}
+
+.product-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-top: 50px;
+}
+
+.product {
+  display: flex;
+  flex-direction: column;
+  align-items: center;;
+  width: 400px;
+  min-height: 500px;
+  margin: 10px;
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  padding: 10px;
+}
+
+.product img {
+  width: 350px;
+  height: 400px;
+}
+
+.product-details {
+  flex-grow: 1;
+  margin-top: 20px;
+  text-align: center;
+}
+
+h3 {
+  margin: 10px 0;
+}
+
+.price {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.discounted-price {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 10px 0;
+  color: #ea2121;
+}
+
+.strick-through {
+  text-decoration: line-through;
+  color: #aaa;
+}
+
+.add-cart-button {
+  margin-top: 20px;
+  &:hover {
+    background-color: #5bb24c;
+  }
+}
+
+.discount-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 30px;
+  background-color: #ea2121;
+  color: #260303;
+  font-weight: bold;
+  font-size: 14px;
+  border-radius: 5px;
+  margin: 10px 0;
+}
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;;
+  background-color: #080000;
+}
+.about-us {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 300px;
+  margin: 10px;
+  box-sizing: border-box;
+  padding: 10px;
+  color: #fff;
+}
+.quick-links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 300px;
+  margin: 10px;
+  box-sizing: border-box;
+  padding: 10px;
+  color: #fff;
+}
+.contact-us {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 300px;
+  margin: 10px;
+  box-sizing: border-box;
+  padding: 10px;
+  color: #fff;
+}
+.follow-us {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 300px;
+  margin: 10px;
+  box-sizing: border-box;
+  padding: 10px;
+  color: #fff;
+}
+.copyright {
+  display: flex;
+  align-items: center;
+  margin: 10px;
+  box-sizing: border-box;
+  padding: 10px;
+  background-color: #000103;
+  color: #fff;
+  justify-content: center;
+}
+.spinner-hover-the-back-ground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(9, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.logo {
+  cursor: pointer;
+  display: flex;
+  width: 60px;
+  height: 60px;
+  margin: 10px 10px 10px 40px;
+}
+img:hover{
+  border: 1px solid rgb(175, 103, 9);
+  box-shadow: 0px 0px 30px rgb(113, 82, 4);
+}
+
+.custom-button-size {
+  width: 48px;
+  height: 48px;
+  padding: 8px;
+}
+
+
+.discountFilter{
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  margin: 10px;
+  box-sizing: border-box;
+  padding: 10px;
+  color: #fff;
+}
+
+
+.min-max{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 300px;
+  margin: 10px;
+  box-sizing: border-box;
+  padding: 10px;
+  color: #fff;
+}
+
+.admin{
+  display: flex;
+  width: 300px;
+  margin: 10px;
+  box-sizing: border-box;
+  padding: 10px;
+  color: #fff;
+}
