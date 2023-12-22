@@ -16,7 +16,7 @@
       <div  class="discountFilter">
         <mat-label style="color: #260303; font-size: medium; font-family: Roboto, sans-serif">Category Filter :</mat-label>
 
-        <mat-form-field>
+        <mat-form-field appearance="outline">
           <mat-label>Category</mat-label>
           <mat-select [(value)]="selectedCategory" (selectionChange)="applyFilters()">
             <mat-option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</mat-option>
@@ -29,12 +29,12 @@
       <div class="discountFilter">
         <mat-label style="color: #260303; font-size: medium; font-family: Roboto, sans-serif">Discount (Min-Max) Filter :</mat-label>
 
-        <mat-form-field>
+        <mat-form-field appearance="outline">
           <mat-label>Min Discount</mat-label>
           <input matInput type="number" [(ngModel)]="minDiscountValue" (input)="applyFilters()">
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field appearance="outline">
           <mat-label>Max Discount</mat-label>
           <input matInput type="number" [(ngModel)]="maxDiscountValue" (input)="applyFilters()">
         </mat-form-field>
@@ -44,12 +44,12 @@
       <div class="discountFilter">
       <mat-label style="color: #260303; font-size: medium; font-family: Roboto, sans-serif">Price (Min-Max) Filter :</mat-label>
 
-        <mat-form-field>
+        <mat-form-field appearance="outline">
           <mat-label>Min Price</mat-label>
           <input matInput type="number" [(ngModel)]="minPrice" (input)="applyFilters()">
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field appearance="outline">
           <mat-label>Max Price</mat-label>
           <input matInput type="number" [(ngModel)]="maxPrice" (input)="applyFilters()">
         </mat-form-field>

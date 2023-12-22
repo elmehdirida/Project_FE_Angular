@@ -1,10 +1,11 @@
 import {Component} from '@angular/core';
-import { MatDialogRef} from "@angular/material/dialog";
+import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {CartProduct} from "../../../Model/CartProduct";
 import {MatTableDataSource} from "@angular/material/table";
 import {LocalStorageService} from "../../../services/Storage/local-storage.service";
 import {OrderProductService} from "../../../services/order-product.service";
 import {OrderServiceService} from "../../../services/order-service.service";
+import {PaymentDialogComponent} from "../payment-dialog/payment-dialog.component";
 
 @Component({
   selector: 'app-cart',
@@ -18,6 +19,7 @@ export class CartComponent{
     private  localStorageService: LocalStorageService,
     private  orderProductService: OrderProductService,
     private orderService: OrderServiceService,
+    private dialog: MatDialog
   ) {
     this.cartItems = this.localStorageService.getCartStorage();
     this.calcTotalCost(this.cartItems);
@@ -113,6 +115,20 @@ checkout() {
     } else {
       return product.price;
     }
+  }
+
+
+  openPaymentDialog() {
+    const dialogRef = this.dialog.open(PaymentDialogComponent, {
+      maxHeight: '90vh',
+      maxWidth: '80vw',
+      width: "70vw",
+      height: "50vh"
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed', result);
+    });
   }
 
 }
