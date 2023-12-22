@@ -22,6 +22,7 @@ import { ProductDetailComponent } from './product-detail/product-detail.componen
 import {MatDialogModule} from "@angular/material/dialog";
 import { CommentComponent } from './comment/comment.component';
 import { RatingComponent } from './rating/rating.component';
+import {ToolbarComponent} from "../toolbar/toolbar.component";
 import { RatingStaticComponent } from './rating-static/rating-static.component';
 
 
@@ -34,6 +35,7 @@ import { RatingStaticComponent } from './rating-static/rating-static.component';
     CommentComponent,
     RatingComponent,
     RatingStaticComponent,
+    ToolbarComponent
   ],
   imports: [
     CommonModule,

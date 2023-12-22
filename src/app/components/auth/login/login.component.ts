@@ -42,7 +42,6 @@ export class LoginComponent  implements OnInit{
       this.authService.login(this.loginForm.value.email, this.loginForm.value.password).subscribe({
         next: (res :User):any => {
           if (res) {
-            console.log(res);
             this.localStorageService.setIsUserLoggedIn(true);
             this.localStorageService.setUserStorage(res);
             this.loginErrors = [];

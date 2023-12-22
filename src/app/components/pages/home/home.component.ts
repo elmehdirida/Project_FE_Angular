@@ -11,6 +11,7 @@ import {MatSidenav} from "@angular/material/sidenav";
 import {BreakpointObserver} from "@angular/cdk/layout";
 import {Category} from "../../../Model/Category";
 import {CategoryServiceService} from "../../../services/category-service.service";
+import {CartServiceService} from "../../../services/cart-service.service";
 import {User} from "../../../Model/User";
 
 @Component({
@@ -42,6 +43,14 @@ export class HomeComponent implements OnInit {
   maxPrice: number = 1000;
 
   ngOnInit() {
+    this.cartService.toggleSidenav$.subscribe(() => {
+      this.drawer.toggle();
+    });
+
+    this.localStorageService.cartItems$.subscribe(cartItems => {
+      this.cartItems = cartItems;
+      this.cartCount = cartItems.length;
+    });
     this.breakpointObserver
       .observe(['(max-width: 805px)'])
       .subscribe(result => {
@@ -65,7 +74,8 @@ export class HomeComponent implements OnInit {
               private route: ActivatedRoute,
               private localStorageService: LocalStorageService,
               public dialog: MatDialog,
-              private breakpointObserver: BreakpointObserver
+              private breakpointObserver: BreakpointObserver,
+              private cartService: CartServiceService,
   ) {
     this.isLoginIn = this.localStorageService.isUserLoggedIn();
     if (this.isLoginIn) {
@@ -125,10 +135,13 @@ export class HomeComponent implements OnInit {
                           quantity: 1,
                           id: this.cartCount,
                           product_id: product.id!
+
       });
     }
     this.localStorageService.setCartStorage(this.cartItems);
     this.localStorageService.setCartCount(this.cartCount);
+    this.cartService.updateCartCount(this.cartCount);
+
   }
 
   register() {
@@ -186,9 +199,6 @@ export class HomeComponent implements OnInit {
 
   }
 
-  toggleSidenav() {
-    this.drawer.toggle();
-  }
 
 
   @HostListener('window:resize', ['$event'])
@@ -207,41 +217,6 @@ export class HomeComponent implements OnInit {
 
 
 
-
-  /*filterProductsByDiscountRange() {
-    this.filteredProducts = this.products.filter(product => {
-      const discountValue = product.discount ? product.discount.discount : 0;
-      return discountValue >= this.minDiscountValue && discountValue <= this.maxDiscountValue;
-    });
-  }
-
-
-  filterProductsByPrice() {
-    this.filteredProducts = this.products.filter(product => {
-      const price = product.price ? (product.price - (product.price*product.discount!.discount/100)) : 0;
-      console.log("price1", price)
-      console.log("price2", (product.price - (product.price*product.discount!.discount/100)))
-      return price >= this.minPrice && price <= this.maxPrice;
-    });
-  }
-
-  filterProductsByCategory() {
-    if (this.selectedCategory) {
-      console.log("Selected Category ID:", this.selectedCategory);
-      this.filteredProducts = this.products.filter(product => {
-        if (product.category) {
-          console.log("Product Category ID:", product.category.id);
-          return product.category.id === this.selectedCategory;
-        }
-        return false;
-      });
-    } else {
-      this.filteredProducts = this.products;
-    }
-  }*/
-
-
-
   applyFilters() {
     this.filteredProducts = this.products.filter(product => {
       const discountValue = product.discount ? product.discount.discount : 0;
@@ -254,11 +229,7 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  // Call this method whenever a filter value changes
 
-  onFilterChange() {
-    this.applyFilters();
-  }
 
 
 

@@ -1,11 +1,11 @@
 import {Component} from '@angular/core';
-import { MatDialogRef} from "@angular/material/dialog";
+import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {CartProduct} from "../../../Model/CartProduct";
 import {MatTableDataSource} from "@angular/material/table";
 import {LocalStorageService} from "../../../services/Storage/local-storage.service";
 import {OrderProductService} from "../../../services/order-product.service";
 import {OrderServiceService} from "../../../services/order-service.service";
-import {flatMap} from "rxjs";
+import {PaymentDialogComponent} from "../payment-dialog/payment-dialog.component";
 
 @Component({
   selector: 'app-cart',
@@ -18,7 +18,8 @@ export class CartComponent{
     public dialogRef: MatDialogRef<CartComponent>,
     private  localStorageService: LocalStorageService,
     private  orderProductService: OrderProductService,
-    private orderService: OrderServiceService
+    private orderService: OrderServiceService,
+    private dialog: MatDialog
   ) {
     this.cartItems = this.localStorageService.getCartStorage();
     this.calcTotalCost(this.cartItems);
@@ -61,7 +62,7 @@ export class CartComponent{
   calcTotalCost(cartItems: CartProduct[]) {
     this.total = 0;
     cartItems.forEach((item) => {
-      this.total += item.product.price * item.quantity;
+      this.total += this.calculateProductPriceByDiscount(item.product) * item.quantity;
     });
 
   }
@@ -105,4 +106,29 @@ checkout() {
   onNoClick() {
     this.dialogRef.close();
   }
+
+
+
+  calculateProductPriceByDiscount(product: any) {
+    if (product.discount?.discount != 0 && product.discount?.discount != null) {
+      return product.price - (product.price * product.discount.discount / 100);
+    } else {
+      return product.price;
+    }
+  }
+
+
+  openPaymentDialog() {
+    const dialogRef = this.dialog.open(PaymentDialogComponent, {
+      maxHeight: '90vh',
+      maxWidth: '80vw',
+      width: "70vw",
+      height: "50vh"
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed', result);
+    });
+  }
+
 }

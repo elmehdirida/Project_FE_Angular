@@ -37,6 +37,7 @@ export class ProductDetailComponent {
   Init(): void {
     const navigationState = window.history.state;
     if (navigationState && navigationState.product) {
+      console.log("product detail : ",navigationState.product)
       this.product= navigationState.product;
 
     }
