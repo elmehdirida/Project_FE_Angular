@@ -4,9 +4,10 @@
 
   <mat-form-field>
     <mat-label>Insert Your Comment Here :</mat-label>
-    <input style="height: 80px" matInput formControlName="text">
-  </mat-form-field>
-
+    <input style="height: 80px" matInput formControlName="text" >
+    <mat-error *ngIf="form.controls['text'].hasError('required')">
+      Name is <strong>required</strong>
+    </mat-error>  </mat-form-field>
   <app-rating (onRating)="Handle($event)"></app-rating>
 </div>
 <div mat-dialog-actions>

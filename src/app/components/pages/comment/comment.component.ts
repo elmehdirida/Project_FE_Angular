@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {Product} from "../../../Model/Product";
-import {FormBuilder} from "@angular/forms";
+import {FormBuilder, Validators} from "@angular/forms";
 import {CommentService} from "../../../services/CommentService.service";
 import {Commentiare} from "../../../Model/Commentiare";
 
@@ -29,8 +29,7 @@ export class CommentComponent implements  OnInit{
        console.log(this.productDetail?.id)
   }
   form=this.build.group({
-    email : this.build.control(''),
-    text : this.build.control(''),
+    text : this.build.control('',[Validators.required]),
     rating : this.ratingProduct,
     user_id : 2,
     product_id : this.productDetail?.id,
@@ -43,14 +42,16 @@ export class CommentComponent implements  OnInit{
        console.log(this.form.value);
        this.form.value.product_id=this.productDetail?.id
        this.form.value.rating=this.ratingProduct;
-       this.service.save(this.form.value).subscribe(res =>{
-         this.closePop(this.form.value);
-       },
-         error => {
-         console.log("erreur ")
-         console.log(error)
-         }
-      );
+       if(this.form.valid){
+         this.service.save(this.form.value).subscribe(res =>{
+             this.closePop(this.form.value);
+           },
+           error => {
+             console.log("erreur ")
+             console.log(error)
+           }
+         );
+       }
   }
   Handle(event:number){
        this.ratingProduct=event;
