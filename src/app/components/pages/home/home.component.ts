@@ -36,7 +36,7 @@ export class HomeComponent implements OnInit {
   par: string = ""
   isHandset: boolean = false;
   categories: Category[] = [];
-  selectedCategory: number | null = null;
+  selectedCategory: number | 'all' = 'all';
   minDiscountValue: number = 0;
   maxDiscountValue: number = 100;
   minPrice: number = 0;
@@ -208,14 +208,16 @@ export class HomeComponent implements OnInit {
   applyFilters() {
     this.filteredProducts = this.products.filter(product => {
       const discountValue = product.discount ? product.discount.discount : 0;
-      const price = product.price ? (product.price - (product.price * product.discount!.discount / 100)) : 0;
+      const price = product.price - (product.price * (product.discount?.discount ?? 0) / 100);
       const matchesDiscount = discountValue >= this.minDiscountValue && discountValue <= this.maxDiscountValue;
       const matchesPrice = price >= this.minPrice && price <= this.maxPrice;
-      const matchesCategory = !this.selectedCategory || (product.category && product.category.id === this.selectedCategory);
+      const matchesCategory = this.selectedCategory === 'all' || !this.selectedCategory ||
+        (product.category && product.category.id === this.selectedCategory);
 
       return matchesDiscount && matchesPrice && matchesCategory;
     });
   }
+
 
 
 
