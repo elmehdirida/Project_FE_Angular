@@ -8,13 +8,15 @@ import {CommentComponent} from "../comment/comment.component";
 import {CommentService} from "../../../services/CommentService.service";
 import {load} from "@angular-devkit/build-angular/src/utils/server-rendering/esm-in-memory-file-loader";
 import {ProductService} from "../../../services/product.service";
+import {LocalStorageService} from "../../../services/Storage/local-storage.service";
+import {CartComponent} from "../../dialogs/cart/cart.component";
 
 @Component({
   selector: 'app-product-detail',
   templateUrl: './product-detail.component.html',
   styleUrls: ['./product-detail.component.scss']
 })
-export class ProductDetailComponent {
+export class ProductDetailComponent implements OnInit{
 
   cartCount: number = 0;
   private sub!: Subscription;
@@ -26,42 +28,47 @@ export class ProductDetailComponent {
   showadd: boolean = true;
   showremove: boolean = false;
   constructor(
-    private route: ActivatedRoute,private dialog:MatDialog,
+    private route: ActivatedRoute,
+    private dialog:MatDialog,
     private serviceComment:CommentService,
     private cdr: ChangeDetectorRef,
-    private productService:ProductService
+    private productService:ProductService,
+    private localstorage:LocalStorageService
   ) {
-    this.Init()
-    this.loadInitComments();
-  }
-  Init(): void {
-    const navigationState = window.history.state;
-    if (navigationState && navigationState.product) {
-      console.log("product detail : ",navigationState.product)
-      this.product= navigationState.product;
 
-    }
   }
-  addtocart() {
-    this.showadd = false;
-    this.showremove = true;
-   // this.api.addtocart(productdata)
-  }
-  Handle(event:number){
-    alert(`hello  ${event}`)
-  }
-  removeitem() {
-    //this.showadd = true;
-    //this.showremove = false;
-    //this.api.removecartitem(productdata)
-  }
-  loadInitComments(){
-    this.serviceComment.getComments(this.product.id).subscribe((res : any) => {
-        this.comments = res.data;
+
+  ngOnInit() {
+    this.sub = this.route.params.subscribe(params => {
+      const id = params['id'];
+      console.log("id : ",id);
+      if (id) {
+        this.productService.getProduct(id).subscribe((data: any) => {
+          this.product = data.data;
+          console.log("product : ",this.product);
+          this.isLoaded = true;
+          this.comments = this.product.comments!;
+        });
       }
-      , error => {
-        console.error("Erreur lors du chargement des commentaires :", error);
+    });
+  }
+
+  addtocart() {
+    let cart = this.localstorage.getCartStorage();
+    let item = cart.find((p: any) => p.product_id == this.product.id);
+    if (item) {
+      item.quantity += 1;
+    } else {
+      cart.push({
+        id: cart.length + 1,
+        quantity: 1,
+        product: this.product,
+        product_id: this.product.id!
       });
+    }
+    this.localstorage.setCartStorage(cart);
+
+
   }
 
   loadComments() {
@@ -117,4 +124,11 @@ export class ProductDetailComponent {
      })
   }
 
+  checkout() {
+    this.dialog.open(CartComponent,{
+      width:'60%',
+      enterAnimationDuration :'300ms',
+    });
+
+  }
 }

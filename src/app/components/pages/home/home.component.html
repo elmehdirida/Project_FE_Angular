@@ -72,10 +72,7 @@
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
-
     <app-toolbar [isHome]="true"></app-toolbar>
-
-
 <div class="product-container" *ngIf="!isLoaded ; else loading" >
   <div *ngFor="let product of filteredProducts" class="product"  >
     <div class="discount-bar">{{ product.discount?.discount }}% OFF</div>

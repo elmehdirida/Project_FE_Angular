@@ -6,6 +6,10 @@ import {CartComponent} from "../dialogs/cart/cart.component";
 import {MatSidenav} from "@angular/material/sidenav";
 import {Router} from "@angular/router";
 import {CartServiceService} from "../../services/cart-service.service";
+import {Order} from "../../Model/Order";
+import {OrderServiceService} from "../../services/order-service.service";
+import {User} from "../../Model/User";
+import {PendingOrdersComponent} from "../dialogs/pending-orders/pending-orders.component";
 
 @Component({
   selector: 'app-toolbar',
@@ -14,7 +18,10 @@ import {CartServiceService} from "../../services/cart-service.service";
 })
 export class ToolbarComponent implements OnInit{
   cartCount: number = 0;
+  pendingOrdersCount: number = 0;
   isLoginIn: boolean = false;
+  pendingOrders: Order[] = [];
+  user: User ;
   @Input() isHome: boolean = false;
   @ViewChild('drawer') drawer!: MatSidenav;
 
@@ -25,19 +32,38 @@ export class ToolbarComponent implements OnInit{
     public dialog: MatDialog,
     private router: Router,
     private cartService: CartServiceService,
-  ) {}
-
-  ngOnInit() {
+    private orderService: OrderServiceService
+  ) {
+    this.user = this.localStorageService.getUser();
     this.isLoginIn = this.localStorageService.isUserLoggedIn();
+    if (this.isLoginIn){
+      this.orderService.getOrdersByUserId(this.user.id).subscribe((res:any) => {
+        this.localStorageService.setPendingOrdersStorage(res);
+      });
+    }
+
     this.setNewCartCount();
 
     this.cartService.cartCount.subscribe(count => {
       this.cartCount = count;
     });
 
+    this.localStorageService.pendingOrders$.subscribe(pendingOrders => {
+        console.log(pendingOrders);
+        this.pendingOrders = pendingOrders;
+        this.pendingOrdersCount = pendingOrders.length;
+      }
+    );
+
     this.localStorageService.cartItems$.subscribe(cartItems => {
       this.cartCount = cartItems.length;
     });
+  }
+
+  ngOnInit() {
+
+
+
   }
 
   setNewCartCount() {
@@ -45,13 +71,13 @@ export class ToolbarComponent implements OnInit{
   }
 
   logout() {
-    this.localStorageService.clearStorage();
     this.authService.logout().subscribe({
       next: () => {
         this.localStorageService.setIsUserLoggedIn(false);
         this.localStorageService.removeUserStorage();
         this.localStorageService.deleteToken();
         this.localStorageService.removeCartStorage();
+        this.localStorageService.clearStorage();
         this.router.navigate(['/login']);
       },
       error: (error) => {
@@ -93,5 +119,11 @@ export class ToolbarComponent implements OnInit{
   }
 
 
-
+  openPendingOrdersDialog() {
+    this.dialog.open(PendingOrdersComponent, {
+      width: "50vw",
+      maxHeight: "60vh",
+      data: this.pendingOrders
+    });
+  }
 }

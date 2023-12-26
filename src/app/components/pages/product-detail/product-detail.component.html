@@ -6,46 +6,46 @@
 </nav> -->
 <app-toolbar></app-toolbar>
 <!-- single product display-->
-<div class="container" >
-  <div class="product-detail" style="display: flex; flex-direction: row;margin-left: 30px ">
-    <div class="image-div">
-      <mat-card >
-      <img mat-card-image class="product-img"  src="{{product.image}}" alt="">
-        <mat-card-content style="margin-top: 20px">
-      <div>
-        <button mat-raised-button color="primary">Buy Now</button>&nbsp;
-        <button mat-raised-button color="accent" (click)="addtocart()" *ngIf="showadd" >Add to Cart</button>&nbsp;
-        <button mat-raised-button color="accent" (click)="removeitem()" *ngIf="showremove" >Remove Item</button>
-
-      </div><br>
+<div  *ngIf="isLoaded;else loading">
+  <div class="container"  >
+      <div class="image-div">
+        <mat-card >
+          <img mat-card-image class="product-img"  src="{{product.image}}" alt="">
+          <mat-card-content style="margin-top: 20px">
+            <div>
+              <button mat-raised-button color="primary" (click)="checkout()">Check Out</button>&nbsp;
+              <button mat-raised-button color="accent" (click)="addtocart()"  >Add to Cart</button>&nbsp;
+            </div><br>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    <div class="product-detail">
+      <mat-card style="margin-left: 20px;">
+        <mat-card-content>
+          <div class="description" >
+            <div >
+              <h1>{{product.name}}</h1>
+              <p style="color:green">Special Price </p>
+              <h3 style="color: green;" >Price:${{product.price}}</h3>
+              <strong >Category:&nbsp;{{product.category?.name}}</strong><br>
+              <strong>Description:</strong><br>
+              <p>{{product.description}}</p>
+              <p > <strong> Discount:  </strong><strong style="color: red;">{{product.discount?.discount}} % </strong></p><br>
+              <strong>Stocks:{{product.stock}} Units left</strong><br>
+              <button routerLink="/" mat-raised-button color="accent">BACK</button>
+            </div>
+            <div class="rating">
+              <app-rating-static [SelectedStart]="product.rating"></app-rating-static>
+            </div>
+          </div>
         </mat-card-content>
       </mat-card>
-      </div>
+    </div>
 
 
-    <mat-card style="margin-left: 20px;">
-      <mat-card-content>
-        <div class="description" >
-          <div >
-            <h1>{{product.name}}</h1>
-            <p style="color:green">Special Price </p>
-            <h3 style="color: green;" >Price:${{product.price}}</h3>
-            <strong >Category:&nbsp;{{product.category?.name}}</strong><br>
-            <strong>Description:</strong><br>
-            <p>{{product.description}}</p>
-            <p > <strong> Discount:  </strong><strong style="color: red;">{{product.discount?.discount}} % </strong></p><br>
-            <strong>Stocks:{{product.stock}} Units left</strong><br>
-            <button routerLink="/" mat-raised-button color="accent">BACK</button>
-          </div>
-          <div style="margin-top: 100px">
-            <app-rating-static [SelectedStart]="product.rating"></app-rating-static>
-          </div>
-        </div>
-      </mat-card-content>
-    </mat-card>
+
 
   </div>
-</div>
 
   <mat-card class="crd">
     <div style="display: flex">
@@ -76,5 +76,10 @@
       </ng-template>
     </mat-card-content>
   </mat-card>
+</div>
+<ng-template #loading  >
+  <div class="spinner-hover-the-back-ground">
+    <mat-spinner></mat-spinner></div>
+</ng-template>
 
 <app-footer></app-footer>

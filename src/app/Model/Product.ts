@@ -1,9 +1,10 @@
 import {Discount} from "./Discount";
 import {Category} from "./Category";
+import {Commentiare} from "./Commentiare";
 
 export interface Product
 {
-  comments?: Comment[];
+  comments?: Commentiare[];
   id?: number;
   name: string;
   price: number;

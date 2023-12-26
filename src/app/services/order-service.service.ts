@@ -25,4 +25,8 @@ export class OrderServiceService {
     return this.httpClient.post(`${this.apiUrl}/order`, data);
   }
 
+  getOrdersByUserId(id : number){
+    return this.httpClient.get(`${this.apiUrl}/users/${id}/orders`);
+  }
+
 }

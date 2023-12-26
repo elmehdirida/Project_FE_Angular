@@ -7,7 +7,7 @@ import {PaymentServiceService} from "../../../services/payment-service.service";
 import {Payment} from "../../../Model/Payment";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {OrderServiceService} from "../../../services/order-service.service";
-
+import { take } from 'rxjs/operators';
 @Component({
   selector: 'app-payment-dialog',
   templateUrl: './payment-dialog.component.html',
@@ -38,34 +38,40 @@ export class PaymentDialogComponent {
 
   }
 
-  pay() {
-    let payment:Payment = {
-      amount: this.totalAmount,
-      order_id: this.data.id,
-      payment_method: this.selected,
-      payment_status : 'processing'
-    }
-    this.paymentService.createPayment(payment).subscribe(() => {
-      this.localStorageService.cartItems$.subscribe(cartItems => {
-        this.localStorageService.setCartStorage([]);
-        this.localStorageService.setCartCount(0);
-      });
-      let order = this.data;
-      order.order_status = 'processing';
-      this.ordersService.updateOrder(order).subscribe((res) => {
-        console.log(res);
-      });
+// ...
 
-      this._snackBar.open('Payment Successful', 'Close', {
-        duration: 3000
-      });
-      this.dialog.closeAll();
+pay() {
+  let payment: Payment = {
+    amount: this.totalAmount,
+    order_id: this.data.id,
+    payment_method: this.selected,
+    payment_status: 'processing'
+  }
+  this.paymentService.createPayment(payment).subscribe(() => {
+    this.localStorageService.cartItems$.pipe(take(1)).subscribe(cartItems => {
+      this.localStorageService.setCartStorage([]);
+      this.localStorageService.setCartCount(0);
+    });
+    let order = this.data;
+    order.order_status = 'processing';
+    this.ordersService.updateOrder(order).subscribe((res) => {
+      console.log('updateOrder successful');
     }, error => {
-      console.log(error);
+      console.log('updateOrder error', error);
       this._snackBar.open('Payment Failed', 'Close', {
         duration: 3000
       });
-      this.dialog.closeAll();
     });
-  }
+    this._snackBar.open('Payment Successful', 'Close', {
+      duration: 3000
+    });
+    this.dialog.closeAll();
+  }, error => {
+    console.log('createPayment error', error);
+    this._snackBar.open('Payment Failed', 'Close', {
+      duration: 3000
+    });
+    this.dialog.closeAll();
+  });
+}
 }

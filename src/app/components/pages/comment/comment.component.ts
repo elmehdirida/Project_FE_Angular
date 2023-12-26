@@ -4,6 +4,7 @@ import {Product} from "../../../Model/Product";
 import {FormBuilder, Validators} from "@angular/forms";
 import {CommentService} from "../../../services/CommentService.service";
 import {Commentiare} from "../../../Model/Commentiare";
+import {LocalStorageService} from "../../../services/Storage/local-storage.service";
 
 @Component({
   selector: 'app-comment',
@@ -14,11 +15,11 @@ export class CommentComponent implements  OnInit{
   productDetail? : Product;
   closeMessage='close';
   ratingProduct=0;
-  newComment! : Commentiare;
      constructor(private ref:MatDialogRef<CommentComponent>,
                  @Inject(MAT_DIALOG_DATA) public data:any,
                  private build:FormBuilder,
-                 private service:CommentService) {
+                 private service:CommentService,
+                 private local:LocalStorageService) {
      }
   send() {
      this.ref.close()
@@ -31,9 +32,8 @@ export class CommentComponent implements  OnInit{
   form=this.build.group({
     text : this.build.control('',[Validators.required]),
     rating : this.ratingProduct,
-    user_id : 2,
+    user_id : this.local.getUser().id,
     product_id : this.productDetail?.id,
-    name : "outman"
   })
    closePop(result:any){
     this.ref.close(result)
@@ -47,7 +47,6 @@ export class CommentComponent implements  OnInit{
              this.closePop(this.form.value);
            },
            error => {
-             console.log("erreur ")
              console.log(error)
            }
          );

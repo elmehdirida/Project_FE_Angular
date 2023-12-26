@@ -10,8 +10,13 @@
 
     <div class="buttons">
       <button mat-icon-button (click)="openCartDialog()">
-        <mat-icon color="warn">shopping_cart</mat-icon>
+        <mat-icon  style="color: #2196F3">shopping_cart</mat-icon>
         <span [matBadge]="cartCount" matBadgeColor="accent"></span>
+      </button>
+      <!-- pending orders!-->
+      <button mat-icon-button (click)="openPendingOrdersDialog()" *ngIf="pendingOrdersCount >0">
+        <mat-icon color="warn">pending_actions</mat-icon>
+        <span [matBadge]="pendingOrdersCount" matBadgeColor="accent"></span>
       </button>
       <button mat-raised-button color="primary" (click)="register()" *ngIf="!isLoginIn">Register</button>
       <button mat-raised-button color="warn" (click)="logout()" *ngIf="isLoginIn">Log out</button>

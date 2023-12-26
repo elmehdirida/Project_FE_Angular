@@ -17,6 +17,9 @@
         <mat-error *ngFor="let err of loginErrors.password">
         &bigstar;{{err}}
         </mat-error>
+        <mat-error>
+          {{loginErrors.message}}
+        </mat-error>
       </div>
       <mat-form-field appearance="outline" class="max-height" >
         <mat-label>Email</mat-label>

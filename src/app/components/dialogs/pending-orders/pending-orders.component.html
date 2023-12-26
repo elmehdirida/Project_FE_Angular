@@ -1,0 +1,32 @@
+<mat-card>
+  <mat-card-title class="card-title">Pending Orders</mat-card-title>
+  <mat-card-content *ngIf="orders.length;else empty">
+   <mat-list>
+        <mat-card  *ngFor="let order of orders" class="pending-card">
+          <mat-card-content  class="card">
+            <div>
+              <span class="order-date spacer">Order Date: {{order.order_date}}</span>
+              <span class="order-total">Order Total: {{order.total_amount |currency}}</span>
+            </div>
+           <div class="buttons">
+             <button mat-icon-button (click)="ViewList(order)">
+               <mat-icon>list</mat-icon>
+             </button>
+             <button mat-icon-button (click)="DeleteOrder(order)">
+               <mat-icon color="warn">delete</mat-icon>
+             </button>
+             <button mat-icon-button (click)="PayOrder(order)">
+               <mat-icon>payment</mat-icon>
+             </button>
+           </div>
+          </mat-card-content>
+        </mat-card>
+    </mat-list>
+  </mat-card-content>
+  <ng-template #empty>
+    <mat-card-content>
+      <p>No Pending Orders</p>
+    </mat-card-content>
+  </ng-template>
+</mat-card>
+

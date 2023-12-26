@@ -52,6 +52,7 @@ export class LoginComponent  implements OnInit{
           }
         },
         error: (error) => {
+          console.log(error.error);
             this.loginErrors = error.error;
             this.isLoading = false;
             this.localStorageService.setIsUserLoggedIn(false);

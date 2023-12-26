@@ -18,9 +18,10 @@ import {ConfirmDialogComponent} from "./confirm-dialog/confirm-dialog.component"
 import { ShowProductsOrderDialogComponent } from './show-products-order-dialog/show-products-order-dialog.component';
 import {MatSelectModule} from "@angular/material/select";
 import {MatDatepickerModule} from "@angular/material/datepicker";
-import {MatNativeDateModule} from "@angular/material/core";
+import {MatLineModule, MatNativeDateModule} from "@angular/material/core";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import { PaymentDialogComponent } from './payment-dialog/payment-dialog.component';
+import { PendingOrdersComponent } from './pending-orders/pending-orders.component';
 
 
 
@@ -34,7 +35,8 @@ import { PaymentDialogComponent } from './payment-dialog/payment-dialog.componen
     EditUserDialogComponent,
     ConfirmDialogComponent,
     ShowProductsOrderDialogComponent,
-    PaymentDialogComponent
+    PaymentDialogComponent,
+    PendingOrdersComponent
   ],
     imports: [
         CommonModule,
@@ -51,6 +53,7 @@ import { PaymentDialogComponent } from './payment-dialog/payment-dialog.componen
         MatDatepickerModule,
         MatNativeDateModule,
         MatProgressBarModule,
+        MatLineModule,
 
     ]
 })

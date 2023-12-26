@@ -40,7 +40,7 @@ export class HomeComponent implements OnInit {
   minDiscountValue: number = 0;
   maxDiscountValue: number = 100;
   minPrice: number = 0;
-  maxPrice: number = 1000;
+  maxPrice: number = 10000;
 
   ngOnInit() {
     this.cartService.toggleSidenav$.subscribe(() => {
@@ -61,7 +61,6 @@ export class HomeComponent implements OnInit {
         }
       });
 
-    this.calculateToolbarHeight();
     this.getCategories();
 
 
@@ -179,31 +178,9 @@ export class HomeComponent implements OnInit {
   }
 
   consulteProduct(product: Product) {
-    console.log("in consulte **** ")
-    console.log(product)
-    this.router.navigate(["/product"], {
-      state: {product: product, par: this.par}
-    });
+    this.router.navigate(['/product', product.id]);
 
   }
-
-
-
-  @HostListener('window:resize', ['$event'])
-  onResize(event: UIEvent) {
-    this.calculateToolbarHeight();
-  }
-
-  calculateToolbarHeight() {
-    setTimeout(() => {
-      this.toolbarHeight = this.toolbar.nativeElement.clientHeight;
-      if (this.drawer) {
-        this.drawer.fixedTopGap = this.toolbarHeight;
-      }
-    });
-  }
-
-
 
   applyFilters() {
     this.filteredProducts = this.products.filter(product => {

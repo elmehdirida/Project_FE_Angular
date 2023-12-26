@@ -18,7 +18,7 @@ export class RegisterComponent {
     registerForm:FormGroup=new FormGroup({
     email:new FormControl('',[Validators.required]),
     password:new FormControl('',[Validators.required]),
-    confirmPassword:new FormControl('',[Validators.required]),
+      password_confirmation:new FormControl('',[Validators.required]),
     name:new FormControl('',[Validators.required]),
     });
 
@@ -36,7 +36,7 @@ export class RegisterComponent {
         if (error.status === 422) {
           if (this.isValidationErrors(error.error)) {
             const validationErrors = error.error as ValidationErrors;
-            const firstError = Object.values(validationErrors)[0][0];
+            const firstError = Object.values(validationErrors)[0];
             this.snackBar.open(firstError, 'Close', { duration: 3000 });
           }
         } else {

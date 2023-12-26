@@ -11,10 +11,8 @@ export class RatingStaticComponent {
   @Input() SelectedStart=0;
   @Output()
   onRating: EventEmitter<number> =new EventEmitter<number>();
-  ratingProductByUser : number=0;
-  previousSelection =0;
   constructor() {
-
+    console.log("s",this.SelectedStart)
   }
   ngOnInit(): void {
     this.maxRatingArr=Array(this.maxRating).fill(0)

@@ -103,10 +103,14 @@ checkout() {
           if (count == this.cartItems.length) {
             this.localStorageService.removeCartStorage();
             this.localStorageService.setCartCount(0);
+            this.orderService.getOrdersByUserId(this.localStorageService.getUser().id).subscribe((res:any) => {
+              this.localStorageService.setPendingOrdersStorage(res);
+            });
             this.openPaymentDialog(data.data);
             this._snackBar.open('Order Placed Successfully', 'Close', {
               duration: 3000
             });
+
             } else {
             this._snackBar.open('Order Failed', 'Close', {
               duration: 3000
@@ -129,7 +133,6 @@ checkout() {
         }
       )
     } else {
-      //redirect to login
       this.dialogRef.close();
       this.router.navigate(['/login']);
 
@@ -156,9 +159,10 @@ checkout() {
       width: "50vw",
       height: "60vh"
     });
-
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed', result);
+      this.orderService.getOrdersByUserId(this.localStorageService.getUser().id).subscribe((res:any) => {
+        this.localStorageService.setPendingOrdersStorage(res);
+      });
     });
   }
 

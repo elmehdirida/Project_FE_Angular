@@ -15,8 +15,6 @@ export class CommentService {
     return this.httpClient.get(`${this.ApiUrl}/products/${id}/comments`);
   }
   save(comment:any){
-    console.log("any");
-    console.log(comment)
     return this.httpClient.post(`${this.ApiUrl}/comments`,comment);
   }
 }
