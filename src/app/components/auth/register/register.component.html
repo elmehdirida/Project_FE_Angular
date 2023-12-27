@@ -6,21 +6,33 @@
         <mat-form-field  class="custom-input" appearance="outline">
           <mat-label>Name</mat-label>
           <input matInput placeholder="Name"  formControlName="name" name="name" required>
+          <mat-error *ngIf="registerForm.controls['name'].hasError('required')">
+            Name is <strong>required</strong>
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field  class="custom-input" appearance="outline">
           <mat-label>Email</mat-label>
           <input matInput placeholder="Email Address"  formControlName="email" name="email" type="email" required>
+          <mat-error *ngIf="registerForm.controls['email'].hasError('required')">
+            Email is <strong>required</strong>
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field  class="custom-input"  appearance="outline">
           <mat-label>Password</mat-label>
           <input matInput placeholder="Password"  formControlName="password" name="password" type="password" required>
+          <mat-error *ngIf="registerForm.controls['password'].hasError('required')">
+            Password is <strong>required</strong>
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field  class="custom-input" appearance="outline">
           <mat-label>Confirm Password</mat-label>
           <input matInput placeholder="Confirm Password" formControlName="password_confirmation" name="password_confirmation" type="password" required>
+          <mat-error *ngIf="registerForm.controls['password_confirmation'].hasError('required')">
+            Confirm Password is <strong>required</strong>
+          </mat-error>
         </mat-form-field>
 
       </form>

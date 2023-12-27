@@ -28,22 +28,25 @@ export class RegisterComponent {
   }
 
   onSubmit() {
-    this.authService.register(this.registerForm.value).subscribe({
-      next: (response: any) => {
-        this.router.navigate(['/login']);
-      },
-      error: (error: any) => {
-        if (error.status === 422) {
-          if (this.isValidationErrors(error.error)) {
-            const validationErrors = error.error as ValidationErrors;
-            const firstError = Object.values(validationErrors)[0];
-            this.snackBar.open(firstError, 'Close', { duration: 3000 });
+    this.registerForm.markAllAsTouched();
+    if(this.registerForm.valid) {
+      this.authService.register(this.registerForm.value).subscribe({
+        next: (response: any) => {
+          this.router.navigate(['/login']);
+        },
+        error: (error: any) => {
+          if (error.status === 422) {
+            if (this.isValidationErrors(error.error)) {
+              const validationErrors = error.error as ValidationErrors;
+              const firstError = Object.values(validationErrors)[0];
+              this.snackBar.open(firstError, 'Close', {duration: 3000});
+            }
+          } else {
+            this.snackBar.open('An error occurred. Please try again later.', 'Close', {duration: 3000});
           }
-        } else {
-          this.snackBar.open('An error occurred. Please try again later.', 'Close', { duration: 3000 });
-        }
-      },
-    });
+        },
+      });
+    }
   }
 
   private isValidationErrors(obj: any): obj is ValidationErrors {
