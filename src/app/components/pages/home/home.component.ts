@@ -5,7 +5,6 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {AuthServiceService} from "../../../services/auth/auth-service.service";
 import {LocalStorageService} from "../../../services/Storage/local-storage.service";
 import {MatDialog} from "@angular/material/dialog";
-import {CartComponent} from "../../dialogs/cart/cart.component";
 import {CartProduct} from "../../../Model/CartProduct";
 import {MatSidenav} from "@angular/material/sidenav";
 import {BreakpointObserver} from "@angular/cdk/layout";
@@ -93,7 +92,8 @@ export class HomeComponent implements OnInit {
     this.productService.getProducts().subscribe((response: any) => {
       this.products = response.data;
       this.filteredProducts = this.products;
-      this.isLoaded = false;
+        this.refreshFilteredProducts();
+        this.isLoaded = false;
     },
       error => {
         console.log(error);
@@ -182,17 +182,24 @@ export class HomeComponent implements OnInit {
 
   }
 
-  applyFilters() {
-    this.filteredProducts = this.products.filter(product => {
-      const discountValue = product.discount ? product.discount.discount : 0;
-      const price = product.price - (product.price * (product.discount?.discount ?? 0) / 100);
-      const matchesDiscount = discountValue >= this.minDiscountValue && discountValue <= this.maxDiscountValue;
-      const matchesPrice = price >= this.minPrice && price <= this.maxPrice;
-      const matchesCategory = this.selectedCategory === 'all' || !this.selectedCategory ||
-        (product.category && product.category.id === this.selectedCategory);
+  refreshFilteredProducts() {
+    this.filteredProducts = this.products
+      .filter(product => {
+        const discountValue = product.discount ? product.discount.discount : 0;
+        const priceAfterDiscount = product.discount ? (product.price - (product.price * product.discount.discount / 100)) : product.price;
+        const matchesSearchQuery = this.searchQuery === "" || product.name.toLowerCase().includes(this.searchQuery.toLowerCase());
+        const matchesDiscount = discountValue >= this.minDiscountValue && discountValue <= this.maxDiscountValue;
+        const matchesPrice = priceAfterDiscount >= this.minPrice && priceAfterDiscount <= this.maxPrice;
+        const matchesCategory = this.selectedCategory === 'all' || !this.selectedCategory ||
+          (product.category && product.category.id === this.selectedCategory);
 
-      return matchesDiscount && matchesPrice && matchesCategory;
-    });
+        return matchesSearchQuery && matchesDiscount && matchesPrice && matchesCategory;
+      });
+  }
+
+
+  applyFilters() {
+    this.refreshFilteredProducts();
   }
 
 
