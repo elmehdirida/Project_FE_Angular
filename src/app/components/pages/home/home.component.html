@@ -83,8 +83,9 @@
          [ngClass]="product.discount?.discount != 0? 'strick-through ':''">{{ product.price | currency }}</p>
       <p class="discounted-price" *ngIf="product.discount?.discount!=0">{{ getDiscount(product) | currency }}</p>
     </div>
-    <app-rating-static [SelectedStart]="product.rating"></app-rating-static>
-    <button mat-raised-button color="accent" class="add-cart-button" (click)="addToCart(product)">Add to Cart</button>
+    <app-rating [isStatic]="true" [SelectedStart]="product.rating"></app-rating>
+    <button mat-raised-button color="accent" class="add-cart-button" (click)="addToCart(product)" *ngIf="product.stock >0 " >Add to Cart</button>
+    <button mat-raised-button color="primary" class="out-of-stock"  *ngIf="product.stock===0" disabled>Out Of Stock</button>
   </div>
 </div>
 <app-footer *ngIf="!isLoaded ; else loading"></app-footer>

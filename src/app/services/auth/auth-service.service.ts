@@ -21,7 +21,7 @@ constructor(private httpClient : HttpClient) { }
   }
 
   register(user: User) {
-    user.role = 'admin';
+    user.role = 'user';
     return this.httpClient.post(`${this.apiUrl}/register`, user);
   }
 

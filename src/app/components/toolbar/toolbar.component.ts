@@ -88,7 +88,7 @@ export class ToolbarComponent implements OnInit{
 
   openCartDialog() {
     this.dialog.open(CartComponent, {
-      width: "50vw",
+      minWidth: "50vw",
       height: "60vh"
     });
     this.dialog.afterAllClosed.subscribe(() => {

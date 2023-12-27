@@ -10,6 +10,7 @@ import {LocalStorageService} from "../../../services/Storage/local-storage.servi
 import {CartComponent} from "../../dialogs/cart/cart.component";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MatStepper} from "@angular/material/stepper";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-product-detail',
@@ -17,13 +18,12 @@ import {MatStepper} from "@angular/material/stepper";
   styleUrls: ['./product-detail.component.scss']
 })
 export class ProductDetailComponent implements OnInit{
-  //watch the steper
   @ViewChild('stepper') stepper: MatStepper | undefined;
   cartCount: number = 0;
   private sub!: Subscription;
   product!: Product;
   comments : Commentiare[] = [];
-
+  isLogin: boolean = false;
   isLoaded: boolean = false;
   firstFormGroup: FormGroup;
   userRating: any = 0;
@@ -35,7 +35,9 @@ export class ProductDetailComponent implements OnInit{
     private cdr: ChangeDetectorRef,
     private productService:ProductService,
     private localstorage:LocalStorageService,
+    private _snackBar: MatSnackBar
   ) {
+    this.isLogin = this.localstorage.isUserLoggedIn();
     this.firstFormGroup = new FormGroup({
       'comment' : new FormControl("",[Validators.required]),
     });
@@ -99,6 +101,7 @@ export class ProductDetailComponent implements OnInit{
       product_id: this.product.id,
       user: this.localstorage.getUser()
     };
+    if(this.firstFormGroup.valid){
 
     this.serviceComment.save(comment).subscribe((data:any)=>{
       this.product.rating = (this.product.rating * this.product.comments!.length + this.userRating) / (this.product.comments!.length + 1);
@@ -114,5 +117,10 @@ export class ProductDetailComponent implements OnInit{
       this.stepper?.reset()
 
     })
+  }else{
+      this._snackBar.open('Please enter a comment', 'close', {
+        duration: 2000,
+      });
+    }
   }
 }

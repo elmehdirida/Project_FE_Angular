@@ -5,34 +5,39 @@
         <mat-card >
           <img mat-card-image class="product-img"  src="{{product.image}}" alt="">
           <mat-card-content style="margin-top: 20px">
-            <div>
+            <div class="actions">
               <button mat-raised-button color="primary" (click)="checkout()">Check Out</button>&nbsp;
-              <button mat-raised-button color="accent" (click)="addToCart()"  >Add to Cart</button>&nbsp;
+              <button mat-raised-button color="accent" (click)="addToCart()"  *ngIf="product.stock>0" >Add to Cart</button>&nbsp;
+              <button mat-raised-button disabled *ngIf="product.stock ===0"> Out of Stock</button>
             </div><br>
           </mat-card-content>
         </mat-card>
       </div>
     <div class="product-detail">
-      <mat-card style="margin-left: 20px;">
+      <mat-card class="product-card">
         <mat-card-content>
-          <div class="description" >
-            <div >
-              <h1>{{product.name}}</h1>
-              <p style="color:green">Special Price </p>
-              <h3 style="color: green;" >Price:${{product.price}}</h3>
-              <strong >Category:&nbsp;{{product.category?.name}}</strong><br>
+          <div class="product-details">
+            <div class="product-header">
+              <h1>{{ product.name }}</h1>
+              <p class="special-price">Special Price</p>
+              <h3 class="price">Price: ${{ product.price }}</h3>
+
+            </div>
+            <div class="product-info">
+              <strong>Category:</strong> {{ product.category?.name }}<br>
               <strong>Description:</strong><br>
-              <p>{{product.description}}</p>
-              <p > <strong> Discount:  </strong><strong style="color: red;">{{product.discount?.discount}} % </strong></p><br>
-              <strong>Stocks:{{product.stock}} Units left</strong><br>
+              <p>{{ product.description }}</p>
+              <p><strong>Discount:</strong> <strong class="discount">{{ product.discount?.discount }}% </strong></p>
+              <strong>Stocks:</strong> {{ product.stock }} Units left<br>
               <button routerLink="/" mat-raised-button color="accent">BACK</button>
             </div>
-            <div class="rating">
-              <app-rating [SelectedStart]="product.rating" [isStatic]="true"></app-rating>
-            </div>
+          </div>
+          <div class="rating">
+            <app-rating [SelectedStart]="product.rating" [isStatic]="true"></app-rating>
           </div>
         </mat-card-content>
       </mat-card>
+
     </div>
   </div>
   <div class="review">
@@ -70,7 +75,7 @@
 
       </mat-tab>
       <mat-tab label="Add Comment">
-        <mat-stepper  #stepper [linear]="false">
+        <mat-stepper  #stepper [linear]="false" *ngIf="isLogin; else login">
           <mat-step [stepControl]="firstFormGroup">
             <form [formGroup]="firstFormGroup" class="body-content">
               <ng-template matStepLabel>Make A Comment</ng-template>
@@ -108,6 +113,18 @@
             </div>
           </mat-step>
         </mat-stepper>
+        <ng-template #login>
+          <div class="empty">
+            <mat-card >
+              <mat-card-content>
+                <h1>You need to login to add comment</h1>
+              </mat-card-content>
+              <mat-card-actions>
+                <button mat-raised-button color="primary" routerLink="/login">Login</button>
+              </mat-card-actions>
+            </mat-card>
+          </div>
+        </ng-template>
       </mat-tab>
     </mat-tab-group>
   </div>
