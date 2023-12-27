@@ -1,20 +1,13 @@
-<!-- <nav class="navbar bg-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand"style="color:white;">E-commerce Website</a>
-       <button routerLink="/" class="btn btn-warning text-light">BACK</button>
-    </div>
-</nav> -->
 <app-toolbar></app-toolbar>
-<!-- single product display-->
 <div  *ngIf="isLoaded;else loading">
-  <div class="container"  >
+  <div class="container">
       <div class="image-div">
         <mat-card >
           <img mat-card-image class="product-img"  src="{{product.image}}" alt="">
           <mat-card-content style="margin-top: 20px">
             <div>
               <button mat-raised-button color="primary" (click)="checkout()">Check Out</button>&nbsp;
-              <button mat-raised-button color="accent" (click)="addtocart()"  >Add to Cart</button>&nbsp;
+              <button mat-raised-button color="accent" (click)="addToCart()"  >Add to Cart</button>&nbsp;
             </div><br>
           </mat-card-content>
         </mat-card>
@@ -35,48 +28,101 @@
               <button routerLink="/" mat-raised-button color="accent">BACK</button>
             </div>
             <div class="rating">
-              <app-rating-static [SelectedStart]="product.rating"></app-rating-static>
+              <app-rating [SelectedStart]="product.rating" [isStatic]="true"></app-rating>
             </div>
           </div>
         </mat-card-content>
       </mat-card>
     </div>
-
-
-
-
   </div>
+  <div class="review">
+    <mat-tab-group [(selectedIndex)]="all" >
+      <mat-tab label="All Comment">
+        <div class="comment" *ngIf="comments.length>0;else empty">
+          <div *ngFor="let comment of comments">
+            <mat-card class="mat-elevation-z1">
+              <mat-card-header >
+                <div class="comment-header">
+                  <div mat-card-avatar>
+                    <mat-icon>person</mat-icon>
+                  </div>
+                  <div >
+               <span class="comment-user"> {{comment.user.name}}
+                </span>
+                  </div>
+                  <div class="comment-date">{{comment.date | date:'medium'}}</div>
+                </div>
+              </mat-card-header>
+              <mat-card-content>
+                <div class="comment-rating">
+                <div class="div-comment">
+                <p class="comment-text">
+                  {{comment.text}}
+                </p>
+                </div>
+                <app-rating [SelectedStart]="comment.rating" [isStatic]="true"></app-rating>
+                </div>
 
-  <mat-card class="crd">
-    <div style="display: flex">
-      <mat-card-title style="margin-left: 20px;color: #3f51b5;"><strong>Comment :</strong></mat-card-title>
-
-      <div class="example-button-container" >
-        <button mat-mini-fab color="accent" (click)="openPopupComment()" style="margin-left: 40px;width: 35px;height: 35px">
-          <mat-icon>add</mat-icon>
-        </button>
-      </div>
-    </div>
-
-    <mat-card-content>
-      <div *ngIf="comments.length > 0; else noComments" >
-        <div *ngFor="let comment of comments"  class="comments"  >
-          <div class="circle-icon">
-            <mat-icon  aria-hidden="false" aria-label="User Icon">person</mat-icon>
+              </mat-card-content>
+            </mat-card>
           </div>
-          <p style="width: 10%"><strong> {{comment.user.name}}</strong></p>
-          <p style="width: 10%"><strong> {{comment.date}}</strong></p>
-          <p style="width: 50%"><strong> {{comment.text}}</strong> </p>
-          <!--<p style="width: 30%;margin-left: 5px"><strong>{{comment.rating}}</strong></p>-->
-          <app-rating-static [SelectedStart]="comment.rating"></app-rating-static>
         </div>
-      </div>
-      <ng-template #noComments>
-        No Comment
-      </ng-template>
-    </mat-card-content>
-  </mat-card>
+
+      </mat-tab>
+      <mat-tab label="Add Comment">
+        <mat-stepper  #stepper [linear]="false">
+          <mat-step [stepControl]="firstFormGroup">
+            <form [formGroup]="firstFormGroup" class="body-content">
+              <ng-template matStepLabel>Make A Comment</ng-template>
+              <mat-form-field appearance="outline" style="margin-top: 10px;width: 40vw">
+                <mat-label>Comment</mat-label>
+                <input matInput placeholder="comment" formControlName="comment">
+                <mat-error *ngIf="firstFormGroup.controls['comment'].hasError('required')">
+                  Comment is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
+              <div>
+                <button mat-button matStepperNext color="primary">Next</button>
+              </div>
+            </form>
+          </mat-step>
+          <mat-step  label="Enter Your Rating">
+            <form  class="body-content">
+              <ng-template matStepLabel>Enter Your Rating</ng-template>
+              <app-rating  style="margin-top: 10px" [SelectedStart]="userRating"  (onRating)="onRatingChanged($event)"></app-rating>
+              <div style="margin-top: 5px">
+                <button mat-button matStepperPrevious color="warn" style="margin-right: 10px">Back</button>
+                <button mat-button matStepperNext color="primary">Next</button>
+              </div>
+            </form>
+          </mat-step>
+          <mat-step >
+            <div class="body-content">
+            <ng-template matStepLabel>Done</ng-template>
+            <p>You are now done.</p>
+            <div >
+              <button mat-button matStepperPrevious >Back</button>
+              <button mat-button (click)="stepper.reset(); this.userRating=0">Reset</button>
+            </div>
+              <button mat-raised-button color="primary" (click)="addComment()">Add Comment</button>
+            </div>
+          </mat-step>
+        </mat-stepper>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+  <ng-template #empty>
+      <mat-card class="mat-elevation-z1">
+        <div class="empty">
+      <mat-card-content>
+          <h1>No Comments Yet</h1>
+        </mat-card-content> </div>
+      </mat-card>
+
+  </ng-template>
 </div>
+
+
 <ng-template #loading  >
   <div class="spinner-hover-the-back-ground">
     <mat-spinner></mat-spinner></div>

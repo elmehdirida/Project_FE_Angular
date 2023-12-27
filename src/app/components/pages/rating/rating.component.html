@@ -1,8 +1,17 @@
-<mat-icon
-*ngFor="let icon of maxRatingArr;let index=index"
-(mouseenter)="HandleMouseEnter(index)"
-(mouseleave)="HandleMouseLeave()"
-(click)="rating(index)"
-[ngClass]="{checked:SelectedStart>index}"
->
-  star</mat-icon>
+<ng-container *ngIf="!isStatic">
+  <mat-icon
+    *ngFor="let icon of maxRatingArr;let index=index"
+    (mouseenter)="HandleMouseEnter(index)"
+    (click)="rating(index)"
+    (mouseleave)="HandleMouseLeave()"
+    [ngClass]="{checked:SelectedStart>index}"
+  >star
+  </mat-icon>
+</ng-container>
+<ng-container *ngIf="isStatic">
+  <mat-icon
+    *ngFor="let icon of maxRatingArr;let index=index"
+    [ngClass]="{checked:SelectedStart>index}"
+  >star
+  </mat-icon>
+</ng-container>

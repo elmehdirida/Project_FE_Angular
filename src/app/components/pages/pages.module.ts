@@ -25,6 +25,8 @@ import { RatingComponent } from './rating/rating.component';
 import {ToolbarComponent} from "../toolbar/toolbar.component";
 import { RatingStaticComponent } from './rating-static/rating-static.component';
 import { FooterComponent } from './footer/footer.component';
+import {MatTabsModule} from "@angular/material/tabs";
+import {MatStepperModule} from "@angular/material/stepper";
 
 
 
@@ -59,6 +61,8 @@ import { FooterComponent } from './footer/footer.component';
     MatSidenavModule,
     MatSliderModule,
     MatSelectModule,
+    MatTabsModule,
+    MatStepperModule,
   ]
 })
 export class PagesModule {
