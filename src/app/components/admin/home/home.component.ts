@@ -127,19 +127,24 @@ export class HomeComponent implements OnInit{
         this.ProductIdAndCount[index].count += 1;
       }
     });
+    let count = this.ProductIdAndCount.length;
+    if(count > 5){
+      count = 5;
+    }
     this.ProductIdAndCount.sort((a,b)=>b.count-a.count);
-      for(let i = 0; i < 5; i++) {
+      for(let i = 0; i < count; i++) {
       this.Top5Products.push(<CartProduct>this.orderProducts.find((item) => item.product_id == this.ProductIdAndCount[i].productId));
     }
 
-    for(let i = 0; i < 5; i++) {
+    for(let i = 0; i < count; i++) {
       this.productService.getProduct(this.Top5Products[i].product_id).subscribe((response : any)=>{
         this.Top5Products[i].product = response.data;
         if(i == 4){
-          this.isLoaded = true;
+          return;
         }
       }
       );
     }
+    this.isLoaded = true;
   }
 }

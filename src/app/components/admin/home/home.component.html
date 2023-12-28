@@ -88,7 +88,7 @@
           Total Products :
           {{products.length}}
         </div>
-        <div class="last-users">
+        <div class="last-users" *ngIf="ProductIdAndCount.length>0;else empty">
           <div class="last-users-title">
             Top 5 Products
           </div>
@@ -101,6 +101,22 @@
             </div>
           </div>
         </div>
+
+        <ng-template #empty>
+          <div class="last-users">
+            <div class="last-users-title">
+              Top 5 Products
+            </div>
+            <div class="last-users-list">
+              <div class="last-user">
+                <div class="last-user-name">
+                  No Products ordered yet
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </ng-template>
       </mat-card-content>
       <mat-card-actions class="dash-card-actions">
         <button mat-flat-button routerLink="/products">View Products</button>
