@@ -12,7 +12,7 @@
     <mat-card-title>{{item.product.name}}</mat-card-title>
     <mat-card-content>
         <img [src]="item.product.image" class="image">
-        <p class="price">{{item.product.price | currency}}</p>
+        <p class="price"> {{getDiscountedPrice(item.product.price, item.product.discount?.discount) | currency}}</p>
       </mat-card-content>
 
   </mat-card>

@@ -4,6 +4,7 @@ import {Order} from "../../../Model/Order";
 import {OrderProductService} from "../../../services/order-product.service";
 import {CartProduct} from "../../../Model/CartProduct";
 import {ProductService} from "../../../services/product.service";
+import {Discount} from "../../../Model/Discount";
 
 @Component({
   selector: 'app-show-products-order-dialog',
@@ -36,4 +37,11 @@ export class ShowProductsOrderDialogComponent {
     })
   }
 
+  getDiscountedPrice(price: number, discount: number | undefined) {
+    if (discount) {
+      return price - (price * discount / 100);
+    }
+    return price;
+
+  }
 }

@@ -56,6 +56,11 @@ export class LocalStorageService {
     return this.getPendingOrdersStorage().length;
   }
 
+  removePendingOrdersStorage() {
+    localStorage.removeItem('pendingOrders');
+    this.pendingOrdersSource.next([]);
+  }
+
   setCartCount(length: number) {
     localStorage.setItem('cartCount', JSON.stringify(length));
   }

@@ -77,6 +77,7 @@ export class ToolbarComponent implements OnInit{
         this.localStorageService.removeUserStorage();
         this.localStorageService.deleteToken();
         this.localStorageService.removeCartStorage();
+        this.localStorageService.removePendingOrdersStorage();
         this.localStorageService.clearStorage();
         this.router.navigate(['/login']);
       },

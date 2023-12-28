@@ -66,17 +66,6 @@ export class AdminComponent {
       return path;
   }
   logout() {
-    this.authService.logout().subscribe({
-      next: () => {
-        this.localStorageService.setIsUserLoggedIn(false);
-        this.localStorageService.removeUserStorage();
-        this.localStorageService.removeCartStorage();
-        this.localStorageService.deleteToken();
-        this.router.navigate(['/login']);
-      },
-      error: (error) => {
-        console.log(error);
-      },
-    });
+    this.router.navigate(['/home']);
   }
 }
